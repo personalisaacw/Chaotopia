@@ -18,12 +18,14 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>17.0.6</version>
+            <!--Changed javafx version here. We are using 21.0.6-->
+            <version>21.0.6</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>17.0.6</version>
+            <!--Changed javafx version here. We are using 21.0.6-->
+            <version>21.0.6</version>
         </dependency>
         <dependency>
             <groupId>org.controlsfx</groupId>
@@ -76,6 +78,15 @@
                             <noManPages>true</noManPages>
                             <stripDebug>true</stripDebug>
                             <noHeaderFiles>true</noHeaderFiles>
+
+                            <!-- options added by Rosa to help work with Mac. Update to your path to javafx-->
+                            <options>
+                                <option>--module-path</option>
+                                <option>/Library/Java/JavaVirtualMachines/javafx-sdk-21.0.6/lib</option>
+                                <option>--add-modules</option>
+                                <option>javafx.controls,javafx.fxml</option>
+                                <option>-Dprism.order=sw</option>
+                            </options>
                         </configuration>
                     </execution>
                 </executions>
