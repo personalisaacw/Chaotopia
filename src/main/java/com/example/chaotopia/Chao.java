@@ -129,4 +129,6 @@ public class Chao {
             this.setType(ChaoType.DARK);
         }
     }
+
+    //missing animate method
 }
