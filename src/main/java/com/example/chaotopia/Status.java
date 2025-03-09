@@ -187,6 +187,7 @@ public class Status {
 
     /**
      * Displays all stats to the console, including whether the Chao is alive or dead.
+     * TO DO: Make this an actual UI thing
      */
     public void displayStats() {
         System.out.println("Happiness: " + happiness);
