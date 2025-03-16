@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * JUnit tests for the Chao class.
  * Note: This test assumes that Status can be instantiated directly.
- * If Status requires specific parameters, you'll need to adapt these tests.
  */
 public class ChaoTest {
 
