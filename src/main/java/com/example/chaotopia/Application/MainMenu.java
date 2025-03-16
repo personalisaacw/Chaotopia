@@ -1,4 +1,4 @@
-package com.example.chaotopia.Model;
+package com.example.chaotopia.Application;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

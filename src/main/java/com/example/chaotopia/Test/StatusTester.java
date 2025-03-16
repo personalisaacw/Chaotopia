@@ -1,4 +1,6 @@
-package com.example.chaotopia;
+package com.example.chaotopia.Test;
+
+import com.example.chaotopia.Model.Status;
 
 public class StatusTester {
     public static void main(String[] args) {
