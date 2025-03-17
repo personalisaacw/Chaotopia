@@ -1,5 +1,3 @@
-package com.example.chaotopia.Test;
-
 import com.example.chaotopia.Model.Status;
 
 public class StatusTester {
