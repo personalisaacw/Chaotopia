@@ -9,7 +9,7 @@ public class HelloController {
     @FXML
     private ImageView characterImageView;
 
-    private AnimationIdle animationIdle;
+    private Animation animationIdle;
 
     @FXML
     public void initialize() {
@@ -17,7 +17,7 @@ public class HelloController {
         characterImageView.setImage(new Image(getClass().getResourceAsStream("/com/example/chaotopia/sprites/DarkChaoIdle2.png")));
 
         // Create animation instance
-        animationIdle = new AnimationIdle(characterImageView);
+        animationIdle = new Animation(characterImageView);
 
         // Start the animation
         animationIdle.startAnimation();

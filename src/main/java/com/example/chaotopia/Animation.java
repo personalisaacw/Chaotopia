@@ -1,6 +1,5 @@
 package com.example.chaotopia;
 
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
@@ -17,7 +16,7 @@ import javafx.util.Duration;
  * 0.2 seconds before advancing to the next one.</p>
  *
  */
-public class AnimationIdle {
+public class Animation {
 
     /** The ImageView component that will display the animated character */
     private ImageView characterView;
@@ -49,7 +48,7 @@ public class AnimationIdle {
      * @param characterView The ImageView component that will display the animated character.
      *                     This component will have its image updated with each frame of the animation.
      */
-    public AnimationIdle(ImageView characterView) {
+    public Animation(ImageView characterView) {
         this.characterView = characterView;
         timeline.setCycleCount(Animation.INDEFINITE);
     }
