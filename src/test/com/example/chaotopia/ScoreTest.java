@@ -1,9 +1,7 @@
 package com.example.chaotopia;
 
-import com.example.chaotopia.Score;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * JUnit test for the Score class.
