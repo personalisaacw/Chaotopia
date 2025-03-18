@@ -1,8 +1,5 @@
-<<<<<<< src/main/java/com/example/chaotopia/Score.java
 package com.example.chaotopia;
 
-=======
->>>>>>> src/main/java/com/example/chaotopia/Score.java
 /**
  * An object measuring the player's care for the Chao.
  * <br><br>

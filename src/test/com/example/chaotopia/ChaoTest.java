@@ -18,25 +18,25 @@ public class ChaoTest {
         // Assuming Status can be instantiated directly
         // Modify this if Status has a different constructor
         status = new Status();
-        chao = new Chao(0, "TestChao", Chao.ChaoType.BLUE, Chao.State.IDLE, status);
+        chao = new Chao(0, "TestChao", ChaoType.BLUE, State.NORMAL, status);
     }
 
     @Test
     void testConstructorAndGetters() {
         assertEquals(0, chao.getAlignment());
         assertEquals("TestChao", chao.getName());
-        assertEquals(Chao.ChaoType.BLUE, chao.getType());
-        assertEquals(Chao.State.IDLE, chao.getState());
+        assertEquals(ChaoType.BLUE, chao.getType());
+        assertEquals(State.NORMAL, chao.getState());
         assertEquals(status, chao.getStatus());
     }
 
     @Test
     void testSetters() {
-        chao.setType(Chao.ChaoType.RED);
-        assertEquals(Chao.ChaoType.RED, chao.getType());
+        chao.setType(ChaoType.RED);
+        assertEquals(ChaoType.RED, chao.getType());
 
-        chao.setState(Chao.State.HAPPY);
-        assertEquals(Chao.State.HAPPY, chao.getState());
+        chao.setState(State.SLEEPING);
+        assertEquals(State.SLEEPING, chao.getState());
     }
 
     @Test
@@ -51,44 +51,44 @@ public class ChaoTest {
     @Test
     void testEvolveToHero() {
         // Test at threshold
-        Chao heroChao1 = new Chao(7, "HeroChao1", Chao.ChaoType.BLUE, Chao.State.IDLE, status);
+        Chao heroChao1 = new Chao(7, "HeroChao1", ChaoType.BLUE, State.NORMAL, status);
         heroChao1.evolve();
-        assertEquals(Chao.ChaoType.HERO, heroChao1.getType());
+        assertEquals(ChaoType.HERO, heroChao1.getType());
 
         // Test above threshold
-        Chao heroChao2 = new Chao(10, "HeroChao2", Chao.ChaoType.BLUE, Chao.State.IDLE, status);
+        Chao heroChao2 = new Chao(10, "HeroChao2", ChaoType.BLUE, State.NORMAL, status);
         heroChao2.evolve();
-        assertEquals(Chao.ChaoType.HERO, heroChao2.getType());
+        assertEquals(ChaoType.HERO, heroChao2.getType());
     }
 
     @Test
     void testEvolveToDark() {
         // Test at threshold
-        Chao darkChao1 = new Chao(-7, "DarkChao1", Chao.ChaoType.BLUE, Chao.State.IDLE, status);
+        Chao darkChao1 = new Chao(-7, "DarkChao1", ChaoType.BLUE, State.NORMAL, status);
         darkChao1.evolve();
-        assertEquals(Chao.ChaoType.DARK, darkChao1.getType());
+        assertEquals(ChaoType.DARK, darkChao1.getType());
 
         // Test below threshold
-        Chao darkChao2 = new Chao(-10, "DarkChao2", Chao.ChaoType.BLUE, Chao.State.IDLE, status);
+        Chao darkChao2 = new Chao(-10, "DarkChao2", ChaoType.BLUE, State.NORMAL, status);
         darkChao2.evolve();
-        assertEquals(Chao.ChaoType.DARK, darkChao2.getType());
+        assertEquals(ChaoType.DARK, darkChao2.getType());
     }
 
     @Test
     void testNoEvolution() {
         // Test with alignment between thresholds
         chao.evolve();
-        assertEquals(Chao.ChaoType.BLUE, chao.getType());
+        assertEquals(ChaoType.BLUE, chao.getType());
 
         // Test with positive alignment below hero threshold
-        Chao positiveChao = new Chao(6, "PositiveChao", Chao.ChaoType.GREEN, Chao.State.IDLE, status);
+        Chao positiveChao = new Chao(6, "PositiveChao", ChaoType.GREEN, State.NORMAL, status);
         positiveChao.evolve();
-        assertEquals(Chao.ChaoType.GREEN, positiveChao.getType());
+        assertEquals(ChaoType.GREEN, positiveChao.getType());
 
         // Test with negative alignment above dark threshold
-        Chao negativeChao = new Chao(-6, "NegativeChao", Chao.ChaoType.RED, Chao.State.IDLE, status);
+        Chao negativeChao = new Chao(-6, "NegativeChao", ChaoType.RED, State.NORMAL, status);
         negativeChao.evolve();
-        assertEquals(Chao.ChaoType.RED, negativeChao.getType());
+        assertEquals(ChaoType.RED, negativeChao.getType());
     }
 
     @Test
@@ -96,16 +96,16 @@ public class ChaoTest {
         // Evolve to HERO
         chao.adjustAlignment(10);
         chao.evolve();
-        assertEquals(Chao.ChaoType.HERO, chao.getType());
+        assertEquals(ChaoType.HERO, chao.getType());
 
         // Evolve to DARK
         chao.adjustAlignment(-20);
         chao.evolve();
-        assertEquals(Chao.ChaoType.DARK, chao.getType());
+        assertEquals(ChaoType.DARK, chao.getType());
 
         // Test going back to HERO
         chao.adjustAlignment(30);
         chao.evolve();
-        assertEquals(Chao.ChaoType.HERO, chao.getType());
+        assertEquals(ChaoType.HERO, chao.getType());
     }
 }
