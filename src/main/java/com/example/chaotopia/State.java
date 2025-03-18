@@ -5,6 +5,7 @@ package com.example.chaotopia;
  */
 public enum State {
     NORMAL,
+    SIT,
     SLEEPING,
     HAPPY,
     ANGRY,
