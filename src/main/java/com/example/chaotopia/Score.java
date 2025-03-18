@@ -20,7 +20,6 @@ public class Score {
     /**
      * Constructor method that creates a score.
      * @param score The initial score.
-     * @param chao The Chao associated with this score.
      */
     public Score(int score) {
         this.score = score;
