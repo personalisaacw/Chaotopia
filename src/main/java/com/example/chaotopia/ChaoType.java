@@ -5,17 +5,18 @@ package com.example.chaotopia;
  * The type may change through evolution based on alignment.
  */
 public enum ChaoType {
-    //Hero Chao stays happy for longer and higher satisfaction from gifts
-    HERO,
-    //Dark Chao's happiness depletes faster
-    DARK,
+    HERO, //Stays happy longer, higher satisfactions from gifts
+    DARK, //Happiness depletes faster
+    BLUE, //Gets sleepy faster
+    RED, //Gets hungry faster
+    GREEN; //Gets sick more often (health depletes faster)
 
-    //Blue Chao gets sleepy faster
-    BLUE,
-
-    //Red Chao gets hungry faster
-    RED,
-
-    //Green Chao gets sick faster (health depletes quicker)
-    GREEN
+    /**
+     * Returns the string representation used in resource file names.
+     * Returns the enum name as-is (e.g., "DARK").
+     */
+    public String getResourceName() {
+        // Return the enum name directly
+        return name();
+    }
 }
