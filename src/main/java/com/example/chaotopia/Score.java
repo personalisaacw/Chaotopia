@@ -1,8 +1,5 @@
-<<<<<<< src/main/java/com/example/chaotopia/Score.java
 package com.example.chaotopia;
 
-=======
->>>>>>> src/main/java/com/example/chaotopia/Score.java
 /**
  * An object measuring the player's care for the Chao.
  * <br><br>
@@ -23,7 +20,6 @@ public class Score {
     /**
      * Constructor method that creates a score.
      * @param score The initial score.
-     * @param chao The Chao associated with this score.
      */
     public Score(int score) {
         this.score = score;
