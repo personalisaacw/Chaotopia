@@ -66,12 +66,12 @@ public class Status {
     }
 
     /**
-     * Sets the sleep value, ensuring it stays within valid range.
+     * Adjusts the sleep value, ensuring it stays within valid range.
      *
-     * @param sleep the new sleep value
+     * @param sleep the value by which to increment sleep
      */
-    public void setSleep(int sleep) {
-        this.sleep = validateStat(sleep);
+    public void adjustSleep(int sleep) {
+        this.sleep = validateStat(this.sleep + sleep);
     }
 
     /**
@@ -84,12 +84,12 @@ public class Status {
     }
 
     /**
-     * Sets the health value, ensuring it stays within valid range.
+     * Adjusts the health value, ensuring it stays within valid range.
      *
-     * @param health the new health value
+     * @param health the value by which to increment health
      */
-    public void setHealth(int health) {
-        this.health = validateStat(health);
+    public void adjustHealth(int health) {
+        this.health = validateStat(this.health + health);
     }
 
     /**
@@ -102,12 +102,12 @@ public class Status {
     }
 
     /**
-     * Sets the happiness value, ensuring it stays within valid range.
+     * Adjusts the happiness value, ensuring it stays within valid range.
      *
-     * @param happiness the new happiness value
+     * @param happiness the value by which to increment happiness
      */
-    public void setHappiness(int happiness) {
-        this.happiness = validateStat(happiness);
+    public void adjustHappiness(int happiness) {
+        this.happiness = validateStat(this.happiness + happiness);
     }
 
     /**
@@ -120,12 +120,12 @@ public class Status {
     }
 
     /**
-     * Sets the fullness value, ensuring it stays within valid range.
+     * Adjusts the fullness value, ensuring it stays within valid range.
      *
-     * @param fullness the new fullness value
+     * @param fullness the value by which to increment fullness
      */
-    public void setFullness(int fullness) {
-        this.fullness = validateStat(fullness);
+    public void adjustFullness(int fullness) {
+        this.fullness = validateStat(this.fullness + fullness);
     }
 
     /**
