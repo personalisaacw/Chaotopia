@@ -5,21 +5,6 @@ package com.example.chaotopia;
  * and status attributes. A Chao can evolve based on its alignment value.
  */
 public class Chao {
-    /**
-     * Defines the different types a Chao can have.
-     * The type may change through evolution based on alignment.
-     */
-    public enum ChaoType {
-        HERO, DARK, BLUE, RED, GREEN
-    }
-
-    /**
-     * Defines the different states a Chao can be in at any given time.
-     */
-    public enum State {
-        IDLE, SLEEPING, HAPPY, UPSET
-    }
-
     private int alignment;
     private String name;
     private ChaoType type;
@@ -130,5 +115,4 @@ public class Chao {
         }
     }
 
-    //missing animate method
 }
