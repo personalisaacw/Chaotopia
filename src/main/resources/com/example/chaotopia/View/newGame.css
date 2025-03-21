@@ -1,11 +1,15 @@
 .button {
     -fx-background-image: url("textBackground.png");
     -fx-background-repeat: no-repeat;
-    -fx-background-size: cover;
+    -fx-background-size: contain;
     -fx-background-position: center center;
     -fx-text-fill: black; /* Optional: text color */
     -fx-font-weight: bold; /* Optional: bold font */
     -fx-font-family: "Upheaval TT (BRK)";
+    -fx-alignment: center;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;  /* removes default gray */
+    -fx-effect: null;
 }
 
 .label {
@@ -16,6 +20,7 @@
     -fx-text-fill: black; /* Optional: text color */
     -fx-font-weight: bold; /* Optional: bold font */
     -fx-font-family: "Upheaval TT (BRK)";
+    -fx-alignment: center;
 }
 
 .MainMenu {
