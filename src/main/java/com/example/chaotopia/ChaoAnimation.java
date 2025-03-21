@@ -54,6 +54,9 @@ public class ChaoAnimation {
 
         // Initialize the timeline with the appropriate frame update logic
         initializeTimeline();
+
+        //Apply scaling for Hero and Dark Chao
+        applyChaoTypeScaling();
     }
 
     /**
@@ -73,6 +76,9 @@ public class ChaoAnimation {
 
         // Initialize the timeline with the appropriate frame update logic
         initializeTimeline();
+
+        //Apply scaling for Hero and Dark Chao
+        applyChaoTypeScaling();
     }
 
     /**
@@ -197,6 +203,9 @@ public class ChaoAnimation {
         this.chaoType = chaoType;
         this.currentFrame = 1;
 
+        //Apply scaling to Hero and Dark Chao
+        applyChaoTypeScaling();
+
         // Restart the animation
         timeline.play();
     }
@@ -237,4 +246,29 @@ public class ChaoAnimation {
     public ChaoType getChaoType() {
         return chaoType;
     }
+
+    /**
+     * Applies scaling to the ImageView based on the Chao type.
+     * Different Chao types can have different scaling factors.
+     */
+    private void applyChaoTypeScaling() {
+        // Apply scaling based on Chao type
+        switch (chaoType) {
+            case DARK:
+            case HERO:
+                // Scale up by 75%
+                characterView.setScaleX(1.60);
+                characterView.setScaleY(1.60);
+                break;
+            case RED:
+            case GREEN:
+            case BLUE:
+            default:
+                // Normal scale
+                characterView.setScaleX(1.0);
+                characterView.setScaleY(1.0);
+                break;
+        }
+    }
+
 }

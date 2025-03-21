@@ -9,7 +9,7 @@ public enum AnimationState {
     SIT(2),
     SLEEPING(2),
     HAPPY(2),
-    ANGRY(3),
+    ANGRY(2),
     HUNGRY(4),
     DEAD(2);
 
