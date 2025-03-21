@@ -1,5 +1,6 @@
 package com.example.chaotopia;
 
+import com.example.chaotopia.Model.*;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;

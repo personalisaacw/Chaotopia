@@ -1,4 +1,4 @@
-package com.example.chaotopia;
+package com.example.chaotopia.Model;
 
 /**
  * The ItemType enum defines the types of items that can exist in the inventory.

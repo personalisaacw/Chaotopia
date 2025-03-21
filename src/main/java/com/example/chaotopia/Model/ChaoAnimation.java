@@ -1,4 +1,4 @@
-package com.example.chaotopia;
+package com.example.chaotopia.Model;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
