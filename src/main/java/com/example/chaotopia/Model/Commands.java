@@ -45,7 +45,7 @@ public final class Commands {
     }
 
     /**
-     * Constructor for the com.example.chaotopia.Commands class.
+     * Constructor for the com.example.chaotopia.Model.Commands class.
      * <p>
      * Cannot be called due to the class being static.
      */
