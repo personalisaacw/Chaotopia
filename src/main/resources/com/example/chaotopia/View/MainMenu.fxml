@@ -5,8 +5,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chaotopia.Controller.MainMenuController">
-      <Button layoutX="261.0" layoutY="154.0" mnemonicParsing="false" onAction="#newGame" text="New Game" />
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="MainMenu" stylesheets="@newGame.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chaotopia.Controller.MainMenuController">
+      <Button layoutX="238.0" layoutY="143.0" mnemonicParsing="false" onAction="#newGame" prefHeight="35.0" prefWidth="123.0" stylesheets="@newGame.css" text="New Game" textFill="#000000c4">
+      <font>
+         <Font name="Upheaval TT -BRK-" size="13.0" />
+      </font></Button>
       <Button layoutX="261.0" layoutY="187.0" mnemonicParsing="false" onAction="#loadGame" text="Load Game" />
       <Button layoutX="271.0" layoutY="221.0" mnemonicParsing="false" onAction="#tutorial" text="Tutorial" />
       <Button layoutX="245.0" layoutY="257.0" mnemonicParsing="false" onAction="#parentalControls" text="Parental Controls" />

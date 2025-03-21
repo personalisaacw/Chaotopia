@@ -1,0 +1,27 @@
+.button {
+    -fx-background-image: url("textBackground.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-text-fill: black; /* Optional: text color */
+    -fx-font-weight: bold; /* Optional: bold font */
+    -fx-font-family: "Upheaval TT (BRK)";
+}
+
+.label {
+    -fx-background-image: url("textBackground.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-text-fill: black; /* Optional: text color */
+    -fx-font-weight: bold; /* Optional: bold font */
+    -fx-font-family: "Upheaval TT (BRK)";
+}
+
+.MainMenu {
+    -fx-background-image: url("mainMenu.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover; /* stretches to fill the area */
+    -fx-background-position: center center;
+}
+
