@@ -23,10 +23,57 @@
     -fx-alignment: center;
 }
 
+.text {
+    -fx-font-family: "Upheaval TT (BRK)";
+}
+
+.text-field {
+    -fx-background-color: rgb(255, 255, 255);;
+
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 0; /* Optional: remove inner spacing */
+}
+
 .MainMenu {
     -fx-background-image: url("mainMenu.png");
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover; /* stretches to fill the area */
     -fx-background-position: center center;
+}
+.ParentalControls {
+    -fx-background-image: url("mainMenu.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover; /* stretches to fill the area */
+    -fx-background-position: center center;
+
+}
+
+Pane {
+    -fx-background-color: rgba(194, 107, 78, 0.59);  /* or any color you want */
+}
+
+.toggle-button {
+    -fx-background-color: #ccc;
+    -fx-text-fill: transparent;
+    -fx-background-radius: 100%;       /* make it fully round */
+    -fx-border-radius: 100%;
+    -fx-border-color: #999;
+    -fx-border-width: 2;
+    -fx-padding: 0;                    /* remove default padding */
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(two-pass-box, rgba(0,0,0,0.2), 4, 0, 0, 1);
+
+
+}
+
+.toggle-button:selected {
+    -fx-background-color: #000000;          /* ON state: green */
+
+
+}
+
+.toggle-button:armed {
+    -fx-background-color: derive(#000000, -20%); /* click/press state */
 }
 
