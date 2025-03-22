@@ -18,6 +18,8 @@ import java.util.Stack;
 public class BaseController {
     private static Stack<Scene> sceneStack = new Stack<>(); // Static stack to track scenes
 
+    //todo: create a "back to main menu function" that'll pop scenes until you reach main menu
+
     /**
      * Handles the action for the back button. This method pops the previous scene from the
      * navigation stack and sets it as the current scene, effectively navigating the user back

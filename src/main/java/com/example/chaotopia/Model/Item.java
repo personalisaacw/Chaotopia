@@ -57,28 +57,28 @@ public class Item {
             this.itemType = ItemType.GIFT;
             this.description = "This gift item boosts your pet's happiness by 10 points.";
             this.flavorText = "Blow the trumpet, and watch your pet groove to the rhythm of joy!";
-            this.effectValue = 10;
+            this.effectValue = 10; //will be used to give 10 happiness
         }
         else if (name.equals("Duck")) {
             this.name = "Duck";
             this.itemType = ItemType.GIFT;
             this.description = "This gift item boosts your pet's happiness by 20 points.";
             this.flavorText = "Quack! The duck's cheerful waddling always lifts the spirits. Your pet's happiness just went up a notch!";
-            this.effectValue = 20;
+            this.effectValue = 20; //will be used to give 20 happiness
         }
         else if (name.equals("Tv")) {
             this.name = "T.V.";
             this.itemType = ItemType.GIFT;
             this.description = "This gift item boosts your pet's happiness by 30 points.";
             this.flavorText = "Binge-watch your pet's favorite shows! Hours of entertainment and pure happiness!";
-            this.effectValue = 30;
+            this.effectValue = 30; //will be used to give 30 happiness
         }
         else if (name.equals("Green Fruit")) {
             this.name = "Green Fruit";
             this.itemType = ItemType.FOOD;
             this.description = "This food item fills your pet's stomach by 30 points. It may also have special effects when fed to a green Chao.";
             this.flavorText = "Fresh from the garden! Sweet, tangy, and perfect for keeping your pet full and happy!";
-            this.effectValue = 30;
+            this.effectValue = 30; //will be used to give 30 fullness
         }
         else if (name.equals("Blue Fruit")) {
             this.name = "Blue Fruit";
