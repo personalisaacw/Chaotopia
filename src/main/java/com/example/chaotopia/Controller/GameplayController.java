@@ -1,6 +1,6 @@
 package com.example.chaotopia.Controller;
-import com.example.chaotopia.Model.Chao;
-import com.example.chaotopia.Model.Commands;
+import com.example.chaotopia.Chao;
+import com.example.chaotopia.Commands;
 
 public class GameplayController extends BaseController {
     /* Variables that the loadGame method will load
