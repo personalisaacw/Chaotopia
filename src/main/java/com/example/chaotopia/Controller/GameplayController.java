@@ -1,6 +1,6 @@
 package com.example.chaotopia.Controller;
-import com.example.chaotopia.Model.Chao;
-import com.example.chaotopia.Model.Commands;
+import com.example.chaotopia.Chao;
+import com.example.chaotopia.Commands;
 
 public class GameplayController extends BaseController {
     /* Variables that the loadGame method will load
@@ -21,7 +21,6 @@ public class GameplayController extends BaseController {
     //sleep function
     public void sleepChao() {
         Commands.sleep(chao);
-        //todo: add keyboard shortcuts
         //todo: need to update the animation of the chao
     }
 
