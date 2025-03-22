@@ -1,15 +1,16 @@
 package com.example.chaotopia.Controller;
 import com.example.chaotopia.Model.Chao;
 import com.example.chaotopia.Model.Commands;
-import com.example.chaotopia.Model.Inventory;
-import com.example.chaotopia.Model.Item;
 
 public class GameplayController extends BaseController {
+    /* Variables that the loadGame method will load
+    Chao object
+    //todo: create inventory class
+     */
 
     private Chao chao;
-    private Inventory inventory;
 
-    //todo: loadGame function (calls load game class)
+    //loadGame (calls load game class)
 
 
     //play function
@@ -20,7 +21,6 @@ public class GameplayController extends BaseController {
     //sleep function
     public void sleepChao() {
         Commands.sleep(chao);
-        //todo: add keyboard shortcuts
         //todo: need to update the animation of the chao
     }
 
@@ -50,106 +50,49 @@ public class GameplayController extends BaseController {
 
     //gifts a trumpet
     public void giftTrumpet() {
-        //if item exists, give the item and remove it from inventory
-        String itemName = "Trumpet";
-        if (inventory.getItemCount(itemName) > 0) {
-            Commands.give(chao, new Item(itemName));
-            inventory.removeItem(itemName);
-            //todo: play sound effect
-        }
-        //else:
-        //todo: display "no items available"/play sound effect
+        //todo: remove item from inventory
     }
 
     //gifts a duck
     public void giftDuck() {
-        //if item exists, give the item and remove it from inventory
-        String itemName = "Duck";
-        if (inventory.getItemCount(itemName) > 0) {
-            Commands.give(chao, new Item(itemName));
-            inventory.removeItem(itemName);
-            //todo: play sound effect
-        }
-        //else:
-        //todo: display "no items available"/play sound effect
+        //todo: remove item from inventory
     }
 
     //gifts a tv
     public void giftTV() {
-        //if item exists, give the item and remove it from inventory
-        String itemName = "T.V.";
-        if (inventory.getItemCount(itemName) > 0) {
-            Commands.give(chao, new Item(itemName));
-            inventory.removeItem(itemName);
-            //todo: play sound effect
-        }
-        //else:
-        //todo: display "no items available"/play sound effect
+        //todo: remove item from inventory
     }
 
     public void feedRedFruit() {
-        //if item exists, feed the fruit and remove it from inventory
-        String itemName = "Red Fruit";
-        if (inventory.getItemCount(itemName) > 0) {
-            Commands.feed(chao, new Item(itemName));
-            inventory.removeItem(itemName);
-            //todo: play sound effect
-            //todo: play the fruit eating animation
-        }
-        //else:
-        //todo: display "no items available"/play sound effect
+        //todo: feed the fruit
+        //todo: play the fruit eating animation
+        //todo: remove item from inventory
     }
 
     public void feedBlueFruit() {
-        //if item exists, feed the fruit and remove it from inventory
-        String itemName = "Blue Fruit";
-        if (inventory.getItemCount(itemName) > 0) {
-            Commands.feed(chao, new Item(itemName));
-            inventory.removeItem(itemName);
-            //todo: play sound effect
-            //todo: play the fruit eating animation
-        }
-        //else:
-        //todo: display "no items available"/play sound effect
+        //todo: feed the fruit
+        //todo: play the fruit eating animation
+        //todo: remove item from inventory
     }
 
     public void feedGreenFruit() {
-        //if item exists, feed the fruit and remove it from inventory
-        String itemName = "Green Fruit";
-        if (inventory.getItemCount(itemName) > 0) {
-            Commands.feed(chao, new Item(itemName));
-            inventory.removeItem(itemName);
-            //todo: play sound effect
-            //todo: play the fruit eating animation
-        }
-        //else:
-        //todo: display "no items available"/play sound effect
+        //todo: feed the fruit
+        //todo: play the fruit eating animation
+        //todo: remove item from inventory
     }
 
     public void feedHeroFruit() {
-        //if item exists, feed the fruit and remove it from inventory
-        String itemName = "Hero Fruit";
-        if (inventory.getItemCount(itemName) > 0) {
-            Commands.feedSpecialFruit(chao, new Item(itemName));
-            inventory.removeItem(itemName);
-            //todo: play sound effect
-            //todo: play the fruit eating animation
-        }
-        //else:
-        //todo: display "no items available"/play sound effect
+        //todo: feed the fruit
+        //todo: change alignment value
+        //todo: play the fruit eating animation
+        //todo: remove item from inventory
     }
 
     public void feedDarkFruit() {
-        //if item exists, feed the fruit and remove it from inventory
-        String itemName = "Dark Fruit";
-        if (inventory.getItemCount(itemName) > 0) {
-            Commands.feedSpecialFruit(chao, new Item(itemName));
-            inventory.removeItem(itemName);
-            //todo: play sound effect
-            //todo: play the fruit eating animation
-        }
-        //else:
-        //todo: display "no items available"/play sound effect
+        //todo: feed the fruit
+        //todo: change alignment value
+        //todo: play the fruit eating animation
+        //todo: remove item from inventory
     }
 
     //todo: save button (saves all data to csv)
