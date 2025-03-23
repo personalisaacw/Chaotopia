@@ -1,5 +1,9 @@
 package com.example.chaotopia;
 
+import com.example.chaotopia.Model.Chao;
+import com.example.chaotopia.Model.ChaoType;
+import com.example.chaotopia.Model.State;
+import com.example.chaotopia.Model.Status;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
