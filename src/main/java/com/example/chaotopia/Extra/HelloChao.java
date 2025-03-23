@@ -1,9 +1,4 @@
-<<<<<<<< HEAD:src/main/java/com/example/chaotopia/Extra/HelloChao.java
 package com.example.chaotopia.Extra;
-========
-package com.example.chaotopia.Model;
->>>>>>>> 196c8d0 (added FruitAnimation.java, FruitType.java, FruitAnimation.fxml, and some testing classes FruitAnimationController.java, FruitAnimationTest.java. I also changed the file structure.):src/main/java/com/example/chaotopia/Model/HelloApplication.java
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
