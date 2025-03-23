@@ -1,0 +1,155 @@
+.gamePlay {
+    -fx-background-image: url("mainMenu.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover; /* stretches to fill the area */
+    -fx-background-position: center center;
+}
+
+.playButton {
+    -fx-background-image: url("play.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center center;
+    -fx-text-fill: black; /* Optional: text color */
+    -fx-font-weight: bold; /* Optional: bold font */
+    -fx-font-family: "Upheaval TT (BRK)";
+    -fx-alignment: center;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;  /* removes default gray */
+    -fx-effect: null;
+}
+
+.sleep {
+    -fx-background-image: url("sleep.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center center;
+    -fx-text-fill: black; /* Optional: text color */
+    -fx-font-weight: bold; /* Optional: bold font */
+    -fx-font-family: "Upheaval TT (BRK)";
+    -fx-alignment: center;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;  /* removes default gray */
+    -fx-effect: null;
+}
+
+.exercise {
+    -fx-background-image: url("exercise.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center center;
+    -fx-text-fill: black; /* Optional: text color */
+    -fx-font-weight: bold; /* Optional: bold font */
+    -fx-font-family: "Upheaval TT (BRK)";
+    -fx-alignment: center;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;  /* removes default gray */
+    -fx-effect: null;
+}
+
+.vet {
+    -fx-background-image: url("vet.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center center;
+    -fx-text-fill: black; /* Optional: text color */
+    -fx-font-weight: bold; /* Optional: bold font */
+    -fx-font-family: "Upheaval TT (BRK)";
+    -fx-alignment: center;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;  /* removes default gray */
+    -fx-effect: null;
+}
+
+.trumpet {
+    -fx-background-image: url("trumpet.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center center;
+    -fx-text-fill: black; /* Optional: text color */
+    -fx-font-weight: bold; /* Optional: bold font */
+    -fx-font-family: "Upheaval TT (BRK)";
+    -fx-alignment: center;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;  /* removes default gray */
+    -fx-effect: null;
+}
+
+.duck {
+    -fx-background-image: url("duck.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center center;
+    -fx-text-fill: black; /* Optional: text color */
+    -fx-font-weight: bold; /* Optional: bold font */
+    -fx-font-family: "Upheaval TT (BRK)";
+    -fx-alignment: center;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;  /* removes default gray */
+    -fx-effect: null;
+}
+
+.tv {
+    -fx-background-image: url("tv.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center center;
+    -fx-text-fill: black; /* Optional: text color */
+    -fx-font-weight: bold; /* Optional: bold font */
+    -fx-font-family: "Upheaval TT (BRK)";
+    -fx-alignment: center;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;  /* removes default gray */
+    -fx-effect: null;
+}
+
+.redFruit {
+    -fx-background-image: url("red fruit.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center center;
+    -fx-text-fill: black; /* Optional: text color */
+    -fx-font-weight: bold; /* Optional: bold font */
+    -fx-font-family: "Upheaval TT (BRK)";
+    -fx-alignment: center;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;  /* removes default gray */
+    -fx-effect: null;
+}
+
+.smallButton {
+    -fx-background-image: url("smallButton.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center center;
+    -fx-text-fill: black; /* Optional: text color */
+    -fx-font-weight: bold; /* Optional: bold font */
+    -fx-font-family: "Upheaval TT (BRK)";
+    -fx-alignment: center;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;  /* removes default gray */
+    -fx-effect: null;
+}
+
+.label {
+    -fx-background-image: url("textBackground.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-text-fill: black; /* Optional: text color */
+    -fx-font-weight: bold; /* Optional: bold font */
+    -fx-font-family: "Upheaval TT (BRK)";
+    -fx-alignment: center;
+}
+
+.inventoryMenus {
+    -fx-background-image: url("textBackground.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-text-fill: black; /* Optional: text color */
+    -fx-font-weight: bold; /* Optional: bold font */
+    -fx-font-family: "Upheaval TT (BRK)";
+    -fx-alignment: center;
+    -fx-rotate: 90;
+}
