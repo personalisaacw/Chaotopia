@@ -1,5 +1,6 @@
 package com.example.chaotopia;
 
+import com.example.chaotopia.Model.Inventory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
