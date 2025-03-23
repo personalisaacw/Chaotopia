@@ -1,6 +1,5 @@
 package com.example.chaotopia;
 
-import com.example.chaotopia.Model.*;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,10 +15,10 @@ class CommandsTest {
     @Test
     void testSleep() {
         Status status = new Status(90, 90, 90, 90);
-        Chao chao = new Chao(0, "Bingy", ChaoType.RED, State.NORMAL,
+        Chao chao = new Chao(0, "Bingy", Chao.ChaoType.RED, Chao.State.IDLE,
                 status);
         Commands.sleep(chao);
-        assertSame(State.SLEEPING, chao.getState());
+        assertSame(Chao.State.SLEEPING, chao.getState());
     }
 
     /**
@@ -30,14 +29,14 @@ class CommandsTest {
     void testIsNotAngryAndFeed() {
         /* Test the isNotAngry method. */
         Status status = new Status(90, 90, 60, 90);
-        Chao chao = new Chao(0, "Bingy", ChaoType.RED, State.ANGRY,
+        Chao chao = new Chao(0, "Bingy", Chao.ChaoType.RED, Chao.State.UPSET,
                 status);
         Item item = new Item("Red Fruit");
         Commands.feed(chao, item);
         assertSame(60, chao.getStatus().getFullness());
 
         /* Now test the feed command. */
-        chao.setState(State.NORMAL);
+        chao.setState(Chao.State.IDLE);
         Commands.feed(chao, item);
         assertSame(90, chao.getStatus().getFullness());
     }
@@ -50,7 +49,7 @@ class CommandsTest {
     void testGiveAndIsNotAngry() {
         /* Ensure isNotAngry works for a happiness command. */
         Status status = new Status(85, 90, 90, 90);
-        Chao chao = new Chao(0, "Bingy", ChaoType.RED, State.ANGRY,
+        Chao chao = new Chao(0, "Bingy", Chao.ChaoType.RED, Chao.State.UPSET,
                 status);
         Item item = new Item("Trumpet");
         Commands.give(chao, item);
@@ -65,7 +64,7 @@ class CommandsTest {
     void testVetAndCooldown() {
         /* Check that the vet command works. */
         Status status = new Status(90, 25, 90, 90);
-        Chao chao = new Chao(0, "Bingy", ChaoType.RED, State.NORMAL,
+        Chao chao = new Chao(0, "Bingy", Chao.ChaoType.RED, Chao.State.IDLE,
                 status);
         Commands.vet(chao);
         assertSame(75, chao.getStatus().getHealth());
@@ -83,19 +82,19 @@ class CommandsTest {
     void testPlayAndIsConscious() {
         /* Check that consciousCheck command works for death. */
         Status status = new Status(50, 0, 90, 90);
-        Chao chao = new Chao(0, "Bingy", ChaoType.RED, State.NORMAL,
+        Chao chao = new Chao(0, "Bingy", Chao.ChaoType.RED, Chao.State.IDLE,
                 status);
         Commands.play(chao);
         assertSame(50, chao.getStatus().getHappiness());
 
         /* Now check for sleep compatibility. */
         chao.getStatus().adjustHealth(100);
-        chao.setState(State.SLEEPING);
+        chao.setState(Chao.State.SLEEPING);
         Commands.play(chao);
         assertSame(50, chao.getStatus().getHappiness());
 
         /* Now test the play command. */
-        chao.setState(State.NORMAL);
+        chao.setState(Chao.State.IDLE);
         Commands.play(chao);
         assertSame(75, chao.getStatus().getHappiness());
     }
@@ -107,7 +106,7 @@ class CommandsTest {
     void testExercise() {
         /* Test the exercise command once. */
         Status status = new Status(90, 65, 90, 90);
-        Chao chao = new Chao(0, "Bingy", ChaoType.RED, State.NORMAL,
+        Chao chao = new Chao(0, "Bingy", Chao.ChaoType.RED, Chao.State.IDLE,
                 status);
         Commands.exercise(chao);
         assertSame(90, chao.getStatus().getHealth());
@@ -128,7 +127,7 @@ class CommandsTest {
     void testPet() {
         /* Test the pet command. */
         Status status = new Status(90, 65, 90, 90);
-        Chao chao = new Chao(0, "Bingy", ChaoType.RED, State.NORMAL,
+        Chao chao = new Chao(0, "Bingy", Chao.ChaoType.RED, Chao.State.IDLE,
                 status);
         Commands.pet(chao);
         assertSame(1, chao.getAlignment());
@@ -141,7 +140,7 @@ class CommandsTest {
     void testBonk() {
         /* Test the bonk command. */
         Status status = new Status(90, 65, 90, 90);
-        Chao chao = new Chao(0, "Bingy", ChaoType.RED, State.NORMAL,
+        Chao chao = new Chao(0, "Bingy", Chao.ChaoType.RED, Chao.State.IDLE,
                 status);
         Commands.bonk(chao);
         assertSame(-1, chao.getAlignment());
