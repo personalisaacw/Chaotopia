@@ -76,6 +76,19 @@ public final class Commands {
     }
 
     /**
+     * Feed command that changes the Chao's alignment value stat based on
+     * the passed special fruit item.
+     * @param chao the Chao being commanded
+     * @param specialFruit the special fruit item being consumed
+     */
+    public static void feedSpecialFruit(Chao chao, Item specialFruit) {
+        if (isConscious(chao) != 0) return; // If Chao is not conscious...
+        if (isNotAngry(chao) != 0) return; // If Chao is angry...
+        chao.getStatus().adjustFullness(specialFruit.getEffectValue());
+        chao.adjustAlignment(specialFruit.getAlignmentChange());
+    }
+
+    /**
      * Gift command that increments the Chao's happiness stat based on
      * the passed gift item.
      * @param chao the Chao being commanded
