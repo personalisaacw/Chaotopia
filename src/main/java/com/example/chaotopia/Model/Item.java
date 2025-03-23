@@ -1,4 +1,4 @@
-package com.example.chaotopia;
+package com.example.chaotopia.Model;
 
 /**
  * Represents an item in the game with properties like name, item type, description,

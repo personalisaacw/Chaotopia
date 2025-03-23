@@ -1,4 +1,4 @@
-package com.example.chaotopia;
+package com.example.chaotopia.Model;
 
 import java.util.HashMap;
 import java.util.Map;

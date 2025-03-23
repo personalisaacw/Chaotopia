@@ -1,4 +1,4 @@
-package com.example.chaotopia;
+package com.example.chaotopia.Model;
 
 /**
  * The Chao class represents a virtual pet character with different types, states,
