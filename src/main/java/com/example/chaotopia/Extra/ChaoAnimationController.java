@@ -1,5 +1,9 @@
-package com.example.chaotopia;
+package com.example.chaotopia.Extra;
 
+import com.example.chaotopia.AnimationState;
+import com.example.chaotopia.ChaoAnimation;
+import com.example.chaotopia.ChaoType;
+import com.example.chaotopia.State;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,7 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class HelloController {
+public class ChaoAnimationController {
 
     @FXML
     private ImageView characterImageView;
