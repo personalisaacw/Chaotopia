@@ -57,7 +57,7 @@ public class Item {
             this.itemType = ItemType.GIFT;
             this.description = "This gift item boosts your pet's happiness by 10 points.";
             this.flavorText = "Blow the trumpet, and watch your pet groove to the rhythm of joy!";
-            this.effectValue = 10; //will be used to give 10 happiness
+            this.effectValue = 10;
         }
         else if (name.equals("Duck")) {
             this.name = "Duck";
@@ -66,7 +66,7 @@ public class Item {
             this.flavorText = "Quack! The duck's cheerful waddling always lifts the spirits. Your pet's happiness just went up a notch!";
             this.effectValue = 20; //will be used to give 20 happiness
         }
-        else if (name.equals("T.V.")) {
+        else if (name.equals("Tv")) {
             this.name = "T.V.";
             this.itemType = ItemType.GIFT;
             this.description = "This gift item boosts your pet's happiness by 30 points.";
