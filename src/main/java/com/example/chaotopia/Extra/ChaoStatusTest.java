@@ -29,7 +29,7 @@ public class ChaoStatusTest extends Application {
 
         // Create a test Chao
         Status initialStatus = new Status(100, 100, 100, 100);
-        Chao testChao = new Chao(0, "Sonic Jr.", ChaoType.DARK, State.NORMAL, initialStatus);
+        Chao testChao = new Chao(0, "Sonic Jr.", ChaoType.BLUE, State.NORMAL, initialStatus);
 
         // Set the Chao in the controller
         controller.setChao(testChao);

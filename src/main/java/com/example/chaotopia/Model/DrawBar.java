@@ -1,12 +1,9 @@
 package com.example.chaotopia.Model;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.util.Duration;
 
 /**
  * The DrawBar class represents a visual status bar that can display
@@ -21,11 +18,6 @@ public class DrawBar extends StackPane {
     private int value;
     private String label;
     private Color barColor;
-
-    // For warning effects
-    private Timeline warningTimeline;
-    private boolean isFlashing = false;
-    private boolean flashState = false;
 
     /**
      * Constructor to create a status bar with specific dimensions and color.
@@ -80,88 +72,13 @@ public class DrawBar extends StackPane {
         // Calculate the fill width based on the current value
         double fillWidth = (width - 4) * value / 100.0;
 
-        // Determine if we should show a warning (below 25%)
-        boolean showWarning = value < 25;
-
-        // Start or stop warning animation
-        if (showWarning && !isFlashing) {
-            startWarningAnimation();
-        } else if (!showWarning && isFlashing) {
-            stopWarningAnimation();
-        }
-
-        // Draw the fill with appropriate color
-        if (showWarning) {
-            // Use warning color when below 25%
-            if (flashState) {
-                gc.setFill(Color.RED);
-            } else {
-                gc.setFill(Color.ORANGE);
-            }
-        } else {
-            gc.setFill(barColor);
-        }
-
+        // Draw the fill
+        gc.setFill(barColor);
         gc.fillRect(2, 2, fillWidth, height - 4);
 
-        // Draw the label with appropriate color
-        if (showWarning) {
-            if (flashState) {
-                gc.setFill(Color.RED);
-            } else {
-                gc.setFill(Color.BLACK);
-            }
-        } else {
-            gc.setFill(Color.BLACK);
-        }
-
+        // Draw the label
+        gc.setFill(Color.BLACK);
         gc.fillText(label + ": " + value, 5, height / 2 + 5);
-    }
-
-    /**
-     * Starts a flashing warning animation for low stats.
-     */
-    private void startWarningAnimation() {
-        isFlashing = true;
-
-        // Stop any existing timeline
-        if (warningTimeline != null) {
-            warningTimeline.stop();
-        }
-
-        // Create a new timeline that toggles flash state every 500ms
-        warningTimeline = new Timeline(
-                new KeyFrame(Duration.millis(500), e -> {
-                    flashState = !flashState;
-                    draw();
-                })
-        );
-        warningTimeline.setCycleCount(Timeline.INDEFINITE);
-        warningTimeline.play();
-    }
-
-    /**
-     * Stops the warning animation.
-     */
-    private void stopWarningAnimation() {
-        isFlashing = false;
-
-        if (warningTimeline != null) {
-            warningTimeline.stop();
-            warningTimeline = null;
-        }
-
-        flashState = false;
-    }
-
-    /**
-     * Stops any active animations when the component is no longer needed.
-     */
-    public void dispose() {
-        if (warningTimeline != null) {
-            warningTimeline.stop();
-            warningTimeline = null;
-        }
     }
 
     /**
