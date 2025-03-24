@@ -45,7 +45,7 @@ public final class Commands {
     }
 
     /**
-     * Constructor for the com.example.chaotopia.Model.Commands class.
+     * Constructor for the com.example.chaotopia.Commands class.
      * <p>
      * Cannot be called due to the class being static.
      */
@@ -60,7 +60,7 @@ public final class Commands {
         if (isConscious(chao) != 0) return; // If Chao is not conscious...
         if (isNotAngry(chao) != 0) return; // If Chao is angry...
         if (chao.getStatus().getSleep() >= 100) return;
-        chao.setState(Chao.State.SLEEPING);
+        chao.setState(State.SLEEPING);
     }
 
     /**
@@ -146,7 +146,7 @@ public final class Commands {
      * @return 0 if the Chao is conscious, or 1 if they are not
      */
     private static int isConscious(Chao chao) {
-        if (chao.getState() == Chao.State.SLEEPING
+        if (chao.getState() == State.SLEEPING
                 || chao.getStatus().isDead()) {
             System.out.println(chao.getName() + " is unresponsive!");
             return 1;
@@ -159,7 +159,7 @@ public final class Commands {
      * @return 0 if the Chao is not angry, or 1 if they are
      */
     private static int isNotAngry(Chao chao) {
-        if (chao.getState() == Chao.State.UPSET) {
+        if (chao.getState() == State.ANGRY) {
             System.out.println(chao.getName() + " is being uncooperative!");
             return 1;
         } else return 0;

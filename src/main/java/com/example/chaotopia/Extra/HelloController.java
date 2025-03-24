@@ -1,4 +1,4 @@
-package com.example.chaotopia.Model;
+package com.example.chaotopia.Extra;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

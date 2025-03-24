@@ -1,4 +1,4 @@
-package com.example.chaotopia;
+package com.example.chaotopia.Model;
 
 /**
  * Defines the different animation states a Chao can have.
@@ -8,9 +8,9 @@ public enum AnimationState {
     NORMAL(4),
     SIT(2),
     SLEEPING(2),
-    HAPPY(4),
-    ANGRY(3),
-    HUNGRY(3),
+    HAPPY(2),
+    ANGRY(2),
+    HUNGRY(4),
     DEAD(2);
 
     private final int frameCount;
@@ -46,24 +46,12 @@ public enum AnimationState {
      * @return The corresponding animation state
      */
     public static AnimationState fromState(State state) {
-        // Direct mapping from State to AnimationState
-        switch(state) {
-            case NORMAL:
-                return NORMAL;
-            case SIT:
-                return SIT;
-            case SLEEPING:
-                return SLEEPING;
-            case HAPPY:
-                return HAPPY;
-            case ANGRY:
-                return ANGRY;
-            case HUNGRY:
-                return HUNGRY;
-            case DEAD:
-                return DEAD;
-            default:
-                return NORMAL; // Default to NORMAL if unknown
+        try {
+            // Since State and AnimationState have matching names,
+            // we can directly convert between them
+            return valueOf(state.name());
+        } catch (IllegalArgumentException e) {
+            return NORMAL; // Default to NORMAL if no match is found
         }
     }
 }
