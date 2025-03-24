@@ -30,7 +30,7 @@ class CommandsTest {
     void testIsNotAngryAndFeed() {
         /* Test the isNotAngry method. */
         Status status = new Status(90, 90, 60, 90);
-        Chao chao = new Chao(0, "Bingy", ChaoType.RED, State.HUNGRY,
+        Chao chao = new Chao(0, "Bingy", ChaoType.RED, State.ANGRY,
                 status);
         Item item = new Item("Red Fruit");
         Commands.feed(chao, item);
