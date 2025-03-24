@@ -21,6 +21,7 @@ public class GameplayController extends BaseController {
     //sleep function
     public void sleepChao() {
         Commands.sleep(chao);
+        //todo: add keyboard shortcuts
         //todo: need to update the animation of the chao
     }
 
