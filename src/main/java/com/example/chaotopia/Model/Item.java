@@ -83,16 +83,16 @@ public class Item {
         else if (name.equals("Blue Fruit")) {
             this.name = "Blue Fruit";
             this.itemType = ItemType.FOOD;
-            this.description = "This food item fills your pet's stomach by 30 points. It may also have special effects when fed to a blue Chao.";
+            this.description = "This food item fills your pet's stomach by 40 points. It may also have special effects when fed to a blue Chao.";
             this.flavorText = "A burst of refreshing flavor straight from the blue skies! Your pet will love it!";
-            this.effectValue = 30;
+            this.effectValue = 40;
         }
         else if (name.equals("Red Fruit")) {
             this.name = "Red Fruit";
             this.itemType = ItemType.FOOD;
-            this.description = "This food item fills your pet's stomach by 30 points. It may also have special effects when fed to a red Chao.";
+            this.description = "This food item fills your pet's stomach by 50 points. It may also have special effects when fed to a red Chao.";
             this.flavorText = "Ripe and juicy with a hint of spice! Your pet can't resist this tasty treat!";
-            this.effectValue = 30;
+            this.effectValue = 50;
         }
         else if (name.equals("Dark Fruit")) {
             this.name = "Dark Fruit";
