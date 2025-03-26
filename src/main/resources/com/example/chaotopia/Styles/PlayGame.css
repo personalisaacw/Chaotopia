@@ -1,0 +1,37 @@
+.root {
+    -fx-background-image: url("../Assets/background.png");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.back-button {
+    -fx-background-image: url("../Assets/back-button.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;  /* removes default gray */
+    -fx-background-radius: 0;
+}
+
+@font-face {
+    font-family: "Upheaval";
+    src: url("../Assets/upheavtt.ttf");
+}
+
+.title-label {
+    -fx-background-image: url("../Assets/title.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-text-fill: #272744; /* Optional: text color */
+    -fx-font-weight: bold; /* Optional: bold font */
+    -fx-font-family: "Upheaval";
+    -fx-alignment: center;
+}
+
+.save-slots {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
