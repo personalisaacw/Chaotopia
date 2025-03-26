@@ -1,11 +1,10 @@
 package com.example.chaotopia.Controller;
 
 import com.example.chaotopia.Model.*;
-        import javafx.animation.KeyFrame;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -37,17 +36,17 @@ public class ChaoStatusController implements Initializable {
     private DrawBar healthBar;
     private DrawBar fullnessBar;
     private DrawBar sleepBar;
-    private Timeline tempAnimationTimer;
-    private State previousState = State.NORMAL;
     private ChaoAnimation chaoAnimation;
 
 
     private int score = 0;
     private Timeline statDecayTimeline;
     private boolean isSleeping = false;
+    private State previousState = State.NORMAL;
 
     private Timeline stateMonitorTimeline;
     private Timeline sleepIncreaseTimeline;
+    private Timeline tempAnimationTimer;
 
     /**
      * Initializes the controller with required resources.
@@ -109,6 +108,15 @@ public class ChaoStatusController implements Initializable {
     }
 
     /**
+     * Gets the current Chao.
+     *
+     * @return the current Chao
+     */
+    public Chao getChao() {
+        return this.chao;
+    }
+
+    /**
      * Updates all status bars to reflect the current Chao status.
      */
     public void updateStatusBars() {
@@ -137,9 +145,11 @@ public class ChaoStatusController implements Initializable {
     }
 
     /**
-     * Starts a gradual sleep increase at a steady rate
+     * Starts the sleep increase process when the Chao is sleeping.
      */
-    private void startSleepIncrease() {
+    public void startSleepIncrease() {
+        isSleeping = true;
+
         // Stop any existing sleep timeline
         if (sleepIncreaseTimeline != null) {
             sleepIncreaseTimeline.stop();
@@ -154,6 +164,15 @@ public class ChaoStatusController implements Initializable {
                     } else {
                         // Stop the timeline when sleep is full or chao isn't sleeping
                         sleepIncreaseTimeline.stop();
+
+                        // If sleep is full, wake up
+                        if (chao != null && chao.getStatus().getSleep() >= 100) {
+                            isSleeping = false;
+                            enableAllInteractions(true);
+
+                            // Update state based on current conditions
+                            updateChaoState(true);
+                        }
                     }
                 })
         );
@@ -279,6 +298,59 @@ public class ChaoStatusController implements Initializable {
     }
 
     /**
+     * Updates the Chao animation to the specified state.
+     *
+     * @param state the state to animate
+     */
+    public void updateChaoAnimation(State state) {
+        if (chaoAnimation != null) {
+            chaoAnimation.changeState(state);
+            chaoAnimation.stopAnimation();
+            chaoAnimation.startAnimation();
+        }
+    }
+
+    /**
+     * Updates the Chao type animation.
+     *
+     * @param type the new Chao type
+     */
+    public void updateChaoType(ChaoType type) {
+        if (chaoAnimation != null) {
+            chaoAnimation.changeChaoType(type);
+            chaoAnimation.stopAnimation();
+            chaoAnimation.startAnimation();
+        }
+    }
+
+    /**
+     * Schedules a state change after a delay.
+     *
+     * @param newState the state to change to
+     * @param delayInSeconds the delay in seconds
+     */
+    public void scheduleStateChange(State newState, double delayInSeconds) {
+        // Cancel any existing temporary animation timer
+        if (tempAnimationTimer != null) {
+            tempAnimationTimer.stop();
+        }
+
+        // Schedule state change after delay
+        tempAnimationTimer = new Timeline(
+                new KeyFrame(Duration.seconds(delayInSeconds), e -> {
+                    chao.setState(newState);
+
+                    // Force animation update
+                    chaoAnimation.changeState(newState);
+                    chaoAnimation.stopAnimation();
+                    chaoAnimation.startAnimation();
+                })
+        );
+        tempAnimationTimer.setCycleCount(1);
+        tempAnimationTimer.play();
+    }
+
+    /**
      * Overloaded method for convenience - updates state without forcing
      */
     private void updateChaoState() {
@@ -382,8 +454,10 @@ public class ChaoStatusController implements Initializable {
     /**
      * Shows a temporary happy animation after positive actions.
      * Returns to the previous state after a delay.
+     *
+     * @return true if animation was shown, false otherwise
      */
-    private void showHappyAnimation() {
+    public boolean showHappyAnimation() {
         if (chao != null && chao.getState() != State.DEAD && !isSleeping) {
             // Store current state to return to it later
             previousState = chao.getState();
@@ -417,47 +491,12 @@ public class ChaoStatusController implements Initializable {
             );
             tempAnimationTimer.setCycleCount(1);
             tempAnimationTimer.play();
+            return true;
         }
+        return false;
     }
 
-    /**
-     * Shows the game over screen when the Chao dies.
-     */
-    private void showGameOverScreen() {
-        // Disable the action buttons
-        enableAllInteractions(false);
 
-        // Create a game over overlay
-        gameOverBox = new VBox(10);
-        gameOverBox.setAlignment(javafx.geometry.Pos.CENTER);
-        gameOverBox.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7); -fx-padding: 20px;");
-        gameOverBox.setPrefSize(500, 300);
-
-        Label gameOverLabel = new Label("GAME OVER");
-        gameOverLabel.setStyle("-fx-font-size: 24px; -fx-text-fill: white; -fx-font-weight: bold;");
-
-        Button newGameButton = new Button("New Game");
-        newGameButton.setOnAction(e -> startNewGame());
-
-        Button loadGameButton = new Button("Load Game");
-        loadGameButton.setOnAction(e -> loadGame());
-
-        gameOverBox.getChildren().addAll(gameOverLabel, newGameButton, loadGameButton);
-
-        // Add the game over overlay to the center of the BorderPane
-        if (mainContainer != null) {
-            mainContainer.setCenter(gameOverBox);
-        } else {
-            // Fallback: try to find the main BorderPane
-            Scene scene = statusBarsContainer.getScene();
-            if (scene != null) {
-                BorderPane rootPane = (BorderPane) scene.getRoot();
-                if (rootPane != null) {
-                    rootPane.setCenter(gameOverBox);
-                }
-            }
-        }
-    }
 
     /**
      * Starts a new game.
@@ -517,7 +556,7 @@ public class ChaoStatusController implements Initializable {
      *
      * @param enable true to enable buttons, false to disable them
      */
-    private void enableAllInteractions(boolean enable) {
+    public void enableAllInteractions(boolean enable) {
         // Find all buttons in the scene
         Scene scene = statusBarsContainer.getScene();
         if (scene != null) {
@@ -538,11 +577,13 @@ public class ChaoStatusController implements Initializable {
     /**
      * Updates the score display.
      *
-     * @param newScore the new score value
+     * @param points the points to add to score (can be negative)
+     * @return the new score value
      */
-    private void updateScore(int newScore) {
-        this.score = newScore;
+    public int updateScore(int points) {
+        this.score += points;
         scoreLabel.setText("SCORE: " + score);
+        return this.score;
     }
 
     /**
@@ -618,28 +659,7 @@ public class ChaoStatusController implements Initializable {
         }
     }
 
-    /**
-     * Heals the Chao, increasing health but costing game points.
-     */
-    @FXML
-    public void healChao() {
-        if (chao != null && !chao.getStatus().isDead() && !isSleeping) {
-            State currentState = chao.getState();
 
-            // If angry, can only perform actions that increase happiness
-            if (currentState == State.ANGRY) {
-                // Healing doesn't increase happiness, so not allowed
-                return;
-            }
-
-            chao.getStatus().adjustHealth(15);
-            updateStatusBars();
-            updateScore(score - 20); // Healing costs points
-
-            // Show happy animation
-            showHappyAnimation();
-        }
-    }
 
     /**
      * Stops the game timers when the application is closing.
@@ -667,4 +687,68 @@ public class ChaoStatusController implements Initializable {
             chaoAnimation.stopAnimation();
         }
     }
+
+
+    //unused methods but could be useful
+//    /**
+//     * Heals the Chao, increasing health but costing game points.
+//     */
+//    @FXML
+//    public void healChao() {
+//        if (chao != null && !chao.getStatus().isDead() && !isSleeping) {
+//            State currentState = chao.getState();
+//
+//            // If angry, can only perform actions that increase happiness
+//            if (currentState == State.ANGRY) {
+//                // Healing doesn't increase happiness, so not allowed
+//                return;
+//            }
+//
+//            chao.getStatus().adjustHealth(15);
+//            updateStatusBars();
+//            updateScore(score - 20); // Healing costs points
+//
+//            // Show happy animation
+//            showHappyAnimation();
+//        }
+//    }
+
+//    /**
+//     * Shows the game over screen when the Chao dies.
+//     */
+//    private void showGameOverScreen() {
+//        // Disable the action buttons
+//        enableAllInteractions(false);
+//
+//        // Create a game over overlay
+//        gameOverBox = new VBox(10);
+//        gameOverBox.setAlignment(javafx.geometry.Pos.CENTER);
+//        gameOverBox.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7); -fx-padding: 20px;");
+//        gameOverBox.setPrefSize(500, 300);
+//
+//        Label gameOverLabel = new Label("GAME OVER");
+//        gameOverLabel.setStyle("-fx-font-size: 24px; -fx-text-fill: white; -fx-font-weight: bold;");
+//
+//        Button newGameButton = new Button("New Game");
+//        newGameButton.setOnAction(e -> startNewGame());
+//
+//        Button loadGameButton = new Button("Load Game");
+//        loadGameButton.setOnAction(e -> loadGame());
+//
+//        gameOverBox.getChildren().addAll(gameOverLabel, newGameButton, loadGameButton);
+//
+//        // Add the game over overlay to the center of the BorderPane
+//        if (mainContainer != null) {
+//            mainContainer.setCenter(gameOverBox);
+//        } else {
+//            // Fallback: try to find the main BorderPane
+//            Scene scene = statusBarsContainer.getScene();
+//            if (scene != null) {
+//                BorderPane rootPane = (BorderPane) scene.getRoot();
+//                if (rootPane != null) {
+//                    rootPane.setCenter(gameOverBox);
+//                }
+//            }
+//        }
+//    }
 }

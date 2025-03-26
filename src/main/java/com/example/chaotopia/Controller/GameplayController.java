@@ -4,10 +4,23 @@ import com.example.chaotopia.Model.Commands;
 import com.example.chaotopia.Model.Inventory;
 import com.example.chaotopia.Model.Item;
 
-public class GameplayController extends BaseController {
+import com.example.chaotopia.Model.*;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+/**
+ * GameplayController extends BaseController and integrates with ChaoStatusController
+ * to manage game interaction and UI updates.
+ */
+public class GameplayController extends BaseController implements Initializable {
 
     private Chao chao;
     private Inventory inventory;
+    private ChaoStatusController statusController;
 
     //todo: loadGame function (calls load game class)
 
