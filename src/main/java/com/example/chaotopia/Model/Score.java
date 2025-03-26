@@ -7,8 +7,8 @@ package com.example.chaotopia.Model;
  * raises their Chao. It serves as gauge of the player's total progress
  * in the game.
  * <br><br>
- * The Score is retrieved with {@link getScore} and incremented
- * with {@link setScore}.
+ * The Score is retrieved with {@link #getScore} and incremented
+ * with {@link #setScore}.
  *
  * @version 1.0.0
  * @author Justin Rowbotham

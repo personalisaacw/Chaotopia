@@ -3,9 +3,9 @@ package com.example.chaotopia.Model;
 /**
  * Static entity or utility class for player-issued commands.
  * <br><br>
- * The player can command their Chao to {@link sleep}, {@link feed},
- * {@link give} (receive a gift), {@link vet} (go to vet), {@link play},
- * {@link exercise}, {@link pet} (receive a pet), and {@link bonk}
+ * The player can command their Chao to {@link #sleep}, {@link #feed},
+ * {@link #give} (receive a gift), {@link #vet} (go to vet), {@link #play},
+ * {@link #exercise}, {@link #pet} (receive a pet), and {@link #bonk}
  * (be bonked).
  *
  * @version 1.0.0
