@@ -1,4 +1,4 @@
-package com.example.chaotopia;
+package com.example.chaotopia.Model;
 
 /**
  * Represents an item in the game with properties like name, item type, description,
@@ -34,8 +34,13 @@ public class Item {
     private int effectValue;
 
     /**
+     * The amount of alignment change that this item has. It can change Chao alignment by +1 if it is a Hero Fruit and -1 if it is a Dark Fruit.
+     */
+    private int alignmentChange;
+
+    /**
      * Constructs an Item based on the given name. The item is initialized with specific
-     * attributes like type, description, flavor text, and effect value based on the item name.
+     * attributes like type, description, flavor text, effect value and alignment change based on the item name.
      *
      * @param name The name of the item, which determines its attributes.
      *             Valid item names include: Trumpet, Duck, Tv, Green Fruit, Blue Fruit,
@@ -94,14 +99,16 @@ public class Item {
             this.itemType = ItemType.SPECIAL;
             this.description = "This special item fills your pet's stomach by 10 points. It also makes your Chao feel evil, giving -1 points toward your Chaos alignment and increasing its chances of becoming a Dark Chao.";
             this.flavorText = "Darkness has its taste... and your pet can't get enough of it. A deliciously sinister choice!";
-            this.effectValue = 10; //will be used to give 10 fullness
+            this.effectValue = 10;
+            this.alignmentChange = -1;
         }
         else if (name.equals("Hero Fruit")) {
             this.name = "Hero Fruit";
             this.itemType = ItemType.SPECIAL;
             this.description = "This special item fills your pet's stomach by 10 points. It also makes your Chao feel heroic, giving +1 points toward your Chaos alignment and increasing its chances of becoming a Hero Chao.";
             this.flavorText = "The fruit of champions! Your pet feels stronger and ready for anything. A true hero in the making!";
-            this.effectValue = 10; //will be used to give 10 fullness
+            this.effectValue = 10;
+            this.alignmentChange = 1;
         }
         else {
             throw new IllegalArgumentException("Invalid item name: " + name + ". Valid items are: Trumpet, Duck, Tv, Green Fruit, Blue Fruit, Red Fruit, Dark Fruit, Hero Fruit");
@@ -152,5 +159,15 @@ public class Item {
      */
     public int getEffectValue() {
         return effectValue;
+    }
+
+    /**
+     * Gets the alignment change value of the item, which determines how it changes Chao alignment.
+     * For example, a Hero fruit gives Chao +1 alignment, making them more likely to evolve into a Hero Chao.
+     *
+     * @return The alignment change value of the item.
+     */
+    public int getAlignmentChange() {
+        return alignmentChange;
     }
 }
