@@ -21,31 +21,40 @@ public class GameplayController extends BaseController {
     public void sleepChao() {
         Commands.sleep(chao);
         //todo: add keyboard shortcuts
-        //todo: need to update the animation of the chao
+        //todo: play the chao animation
+        //todo: play the proper sound
     }
 
     //exercise function
     public void exerciseChao() {
         Commands.exercise(chao);
-        //todo: need to update the animation of the chao
+        //todo: add keyboard shortcuts
+        //todo: play the chao animation
+        //todo: play the proper sound
     }
 
     //vet function
     public void vetChao() {
         Commands.vet(chao);
-        //todo: need to update the animation of the chao
+        //todo: add keyboard shortcuts
+        //todo: play the chao animation
+        //todo: play the proper sound
     }
 
     //pet function
     public void petChao() {
         Commands.pet(chao);
-        //todo: need to update the animation of the chao
+        //todo: add keyboard shortcuts
+        //todo: play the chao animation
+        //todo: play the proper sound
     }
 
     //bonk function
     public void bonkChao() {
         Commands.bonk(chao);
-        //todo: need to update the animation of the chao
+        //todo: add keyboard shortcuts
+        //todo: play the chao animation
+        //todo: play the proper sound
     }
 
     //gifts a trumpet
@@ -55,7 +64,9 @@ public class GameplayController extends BaseController {
         if (inventory.getItemCount(itemName) > 0) {
             Commands.give(chao, new Item(itemName));
             inventory.removeItem(itemName);
-            //todo: play sound effect
+            //todo: add keyboard shortcuts
+            //todo: play the chao animation
+            //todo: play the proper sound
         }
         //else:
         //todo: display "no items available"/play sound effect
@@ -68,7 +79,9 @@ public class GameplayController extends BaseController {
         if (inventory.getItemCount(itemName) > 0) {
             Commands.give(chao, new Item(itemName));
             inventory.removeItem(itemName);
-            //todo: play sound effect
+            //todo: add keyboard shortcuts
+            //todo: play the chao animation
+            //todo: play the proper sound
         }
         //else:
         //todo: display "no items available"/play sound effect
@@ -81,7 +94,9 @@ public class GameplayController extends BaseController {
         if (inventory.getItemCount(itemName) > 0) {
             Commands.give(chao, new Item(itemName));
             inventory.removeItem(itemName);
-            //todo: play sound effect
+            //todo: add keyboard shortcuts
+            //todo: play the chao animation
+            //todo: play the proper sound
         }
         //else:
         //todo: display "no items available"/play sound effect
@@ -93,8 +108,9 @@ public class GameplayController extends BaseController {
         if (inventory.getItemCount(itemName) > 0) {
             Commands.feed(chao, new Item(itemName));
             inventory.removeItem(itemName);
-            //todo: play sound effect
+            //todo: add keyboard shortcuts
             //todo: play the fruit eating animation
+            //todo: play the proper sound
         }
         //else:
         //todo: display "no items available"/play sound effect
@@ -106,8 +122,9 @@ public class GameplayController extends BaseController {
         if (inventory.getItemCount(itemName) > 0) {
             Commands.feed(chao, new Item(itemName));
             inventory.removeItem(itemName);
-            //todo: play sound effect
+            //todo: add keyboard shortcuts
             //todo: play the fruit eating animation
+            //todo: play the proper sound
         }
         //else:
         //todo: display "no items available"/play sound effect
@@ -119,8 +136,9 @@ public class GameplayController extends BaseController {
         if (inventory.getItemCount(itemName) > 0) {
             Commands.feed(chao, new Item(itemName));
             inventory.removeItem(itemName);
-            //todo: play sound effect
+            //todo: add keyboard shortcuts
             //todo: play the fruit eating animation
+            //todo: play the proper sound
         }
         //else:
         //todo: display "no items available"/play sound effect
@@ -132,8 +150,9 @@ public class GameplayController extends BaseController {
         if (inventory.getItemCount(itemName) > 0) {
             Commands.feedSpecialFruit(chao, new Item(itemName));
             inventory.removeItem(itemName);
-            //todo: play sound effect
+            //todo: add keyboard shortcuts
             //todo: play the fruit eating animation
+            //todo: play the proper sound
         }
         //else:
         //todo: display "no items available"/play sound effect
@@ -145,8 +164,9 @@ public class GameplayController extends BaseController {
         if (inventory.getItemCount(itemName) > 0) {
             Commands.feedSpecialFruit(chao, new Item(itemName));
             inventory.removeItem(itemName);
-            //todo: play sound effect
+            //todo: add keyboard shortcuts
             //todo: play the fruit eating animation
+            //todo: play the proper sound
         }
         //else:
         //todo: display "no items available"/play sound effect
