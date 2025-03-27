@@ -321,7 +321,7 @@ public class GameplayAnimationController implements Initializable {
     }
 
     /**
-     * Feeds the Chao, increasing fullness and slightly increasing happiness.
+     * DON'T NEED THIS
      */
     @FXML
     public void feedChao() {
@@ -344,7 +344,7 @@ public class GameplayAnimationController implements Initializable {
     }
 
     /**
-     * Plays with the Chao, increasing happiness.
+     * DON'T NEED THIS
      */
     @FXML
     public void playWithChao() {
@@ -360,7 +360,7 @@ public class GameplayAnimationController implements Initializable {
     }
 
     /**
-     * Lets the Chao sleep, increasing sleep and health.
+     * DON'T NEED THIS
      */
     @FXML
     public void letChaoSleep() {
