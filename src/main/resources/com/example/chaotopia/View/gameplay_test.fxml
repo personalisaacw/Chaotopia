@@ -15,13 +15,16 @@
     </top>
 
     <center>
-        <VBox alignment="CENTER" spacing="20">
-            <!-- Chao image view and status bars will be here -->
-            <StackPane fx:id="chaoImageContainer" prefHeight="200" prefWidth="200"
-                       style="-fx-background-color: #ccaa88; -fx-border-color: #886644; -fx-border-width: 3; -fx-border-radius: 5;" />
+        <!-- Use a StackPane to enable overlays -->
+        <StackPane fx:id="centerStackPane">
+            <VBox alignment="CENTER" spacing="20">
+                <!-- Chao image view and status bars -->
+                <StackPane fx:id="chaoImageContainer" prefHeight="200" prefWidth="200"
+                           style="-fx-background-color: #ccaa88; -fx-border-color: #886644; -fx-border-width: 3; -fx-border-radius: 5;" />
 
-            <VBox fx:id="statusBarsContainer" spacing="10" alignment="CENTER" />
-        </VBox>
+                <VBox fx:id="statusBarsContainer" spacing="10" alignment="CENTER" />
+            </VBox>
+        </StackPane>
     </center>
 
     <bottom>

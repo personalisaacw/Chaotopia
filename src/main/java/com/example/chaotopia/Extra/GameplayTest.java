@@ -43,8 +43,6 @@ public class GameplayTest extends Application {
         chaoImageContainer.getChildren().add(chaoImageView);
 
         // Initialize the ChaoStatusController with necessary references
-        // Note: This is a manual initialization since we're not loading it from FXML
-        // You may need to adjust this based on your ChaoStatusController implementation
         statusController.initializeManually(
                 statusBarsContainer,
                 (javafx.scene.control.Label) mainContainer.lookup("#nameLabel"),
@@ -65,6 +63,10 @@ public class GameplayTest extends Application {
 
         // Set up the scene
         Scene scene = new Scene(root, 800, 600);
+
+        // Store the controller in the scene's userData for access from GameOverScreen
+        scene.setUserData(gameplayController);
+
         primaryStage.setTitle("Chaotopia - Gameplay Test");
         primaryStage.setScene(scene);
         primaryStage.show();

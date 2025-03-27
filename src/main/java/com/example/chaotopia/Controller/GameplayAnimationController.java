@@ -15,9 +15,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.scene.Node;
 
 /**
  * Controller class for managing the Chao status UI and game logic.
@@ -173,6 +173,11 @@ public class GameplayAnimationController implements Initializable {
             sleepIncreaseTimeline.stop();
         }
 
+        // Force animation update for immediate feedback
+        chaoAnimation.changeState(State.SLEEPING);
+        chaoAnimation.stopAnimation();
+        chaoAnimation.startAnimation();
+
         // Create a new timeline that increases sleep by 2 points every 500ms
         sleepIncreaseTimeline = new Timeline(
                 new KeyFrame(Duration.millis(500), e -> {
@@ -210,6 +215,15 @@ public class GameplayAnimationController implements Initializable {
             chaoAnimation.stopAnimation();
             chaoAnimation.startAnimation();
         }
+    }
+
+    /**
+     * Gets the current ChaoAnimation object.
+     *
+     * @return the ChaoAnimation object
+     */
+    public ChaoAnimation getChaoAnimation() {
+        return this.chaoAnimation;
     }
 
     /**
@@ -447,10 +461,11 @@ public class GameplayAnimationController implements Initializable {
                 enableAllInteractions(true);
 
                 // After waking up, determine next highest priority state
-                if (status.getFullness() <= 0) {
-                    newState = State.HUNGRY;
-                } else if (status.getHappiness() <= 0) {
+                if (status.getHappiness() <= 0){
                     newState = State.ANGRY;
+                }
+                else if (status.getFullness() <= 0) {
+                    newState = State.HUNGRY;
                 } else {
                     newState = State.NORMAL;
                 }
@@ -467,11 +482,11 @@ public class GameplayAnimationController implements Initializable {
                 tempAnimationTimer.getStatus() == Timeline.Status.RUNNING) {
             // Keep the HAPPY state if animation timer is active
             return;
-        } else if (status.getFullness() <= 0) {
-            newState = State.HUNGRY;
-        } else if (status.getHappiness() <= 0) {
+        } else if (status.getHappiness() <= 0 || (currentState == State.ANGRY && status.getHappiness() < 50)) {
             newState = State.ANGRY;
-        } else {
+        } else if(status.getFullness() <= 0){
+            newState = State.HUNGRY;
+        }else {
             newState = State.NORMAL;
         }
 
@@ -492,7 +507,7 @@ public class GameplayAnimationController implements Initializable {
      *
      * @param forceUpdate If true, forces the animation to update immediately
      */
-    private void updateChaoState(boolean forceUpdate) {
+    public void updateChaoState(boolean forceUpdate) {
         if (chao == null) return;
 
         Status status = chao.getStatus();
@@ -511,10 +526,10 @@ public class GameplayAnimationController implements Initializable {
                 isSleeping = false;
                 enableAllInteractions(true);
             }
-        } else if (status.getFullness() <= 0) {
-            newState = State.HUNGRY;
-        } else if (status.getHappiness() <= 0) {
+        } else if (status.getHappiness() <= 0 || (currentState == State.ANGRY && status.getHappiness() < 50)) {
             newState = State.ANGRY;
+        } else if(status.getFullness() <= 0){
+            newState = State.HUNGRY;
         } else if (currentState == State.HAPPY) {
             // Keep HAPPY state if it's currently showing (will be reset by timer)
         } else {
@@ -537,7 +552,7 @@ public class GameplayAnimationController implements Initializable {
     /**
      * Overloaded method for convenience - updates state without forcing
      */
-    private void updateChaoState() {
+    public void updateChaoState() {
         updateChaoState(false);
     }
 
@@ -571,115 +586,135 @@ public class GameplayAnimationController implements Initializable {
     }
 
     /**
-     * Starts a new game.
-     */
-    private void startNewGame() {
-        // Create a new Chao
-        Status initialStatus = new Status(100, 100, 100, 100);
-        Chao newChao = new Chao(0, "Sonic Jr.", ChaoType.BLUE, State.NORMAL, initialStatus);
-
-        // Reset sleep status
-        isSleeping = false;
-
-        // Set the new Chao
-        setChao(newChao);
-
-        // Remove game over screen
-        if (gameOverBox != null && mainContainer != null) {
-            mainContainer.getChildren().remove(gameOverBox);
-
-            // Restore the original center content
-            HBox originalContent = new HBox();
-            originalContent.setAlignment(javafx.geometry.Pos.CENTER);
-            originalContent.setSpacing(20);
-
-            // Re-add Chao image container
-            StackPane imageContainer = new StackPane();
-            imageContainer.setStyle("-fx-background-color: #ccaa88; -fx-border-color: #886644; -fx-border-width: 3; -fx-border-radius: 5;");
-            imageContainer.setPadding(new javafx.geometry.Insets(10));
-            imageContainer.getChildren().add(chaoImageView);
-
-            originalContent.getChildren().addAll(imageContainer, statusBarsContainer);
-            mainContainer.setCenter(originalContent);
-        }
-
-        // Re-enable interactions
-        enableAllInteractions(true);
-
-        // Restart the decay timeline
-        if (statDecayTimeline != null && !statDecayTimeline.getStatus().equals(Timeline.Status.RUNNING)) {
-            statDecayTimeline.play();
-        }
-    }
-
-    /**
-     * Loads a saved game (placeholder).
-     */
-    private void loadGame() {
-        // This would typically load from a file, but for now we'll just simulate it
-        startNewGame();
-    }
-
-    //unused methods but could be useful
-//    /**
-//     * Heals the Chao, increasing health but costing game points.
-//     */
-//    @FXML
-//    public void healChao() {
-//        if (chao != null && !chao.getStatus().isDead() && !isSleeping) {
-//            State currentState = chao.getState();
-//
-//            // If angry, can only perform actions that increase happiness
-//            if (currentState == State.ANGRY) {
-//                // Healing doesn't increase happiness, so not allowed
-//                return;
-//            }
-//
-//            chao.getStatus().adjustHealth(15);
-//            updateStatusBars();
-//            updateScore(score - 20); // Healing costs points
-//
-//            // Show happy animation
-//            showHappyAnimation();
-//        }
-//    }
-
-    /**
      * Shows the game over screen when the Chao dies.
      */
     private void showGameOverScreen() {
-        // Disable the action buttons
-        enableAllInteractions(false);
+        // First ensure we're on the JavaFX thread
+        if (!javafx.application.Platform.isFxApplicationThread()) {
+            javafx.application.Platform.runLater(this::showGameOverScreen);
+            return;
+        }
 
-        // Create a game over overlay
-        gameOverBox = new VBox(10);
-        gameOverBox.setAlignment(javafx.geometry.Pos.CENTER);
-        gameOverBox.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7); -fx-padding: 20px;");
-        gameOverBox.setPrefSize(500, 300);
+        try {
+            // Disable the action buttons
+            enableAllInteractions(false);
 
-        Label gameOverLabel = new Label("GAME OVER");
-        gameOverLabel.setStyle("-fx-font-size: 24px; -fx-text-fill: white; -fx-font-weight: bold;");
+            // Create game over popup components
+            VBox gameOverBox = new VBox(10);
+            gameOverBox.setAlignment(javafx.geometry.Pos.CENTER);
+            gameOverBox.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px; " +
+                    "-fx-border-color: #FF4136; -fx-border-width: 3px; -fx-border-radius: 10px; " +
+                    "-fx-background-radius: 10px;");
+            gameOverBox.setMaxSize(300, 150);
+            gameOverBox.setMinSize(250, 120);
 
-        Button newGameButton = new Button("New Game");
-        newGameButton.setOnAction(e -> startNewGame());
+            Label gameOverLabel = new Label("GAME OVER");
+            gameOverLabel.setStyle("-fx-font-size: 24px; -fx-text-fill: white; -fx-font-weight: bold;");
 
-        Button loadGameButton = new Button("Load Game");
-        loadGameButton.setOnAction(e -> loadGame());
+            HBox buttonBox = new HBox(15);
+            buttonBox.setAlignment(javafx.geometry.Pos.CENTER);
+            buttonBox.setPadding(new javafx.geometry.Insets(10, 0, 0, 0));
 
-        gameOverBox.getChildren().addAll(gameOverLabel, newGameButton, loadGameButton);
+            Button newGameButton = new Button("Play Again?");
+            newGameButton.setStyle("-fx-background-color: #2ECC40; -fx-text-fill: white; -fx-font-weight: bold; " +
+                    "-fx-padding: 8 15; -fx-background-radius: 5;");
+            newGameButton.setOnAction(e -> startNewGame());
 
-        // Add the game over overlay to the center of the BorderPane
-        if (mainContainer != null) {
-            mainContainer.setCenter(gameOverBox);
-        } else {
-            // Fallback: try to find the main BorderPane
-            Scene scene = statusBarsContainer.getScene();
+            Button mainMenuButton = new Button("Main Menu");
+            mainMenuButton.setStyle("-fx-background-color: #0074D9; -fx-text-fill: white; -fx-font-weight: bold; " +
+                    "-fx-padding: 8 15; -fx-background-radius: 5;");
+            mainMenuButton.setOnAction(e -> {
+                // Attempt to navigate to main menu
+                Scene scene = mainContainer.getScene();
+                if (scene != null && scene.getUserData() instanceof GameplayController) {
+                    ((GameplayController) scene.getUserData()).goToMainMenu();
+                }
+            });
+
+            buttonBox.getChildren().addAll(newGameButton, mainMenuButton);
+            gameOverBox.getChildren().addAll(gameOverLabel, buttonBox);
+
+            // Create a full-screen transparent overlay for the popup
+            StackPane overlay = new StackPane();
+            overlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.4);"); // Semi-transparent background
+            overlay.getChildren().add(gameOverBox);
+            overlay.setMouseTransparent(false); // Allow clicking on buttons
+
+            // Position in center bottom area
+            StackPane.setAlignment(gameOverBox, javafx.geometry.Pos.BOTTOM_CENTER);
+            StackPane.setMargin(gameOverBox, new javafx.geometry.Insets(0, 0, 70, 0));
+
+            // Store reference for later removal
+            this.gameOverBox = gameOverBox;
+
+            // Add to scene - use BorderPane directly if possible
+            Scene scene = chaoImageView.getScene();
             if (scene != null) {
-                BorderPane rootPane = (BorderPane) scene.getRoot();
-                if (rootPane != null) {
-                    rootPane.setCenter(gameOverBox);
+                BorderPane root = (BorderPane) scene.getRoot();
+                if (root != null) {
+                    // Use BorderPane's center as a StackPane
+                    StackPane centerStack = (StackPane) root.lookup("#centerStackPane");
+
+                    if (centerStack == null) {
+                        // If no StackPane exists, create one and add current content to it
+                        centerStack = new StackPane();
+                        centerStack.setId("centerStackPane");
+
+                        // Move current center content to StackPane
+                        Node currentCenter = root.getCenter();
+                        root.setCenter(null);
+                        centerStack.getChildren().add(currentCenter);
+                        root.setCenter(centerStack);
+                    }
+
+                    // Add overlay to the StackPane
+                    centerStack.getChildren().add(overlay);
                 }
             }
+        } catch (Exception e) {
+            System.err.println("Error showing game over screen: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Starts a new game.
+     */
+    private void startNewGame() {
+        try {
+            // Create a new Chao with fresh stats
+            Status initialStatus = new Status(100, 100, 100, 100);
+            Chao newChao = new Chao(0, "Sonic Jr.", ChaoType.BLUE, State.NORMAL, initialStatus);
+
+            // Reset sleep status
+            isSleeping = false;
+
+            // Set the new Chao
+            setChao(newChao);
+
+            // Remove game over overlay
+            Scene scene = chaoImageView.getScene();
+            if (scene != null) {
+                BorderPane root = (BorderPane) scene.getRoot();
+                if (root != null) {
+                    StackPane centerStack = (StackPane) root.lookup("#centerStackPane");
+                    if (centerStack != null && centerStack.getChildren().size() > 1) {
+                        // Remove the last child which should be our overlay
+                        centerStack.getChildren().remove(centerStack.getChildren().size() - 1);
+                    }
+                }
+            }
+
+            // Re-enable interactions
+            enableAllInteractions(true);
+
+            // Restart the decay timeline
+            if (statDecayTimeline != null && statDecayTimeline.getStatus() != Timeline.Status.RUNNING) {
+                statDecayTimeline.play();
+            }
+        } catch (Exception e) {
+            System.err.println("Error starting new game: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

@@ -1,5 +1,8 @@
 package com.example.chaotopia.Model;
 
+import com.example.chaotopia.Controller.GameplayController;
+import javafx.scene.Scene;
+
 /**
  * Static entity or utility class for player-issued commands.
  * <br><br>
@@ -143,6 +146,7 @@ public final class Commands {
         if (isNotAngry(chao) != 0) return; // If Chao is angry...
         //if (cooldownActive(petCooldown, CooldownType.PET) != 0) return;
         chao.adjustAlignment(PET_VAL);
+        chao.getStatus().adjustHappiness(3);
     }
 
     /**
@@ -153,6 +157,7 @@ public final class Commands {
         if (isConscious(chao) != 0) return; // If Chao is not conscious...
         //if (cooldownActive(bonkCooldown, CooldownType.BONK) != 0) return;
         chao.adjustAlignment(BONK_VAL);
+        chao.getStatus().adjustHappiness(-3);
     }
 
     /**
@@ -162,21 +167,16 @@ public final class Commands {
     public static void applyNaturalDecay(Chao chao) {
         if (chao.getStatus().isDead()) return;
         if (chao.getState() == State.SLEEPING) {
-            // When sleeping, increase sleep but still decrease other stats slightly
             chao.getStatus().adjustSleep(10);
-            chao.getStatus().adjustHappiness(-1);
-            chao.getStatus().adjustFullness(-1);
-            return;
         }
 
         Status status = chao.getStatus();
-        // Base decrease values (can be adjusted based on Chao type)
-        int happinessDecrease = (int) (Math.random() * 3) + 1;
-        int fullnessDecrease = (int) (Math.random() * 3) + 1;
-        int sleepDecrease = (int) (Math.random() * 3) + 1;
+        int happinessDecrease = 2;
+        int fullnessDecrease = 2;
+        int sleepDecrease = 2;
         int healthDecrease = 0;
 
-        // Apply type-specific modifications similar to the original code
+        // Apply type-specific modifications
         ChaoType type = chao.getType();
         if (type == ChaoType.DARK) {
             happinessDecrease = (int)(happinessDecrease * 1.5);
@@ -196,6 +196,11 @@ public final class Commands {
             healthDecrease += 5;
         }
 
+        // Handle sleep effects - ADD THIS NEW SECTION
+        if (status.getSleep() == 0) {
+            healthDecrease += 15; // Apply -15 health penalty when sleep reaches 0
+        }
+
         // Update the stats
         status.updateStats(-happinessDecrease, -healthDecrease, -fullnessDecrease, -sleepDecrease);
     }
@@ -208,7 +213,8 @@ public final class Commands {
     private static int isConscious(Chao chao) {
         if (chao.getState() == State.SLEEPING
                 || chao.getStatus().isDead()) {
-            System.out.println(chao.getName() + " is unresponsive!");
+            // Replace System.out.println with GameplayController.showGameMessage
+            GameplayController.showGameMessage(chao.getName() + " is unresponsive!");
             return 1;
         } else return 0;
     }
@@ -220,7 +226,7 @@ public final class Commands {
      */
     private static int isNotAngry(Chao chao) {
         if (chao.getState() == State.ANGRY) {
-            System.out.println(chao.getName() + " is being uncooperative!");
+            GameplayController.showGameMessage(chao.getName() + " is being uncooperative!");
             return 1;
         } else return 0;
     }
@@ -241,7 +247,7 @@ public final class Commands {
             else if (type == CooldownType.BONK) bonkCooldown = currentTime;
             return 0;
         } else {
-            System.out.println("Too soon!");
+            GameplayController.showGameMessage("Too soon!");
             return 1;
         }
     }

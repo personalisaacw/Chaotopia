@@ -28,15 +28,6 @@ public class FruitAnimation {
     /** The total number of frames in the animation sequence */
     private final int totalFrames = 6; // All fruits have 6 frames (6th is blank)
 
-    /**
-     * Gets the total number of frames in the animation.
-     *
-     * @return The total frame count
-     */
-    public int getTotalFrames() {
-        return totalFrames;
-    }
-
     /** The type of Fruit being animated */
     private FruitType fruitType;
 
@@ -69,6 +60,15 @@ public class FruitAnimation {
     private void initializeTimeline() {
         this.timeline = new Timeline(new KeyFrame(Duration.seconds(frameSpeed), event -> updateFrame()));
         timeline.setCycleCount(totalFrames); // Only run through all frames once
+    }
+
+    /**
+     * Gets the total number of frames in the animation.
+     *
+     * @return The total frame count
+     */
+    public int getTotalFrames() {
+        return totalFrames;
     }
 
     /**
