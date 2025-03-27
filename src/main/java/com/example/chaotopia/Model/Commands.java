@@ -8,6 +8,8 @@ package com.example.chaotopia.Model;
  * {@link #exercise}, {@link #pet} (receive a pet), and {@link #bonk}
  * (be bonked).
  *
+ * There is also a method {@link #applyNaturalDecay(Chao)} to naturally decrease the
+ * stats which the ChaoStatusController will use.
  * @version 1.0.0
  * @author Justin Rowbotham
  */
@@ -139,7 +141,7 @@ public final class Commands {
     public static void pet(Chao chao) {
         if (isConscious(chao) != 0) return; // If Chao is not conscious...
         if (isNotAngry(chao) != 0) return; // If Chao is angry...
-        if (cooldownActive(petCooldown, CooldownType.PET) != 0) return;
+        //if (cooldownActive(petCooldown, CooldownType.PET) != 0) return;
         chao.adjustAlignment(PET_VAL);
     }
 
@@ -149,8 +151,53 @@ public final class Commands {
      */
     public static void bonk(Chao chao) {
         if (isConscious(chao) != 0) return; // If Chao is not conscious...
-        if (cooldownActive(bonkCooldown, CooldownType.BONK) != 0) return;
+        //if (cooldownActive(bonkCooldown, CooldownType.BONK) != 0) return;
         chao.adjustAlignment(BONK_VAL);
+    }
+
+    /**
+     * Applies natural stat decay over time to simulate hunger, tiredness, etc.
+     * @param chao the Chao to apply decay to
+     */
+    public static void applyNaturalDecay(Chao chao) {
+        if (chao.getStatus().isDead()) return;
+        if (chao.getState() == State.SLEEPING) {
+            // When sleeping, increase sleep but still decrease other stats slightly
+            chao.getStatus().adjustSleep(10);
+            chao.getStatus().adjustHappiness(-1);
+            chao.getStatus().adjustFullness(-1);
+            return;
+        }
+
+        Status status = chao.getStatus();
+        // Base decrease values (can be adjusted based on Chao type)
+        int happinessDecrease = (int) (Math.random() * 3) + 1;
+        int fullnessDecrease = (int) (Math.random() * 3) + 1;
+        int sleepDecrease = (int) (Math.random() * 3) + 1;
+        int healthDecrease = 0;
+
+        // Apply type-specific modifications similar to the original code
+        ChaoType type = chao.getType();
+        if (type == ChaoType.DARK) {
+            happinessDecrease = (int)(happinessDecrease * 1.5);
+        } else if (type == ChaoType.BLUE) {
+            sleepDecrease = (int)(sleepDecrease * 1.5);
+        } else if (type == ChaoType.RED) {
+            fullnessDecrease = (int)(fullnessDecrease * 1.5);
+        } else if (type == ChaoType.GREEN) {
+            healthDecrease = 1;
+        } else if (type == ChaoType.HERO){
+            happinessDecrease = (int)(happinessDecrease * 0.5);
+        }
+
+        // Handle hunger effects
+        if (status.getFullness() == 0) {
+            happinessDecrease *= 2;
+            healthDecrease += 5;
+        }
+
+        // Update the stats
+        status.updateStats(-happinessDecrease, -healthDecrease, -fullnessDecrease, -sleepDecrease);
     }
 
     /**

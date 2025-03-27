@@ -7,7 +7,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.chaotopia.Controller.ChaoStatusController"
+            fx:controller="com.example.chaotopia.Controller.GameplayAnimationController"
             fx:id="mainContainer"
             prefHeight="400.0" prefWidth="600.0"
             style="-fx-background-color: #e8d0aa;">

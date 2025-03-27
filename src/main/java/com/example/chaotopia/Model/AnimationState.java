@@ -3,6 +3,7 @@ package com.example.chaotopia.Model;
 /**
  * Defines the different animation states a Chao can have.
  * Each state corresponds to a specific behavior animation.
+ * @author Rosaline Scully
  */
 public enum AnimationState {
     NORMAL(4),

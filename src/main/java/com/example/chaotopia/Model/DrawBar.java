@@ -11,6 +11,7 @@ import javafx.util.Duration;
 /**
  * The DrawBar class represents a visual status bar that can display
  * a value between 0 and 100 as a filling bar.
+ * @author Rosaline Scully
  */
 public class DrawBar extends StackPane {
     private Canvas canvas;

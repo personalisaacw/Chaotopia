@@ -40,4 +40,10 @@ public class Score {
     public void setScore(int score) {
         this.score = score;
     }
+
+    /**
+     * Updater method that updates the current score.
+     * @param update the amount to increase or decrease by
+     */
+    public void updateScore(int update) { this.score += update; }
 }

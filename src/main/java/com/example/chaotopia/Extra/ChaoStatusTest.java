@@ -1,6 +1,6 @@
 package com.example.chaotopia.Extra;
 
-import com.example.chaotopia.Controller.ChaoStatusController;
+import com.example.chaotopia.Controller.GameplayAnimationController;
 import com.example.chaotopia.Model.Chao;
 import com.example.chaotopia.Model.ChaoType;
 import com.example.chaotopia.Model.State;
@@ -16,7 +16,7 @@ import javafx.stage.Stage;
  */
 public class ChaoStatusTest extends Application {
 
-    private ChaoStatusController controller;
+    private GameplayAnimationController controller;
 
     @Override
     public void start(Stage primaryStage) throws Exception {

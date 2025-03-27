@@ -14,6 +14,8 @@ import javafx.util.Duration;
  *
  * <p>The animation cycles through frames at a configurable speed, displaying each frame
  * before advancing to the next one.</p>
+ *
+ * @author Rosaline Scully
  */
 public class FruitAnimation {
 
