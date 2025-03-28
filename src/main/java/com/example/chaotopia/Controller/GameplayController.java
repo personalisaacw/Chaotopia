@@ -358,7 +358,7 @@ public class GameplayController extends BaseController implements Initializable 
     //gifts a tv
     @FXML
     public void giftTV() {
-        giftItem("Tv");
+        giftItem("T.V.");
     }
 
     /**

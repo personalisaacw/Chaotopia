@@ -43,7 +43,7 @@ public class Item {
      * attributes like type, description, flavor text, effect value and alignment change based on the item name.
      *
      * @param name The name of the item, which determines its attributes.
-     *             Valid item names include: Trumpet, Duck, Tv, Green Fruit, Blue Fruit,
+     *             Valid item names include: Trumpet, Duck, T.V., Green Fruit, Blue Fruit,
      *             Red Fruit, Dark Fruit, and Hero Fruit.
      * @throws IllegalArgumentException if the item name is null or not recognized
      */
