@@ -10,16 +10,8 @@ import javafx.animation.Timeline;
 import javafx.scene.image.ImageView; // Import ImageView
 import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.scene.layout.StackPane;
-import javafx.util.Duration;
 import com.example.chaotopia.Model.AnimationState;
-import javafx.scene.layout.BorderPane;
 
 
 import java.net.URL;
@@ -78,7 +70,6 @@ public class GameplayController extends BaseController implements Initializable 
         // Add some default items for testing
         inventory.addItem("Red Fruit", 20);
         inventory.addItem("Blue Fruit", 20);
-        inventory.addItem("Green Fruit", 20);
         inventory.addItem("Hero Fruit", 20);
         inventory.addItem("Dark Fruit", 20);
         inventory.addItem("Trumpet", 20);
