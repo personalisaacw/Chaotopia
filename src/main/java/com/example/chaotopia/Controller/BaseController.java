@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Stack;
 
 /**
@@ -55,5 +56,10 @@ public class BaseController {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public static void addCSS(Scene scene) {
+        String css = Objects.requireNonNull(BaseController.class.getResource("/com/example/chaotopia/CSS/styles.css")).toExternalForm();
+        scene.getStylesheets().add(css);
     }
 }
