@@ -12,7 +12,7 @@
    <center>
       <VBox alignment="CENTER" spacing="12.0" BorderPane.alignment="CENTER">
          <children>
-            <Label styleClass="title-board" stylesheets="@../CSS/styles.css" text="Parental Controls" textAlignment="CENTER" textFill="#272744">
+            <Label styleClass="title-board" stylesheets="@../CSS/styles.css" text="ChaoTopia" textAlignment="CENTER" textFill="#272744">
                <font>
                   <Font name="Upheaval TT -BRK-" size="64.0" />
                </font>

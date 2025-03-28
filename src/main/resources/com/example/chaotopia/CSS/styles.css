@@ -26,7 +26,6 @@
     -fx-padding: 24px 32px;
     -fx-text-alignment: center;
     -fx-wrap-text: true;
-    -fx-max-width: 800px;
 }
 
 .btn {
