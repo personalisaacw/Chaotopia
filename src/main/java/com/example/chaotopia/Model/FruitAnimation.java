@@ -138,7 +138,6 @@ public class FruitAnimation {
         this.currentFrame = 1; // Reset frame count
 
         fruitView.setVisible(true);
-        updateFrame();
         timeline.playFromStart();
     }
 
