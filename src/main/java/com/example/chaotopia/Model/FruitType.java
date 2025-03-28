@@ -3,6 +3,7 @@ package com.example.chaotopia.Model;
 /**
  * Defines the different types of fruits that can be displayed and animated.
  * Each type corresponds to a specific fruit appearance.
+ * @author Rosaline Scully
  */
 public enum FruitType {
     HERO,

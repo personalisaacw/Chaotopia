@@ -3,6 +3,7 @@ package com.example.chaotopia.Model;
 /**
  * The Chao class represents a virtual pet character with different types, states,
  * and status attributes. A Chao can evolve based on its alignment value.
+ * @author Rosaline Scully
  */
 public class Chao {
     private int alignment;

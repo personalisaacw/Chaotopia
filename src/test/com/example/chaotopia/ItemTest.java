@@ -30,7 +30,7 @@ public class ItemTest {
         assertEquals(20, duck.getEffectValue());
 
         // Test TV item
-        Item tv = new Item("Tv");
+        Item tv = new Item("T.V.");
         assertEquals("T.V.", tv.getName());
         assertEquals(ItemType.GIFT, tv.getItemType());
         assertEquals("This gift item boosts your pet's happiness by 30 points.", tv.getDescription());

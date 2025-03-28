@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import java.io.IOException;
 
 public class MainMenuController extends BaseController {
+
     public void newGame(ActionEvent e) throws IOException {
         switchScene(e, "/com/example/chaotopia/View/PlayGame.fxml");
     }
