@@ -60,11 +60,12 @@ public class ChooseChaosController extends BaseController {
         //save the save slot information
         updateSaveSlot(lastSlotClickedIndex);
 
+        //todo: add the save game functionality Faye will implement
         //save the game state
             //create inventory
             //use the chao and inventory to instantiate a json file
 
-        //todo: create the new save file here?
+        //todo: create the new save file here using the Chao param
         goToGameScreen();
     }
 
