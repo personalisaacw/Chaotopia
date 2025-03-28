@@ -9,19 +9,19 @@
       <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#goBack" prefHeight="40.0" prefWidth="40.0" styleClass="back-button" />
       <Label layoutX="173.0" layoutY="20.0" prefHeight="73.0" prefWidth="254.0" styleClass="title-label" />
 
-      <Button fx:id="slot1Button" layoutX="50.0" layoutY="134.0" onAction="#handleSlot1Click" styleClass="save-slots">
+      <Button layoutX="50.0" layoutY="134.0" onAction="#slot1Click" styleClass="save-slots">
             <graphic>
                   <ImageView fx:id="slot1Image" fitHeight="160" fitWidth="120" />
             </graphic>
       </Button>
 
-      <Button fx:id="slot2Button" layoutX="230.0" layoutY="134.0" onAction="#handleSlot2Click" styleClass="save-slots">
+      <Button layoutX="230.0" layoutY="134.0" onAction="#slot2Click" styleClass="save-slots">
             <graphic>
                   <ImageView fx:id="slot2Image" fitHeight="160" fitWidth="120" />
             </graphic>
       </Button>
 
-      <Button fx:id="slot3Button" layoutX="410.0" layoutY="134.0" onAction="#handleSlot3Click" styleClass="save-slots">
+      <Button layoutX="410.0" layoutY="134.0" onAction="#slot3Click" styleClass="save-slots">
             <graphic>
                   <ImageView fx:id="slot3Image" fitHeight="160" fitWidth="120" />
             </graphic>
