@@ -13,6 +13,12 @@
     -fx-border-color: transparent;
     -fx-background-color: transparent;  /* removes default gray */
     -fx-background-radius: 0;
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.back-button:hover {
+    -fx-scale-x: 1.1; /* Increases width */
+    -fx-scale-y: 1.1; /* Increases height */
 }
 
 @font-face {
@@ -21,7 +27,7 @@
 }
 
 .title-label {
-    -fx-background-image: url("../Assets/title.png");
+    -fx-background-image: url("../Assets/PlayGameScreen/title.png");
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
     -fx-background-position: center center;
@@ -45,7 +51,7 @@
 }
 
 .trash-button {
-    -fx-background-image: url("../Assets/trash-button.png");
+    -fx-background-image: url("../Assets/PlayGameScreen/trash-button.png");
     -fx-background-size: cover;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
