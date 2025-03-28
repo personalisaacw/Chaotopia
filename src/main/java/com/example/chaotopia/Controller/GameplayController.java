@@ -1,11 +1,15 @@
 package com.example.chaotopia.Controller;
-import com.example.chaotopia.Model.Chao;
-import com.example.chaotopia.Model.Commands;
-import com.example.chaotopia.Model.Inventory;
-import com.example.chaotopia.Model.Item;
-import com.example.chaotopia.Model.Score;
 
 import com.example.chaotopia.Model.*;
+import com.example.chaotopia.Model.FruitAnimation;
+import com.example.chaotopia.Model.FruitType;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.scene.image.ImageView; // Import ImageView
+import javafx.scene.layout.BorderPane;
+import javafx.util.Duration;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -32,6 +36,8 @@ public class GameplayController extends BaseController implements Initializable 
     @FXML private Label scoreLabel;
     @FXML private Label messageLabel;
     @FXML private BorderPane mainContainer;
+    @FXML private Label nameLabel;
+    @FXML private ImageView fruitImageView;
 
     //Timelines
     private Timeline messageTimeline;
@@ -41,6 +47,7 @@ public class GameplayController extends BaseController implements Initializable 
     private Inventory inventory;
     private GameplayAnimationController statusController;
     private Score score;
+    private FruitAnimation fruitAnimation;
 
     //todo: loadGame function (calls load game class)
 
@@ -51,13 +58,22 @@ public class GameplayController extends BaseController implements Initializable 
     public void initialize(URL location, ResourceBundle resources) {
         // change everything in here based on load game
         inventory = new Inventory();
-        statusController = new GameplayAnimationController();
+        //statusController = new GameplayAnimationController();
         score = new Score(0);
 
-        // Initialize message label if it's found
         if (messageLabel != null) {
             messageLabel.setVisible(false);
         }
+
+        if (fruitImageView != null) {
+            fruitAnimation = new FruitAnimation(fruitImageView, FruitType.RED);
+            fruitImageView.setVisible(false); // Ensure it's hidden initially
+        } else {
+            System.err.println("Warning: fruitImageView is null in GameplayController.initialize. Check FXML.");
+        }
+
+        if(scoreLabel != null) scoreLabel.setText("SCORE: " + score.getScore());
+        if(nameLabel != null) nameLabel.setText("Chao Name");
 
         // Add some default items for testing
         inventory.addItem("Red Fruit", 20);
@@ -77,6 +93,12 @@ public class GameplayController extends BaseController implements Initializable 
      */
     public void setStatusController(GameplayAnimationController statusController) {
         this.statusController = statusController;
+
+        // If chao is already set, pass it to statusController
+        if(this.chao != null && this.statusController != null){
+            this.statusController.setChao(this.chao);
+        }
+
     }
 
     /**
@@ -86,8 +108,10 @@ public class GameplayController extends BaseController implements Initializable 
      */
     public void setChao(Chao chao) {
         this.chao = chao;
-
-        // Update the status controller if available
+        if(nameLabel != null) {
+            nameLabel.setText(chao.getName());
+        }
+        // Pass chao to status controller if it's ready
         if (statusController != null) {
             statusController.setChao(chao);
         }
@@ -156,8 +180,11 @@ public class GameplayController extends BaseController implements Initializable 
     @FXML
     public void vetChao() {
         if (isInteractionAllowed("VET")) {
-            Commands.vet(chao);
-
+            String commandResult = Commands.vet(chao);
+            if (commandResult != null) {
+                displayMessage(commandResult, 2.0);
+                return;
+            }
             // Update UI and possibly deduct points
             if (statusController != null) {
                 statusController.updateStatusBars();
@@ -340,7 +367,7 @@ public class GameplayController extends BaseController implements Initializable 
     //gifts a tv
     @FXML
     public void giftTV() {
-        giftItem("T.V.");
+        giftItem("Tv");
     }
 
     /**
@@ -410,54 +437,72 @@ public class GameplayController extends BaseController implements Initializable 
         // Then check if we have the item in inventory
         if (inventory.getItemCount(fruitName) <= 0) {
             displayMessage("No " + fruitName + " available!", 2.0);
+            //TODO: play sound
             return;
         }
 
+        if (statusController == null || fruitAnimation == null || fruitImageView == null) {
+            System.err.println("Cannot feed fruit: Controller or animation components not initialized.");
+            return;
+        }
+
+        FruitType currentFruitType = getFruitTypeFromName(fruitName);
+        if (currentFruitType != null) {
+            fruitAnimation.changeFruitType(currentFruitType); // Makes view visible and starts animation
+        }
+        statusController.showHappyAnimation();
+
         // If we reach here, both Chao state and inventory allow feeding
         Item fruit = new Item(fruitName);
-
-        // Store current alignment and type
         int previousAlignment = chao.getAlignment();
         ChaoType previousType = chao.getType();
+        boolean evolutionTriggered = false;
 
         if (isSpecial) {
-            Commands.feedSpecialFruit(chao, fruit);
+            Commands.feedSpecialFruit(chao, fruit); // This applies stats/alignment
 
-            // Check if Hero fruit pushed alignment over the Hero threshold
+            // Check for evolution AFTER applying the command
             if (fruitName.equals("Hero Fruit") && previousAlignment < 7 && chao.getAlignment() >= 7) {
                 triggerHeroEvolution();
-                inventory.removeItem(fruitName);
-                displayMessage(chao.getName() + " is evolving into a Hero Chao!", 3.0);
-                return; // Skip normal processing since evolution is triggered
-            }
-
-            // Check if Dark fruit pushed alignment over the Dark threshold
-            if (fruitName.equals("Dark Fruit") && previousAlignment > -7 && chao.getAlignment() <= -7) {
+                evolutionTriggered = true;
+            } else if (fruitName.equals("Dark Fruit") && previousAlignment > -7 && chao.getAlignment() <= -7) {
                 triggerDarkEvolution();
-                inventory.removeItem(fruitName);
-                displayMessage(chao.getName() + " is evolving into a Dark Chao!", 3.0);
-                return; // Skip normal processing since evolution is triggered
+                evolutionTriggered = true;
             }
-
-            // If no evolution was triggered but the alignment changed significantly,
-            // we need to manually check if the type should change
-            if (previousType != chao.getType() && statusController != null) {
-                chao.evolve(); // Make sure type updates based on alignment
+            // If no immediate evolution, check if type changed due to alignment shift
+            else if (previousType != chao.getType() && !evolutionTriggered) {
+                chao.evolve(); // Ensure Chao model type is updated
                 statusController.updateChaoType(chao.getType());
             }
 
-        } else {
+        } else { // Regular fruit
             Commands.feed(chao, fruit);
         }
 
+        // Update Inventory and Score
         inventory.removeItem(fruitName);
-
-        // Update UI and show animation
-        if (statusController != null) {
-            statusController.updateStatusBars();
+        if (!evolutionTriggered) {
             score.updateScore(5);
             updateScoreUI(score.getScore());
-            statusController.showHappyAnimation();
+        }
+        // Update status bars
+        statusController.updateStatusBars();
+    }
+
+    /**
+     * Helper method to convert fruit name string to FruitType enum.
+     *
+     * @param fruitName Name like "Red Fruit", "Hero Fruit"
+     * @return Corresponding FruitType or null if not found
+     */
+    private FruitType getFruitTypeFromName(String fruitName) {
+        switch (fruitName) {
+            case "Red Fruit": return FruitType.RED;
+            case "Blue Fruit": return FruitType.BLUE;
+            case "Green Fruit": return FruitType.GREEN;
+            case "Hero Fruit": return FruitType.HERO;
+            case "Dark Fruit": return FruitType.DARK;
+            default: return null;
         }
     }
 
@@ -495,92 +540,31 @@ public class GameplayController extends BaseController implements Initializable 
      * @param durationSeconds How long to show the message (in seconds)
      */
     public void displayMessage(String message, double durationSeconds) {
-        // First print to console as a fallback
-        System.out.println(message);
+        System.out.println(message); // Keep console fallback
 
-        try {
-            // Only attempt UI updates if we're in a properly initialized state
-            if (mainContainer != null && mainContainer.getScene() != null) {
-                // Check if we need to create the label
-                if (messageLabel == null) {
-                    messageLabel = new Label();
-                    messageLabel.setStyle("-fx-background-color: rgba(0,0,0,0.8); -fx-text-fill: white; " +
-                            "-fx-padding: 10 15; -fx-background-radius: 5; " +
-                            "-fx-font-size: 14px; -fx-font-weight: bold;");
-                    messageLabel.setManaged(false); // So it doesn't affect layout
-                    messageLabel.setVisible(false);
-                }
-
-                // Set the message text
+        // messageLabel should be injected by FXML
+        if (messageLabel != null) {
+            // Ensure UI updates happen on the JavaFX Application Thread
+            javafx.application.Platform.runLater(() -> {
                 messageLabel.setText(message);
-
-                // Add to scene if not already there
-                if (!mainContainer.getChildren().contains(messageLabel)) {
-                    mainContainer.getChildren().add(messageLabel);
-                    messageLabel.setLayoutX(mainContainer.getWidth() - 250); // Position in bottom right
-                    messageLabel.setLayoutY(mainContainer.getHeight() - 100);
-                }
-
-                // Make visible
                 messageLabel.setVisible(true);
 
-                // Create timeline to hide it after duration
+                // Stop existing timeline if it's running
                 if (messageTimeline != null) {
                     messageTimeline.stop();
                 }
 
+                // Create timeline to hide the label after duration
                 messageTimeline = new Timeline(
                         new KeyFrame(Duration.seconds(durationSeconds), e -> {
                             messageLabel.setVisible(false);
                         })
                 );
                 messageTimeline.play();
-            }
-        } catch (Exception e) {
-            // If anything goes wrong, we still have the console output
-            System.err.println("Error displaying message in UI: " + e.getMessage());
+            });
+        } else {
+            System.err.println("Error: messageLabel is null. Check FXML definition.");
         }
-    }
-
-    /**
-     * Creates the message label if it doesn't exist in the FXML
-     */
-    private void createMessageLabel() {
-        messageLabel = new Label();
-        messageLabel.setVisible(false);
-        messageLabel.setManaged(false);
-        messageLabel.setMouseTransparent(true);
-
-        // Set it to appear above other elements
-        StackPane.setAlignment(messageLabel, javafx.geometry.Pos.BOTTOM_RIGHT);
-        StackPane.setMargin(messageLabel, new javafx.geometry.Insets(0, 20, 20, 0));
-    }
-
-    public static void showGameMessage(String message) {
-        // This is a static method that will be called from Commands
-        // We need to get the active controller instance
-        System.out.println(message);
-//        try {
-//            // Try to get the current scene
-//            Scene scene = javafx.stage.Stage.getWindows().stream()
-//                    .filter(window -> window instanceof javafx.stage.Stage)
-//                    .map(window -> ((javafx.stage.Stage) window).getScene())
-//                    .findFirst()
-//                    .orElse(null);
-//
-//            if (scene != null) {
-//                GameplayController controller = (GameplayController) scene.getUserData();
-//                if (controller != null) {
-//                    // Use Platform.runLater to ensure UI updates happen on JavaFX thread
-//                    javafx.application.Platform.runLater(() -> {
-//                        controller.displayMessage(message, 2.5); // Show for 2.5 seconds
-//                    });
-//                }
-//            }
-//        } catch (Exception e) {
-//            // Fallback to console if something went wrong
-//            System.out.println(message);
-//        }
     }
 
     /**

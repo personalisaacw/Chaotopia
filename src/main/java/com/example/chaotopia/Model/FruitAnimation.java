@@ -3,39 +3,21 @@ package com.example.chaotopia.Model;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-/**
- * Manages animation sequences for Fruits in the Chaotopia application.
- * This class handles the automatic cycling through a series of sprite images
- * to create smooth animation effects for fruits.
- *
- * <p>The animation cycles through frames at a configurable speed, displaying each frame
- * before advancing to the next one.</p>
- *
- * @author Rosaline Scully
- */
+
 public class FruitAnimation {
 
-    /** The ImageView component that will display the animated fruit */
+
     private ImageView fruitView;
-
-    /** Tracks the current frame number in the animation sequence */
     private int currentFrame = 1;
-
-    /** The total number of frames in the animation sequence */
-    private final int totalFrames = 6; // All fruits have 6 frames (6th is blank)
-
-    /** The type of Fruit being animated */
+    private final int totalFrames = 6;
     private FruitType fruitType;
-
-    /** The Timeline that controls the animation sequence */
     private Timeline timeline;
-
-    /** The animation speed in seconds per frame */
-    private double frameSpeed = 0.2;
+    private double frameSpeed = 0.2; // 0.2 seconds per frame
 
     /**
      * Constructs a new FruitAnimation instance.
@@ -45,30 +27,35 @@ public class FruitAnimation {
      * @param fruitType The type of Fruit being animated
      */
     public FruitAnimation(ImageView fruitView, FruitType fruitType) {
+        if (fruitView == null) {
+            throw new IllegalArgumentException("ImageView cannot be null for FruitAnimation");
+        }
         this.fruitView = fruitView;
         this.fruitType = fruitType;
-
-        // Initialize the timeline with the appropriate frame update logic
         initializeTimeline();
-
-        // No scaling needed
     }
 
     /**
-     * Initializes the animation timeline.
+     * Initializes the animation timeline and adds the onFinished handler.
      */
     private void initializeTimeline() {
-        this.timeline = new Timeline(new KeyFrame(Duration.seconds(frameSpeed), event -> updateFrame()));
-        timeline.setCycleCount(totalFrames); // Only run through all frames once
-    }
+        // Reset frame count for initialization/re-initialization
+        this.currentFrame = 1;
 
-    /**
-     * Gets the total number of frames in the animation.
-     *
-     * @return The total frame count
-     */
-    public int getTotalFrames() {
-        return totalFrames;
+        this.timeline = new Timeline(new KeyFrame(Duration.seconds(frameSpeed), event -> updateFrame()));
+        timeline.setCycleCount(totalFrames); // Run exactly 6 times (for frames 1-6)
+
+
+        timeline.setOnFinished(event -> {
+            Platform.runLater(() -> {
+                if (fruitView != null) {
+                    fruitView.setVisible(false);
+                    fruitView.setImage(null);
+                }
+                this.currentFrame = 1;
+            });
+        });
+
     }
 
     /**
@@ -76,99 +63,90 @@ public class FruitAnimation {
      * This method is called by the timeline at regular intervals.
      */
     private void updateFrame() {
+        // Check if fruitView is still valid (might be nullified if disposed elsewhere)
+        if (fruitView == null) {
+            if(timeline != null) timeline.stop(); // Stop if view is gone
+            return;
+        }
         try {
-            // For the 6th frame, display nothing (clear the image)
+            // Frame 6 is blank
             if (currentFrame == 6) {
                 fruitView.setImage(null);
             } else {
-                // Generate the path to the current frame's image using a folder structure
-                // Format: /fruits/FRUITTYPE/frame1.png
                 String imagePath = String.format("/com/example/chaotopia/fruits/%s/frame%d.png",
                         fruitType.getResourceName(),
                         currentFrame);
-
-                // Load the image
                 Image frameImage = new Image(getClass().getResourceAsStream(imagePath));
-
-                // Update the image view
                 fruitView.setImage(frameImage);
             }
-
-            // Move to the next frame
-            currentFrame++;
-        } catch (Exception e) {
-            System.err.println("Error loading fruit animation frame: " + e.getMessage());
+            currentFrame++; // Increment frame *after* using it
+        } catch (NullPointerException npe) {
+            System.err.println("Error loading fruit animation frame: Resource not found. Check path and image existence.");
             System.err.println("Attempted path: " +
                     "/com/example/chaotopia/fruits/" +
-                    fruitType.getResourceName() + "/frame" +
-                    currentFrame + ".png");
+                    (fruitType != null ? fruitType.getResourceName() : "null") + "/frame" +
+                    (currentFrame) + ".png"); // Use currentFrame before increment
+            if(timeline != null) timeline.stop(); // Stop animation on error
+        } catch (Exception e) {
+            System.err.println("Error loading fruit animation frame: " + e.getMessage());
             e.printStackTrace();
+            if(timeline != null) timeline.stop(); // Stop animation on error
         }
     }
 
     /**
-     * Starts the animation.
-     * The animation will cycle through all frames repeatedly until stopped.
-     * If the animation is already running, calling this method has no effect.
+     * Starts the animation from the beginning.
+     * The animation will play once through all frames.
+     * If the animation is already running, it might restart or behave unexpectedly depending on FX version,
+     * it's safer to ensure it's stopped first if needed, but changeFruitType handles this.
      */
     public void startAnimation() {
-        timeline.play();
-    }
-
-    /**
-     * Stops the animation.
-     * The current frame will remain displayed in the ImageView.
-     * If the animation is already stopped, calling this method has no effect.
-     */
-    public void stopAnimation() {
-        timeline.stop();
-    }
-
-    /**
-     * Changes the Fruit type being animated.
-     * This allows switching between different Fruit types without creating a new FruitAnimation instance.
-     *
-     * @param fruitType The new Fruit type
-     */
-    public void changeFruitType(FruitType fruitType) {
-        // Stop the current animation
-        timeline.stop();
-
-        // Update the Fruit type
-        this.fruitType = fruitType;
-        this.currentFrame = 1;
-
-        // Restart the animation
-        timeline.play();
-    }
-
-    /**
-     * Changes the animation speed.
-     *
-     * @param frameSpeed The new speed in seconds per frame
-     */
-    public void setAnimationSpeed(double frameSpeed) {
-        this.frameSpeed = frameSpeed;
-
-        // Recreate the timeline with the new speed
-        boolean wasPlaying = timeline.getStatus() == Animation.Status.RUNNING;
-        timeline.stop();
-        initializeTimeline();
-
-        // Resume the animation if it was playing
-        if (wasPlaying) {
-            timeline.play();
+        if (timeline != null && fruitView != null) {
+            // Ensure starting from frame 1 and view is visible
+            currentFrame = 1;
+            fruitView.setVisible(true);
+            timeline.playFromStart(); // Use playFromStart to ensure it begins at frame 1
         }
     }
 
     /**
-     * Gets the current Fruit type.
-     *
-     * @return The current Fruit type
+     * Stops the animation immediately.
+     * The current frame might remain displayed. Consider hiding manually if needed.
      */
-    public FruitType getFruitType() {
-        return fruitType;
+    public void stopAnimation() {
+        if (timeline != null) {
+            timeline.stop();
+        }
+        // Optionally hide the view immediately when stopped externally
+        // if (fruitView != null) {
+        //     Platform.runLater(() -> fruitView.setVisible(false));
+        // }
     }
 
 
+    /**
+     * Changes the Fruit type being animated and starts the animation from the beginning.
+     *
+     * @param newFruitType The new Fruit type
+     */
+    public void changeFruitType(FruitType newFruitType) {
+        if (timeline == null || fruitView == null) return; // Safety check
+
+        timeline.stop(); // Stop any current animation
+
+        this.fruitType = newFruitType;
+        this.currentFrame = 1; // Reset frame count
+
+        fruitView.setVisible(true);
+        updateFrame();
+        timeline.playFromStart();
+    }
+
+    /**
+     * Gets the total duration of one animation cycle.
+     * @return Duration object
+     */
+    public Duration getAnimationDuration() {
+        return Duration.seconds(totalFrames * frameSpeed);
+    }
 }

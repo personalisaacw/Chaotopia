@@ -4,13 +4,13 @@ package com.example.chaotopia.Model;
  * An object measuring the player's care for the Chao.
  * <br><br>
  * The score increases as the player performs actions and otherwise
- * raises their Chao. It serves as gauge of the player's total progress
+ * raises their Chao. It serves as a gauge of the player's total progress
  * in the game.
  * <br><br>
  * The Score is retrieved with {@link #getScore} and incremented
  * with {@link #setScore}.
  *
- * @version 1.0.0
+ * @version 1.0.1
  * @author Justin Rowbotham
  */
 public class Score {
@@ -22,7 +22,7 @@ public class Score {
      * @param score The initial score.
      */
     public Score(int score) {
-        this.score = score;
+        this.score = Math.max(score, 0); // Ensure non-negative score
     }
 
     /**
@@ -38,12 +38,14 @@ public class Score {
      * @param score the new score to implement
      */
     public void setScore(int score) {
-        this.score = score;
+        this.score = Math.max(score, 0); // Prevent negative score
     }
 
     /**
      * Updater method that updates the current score.
      * @param update the amount to increase or decrease by
      */
-    public void updateScore(int update) { this.score += update; }
+    public void updateScore(int update) {
+        this.score = Math.max(this.score + update, 0); // Ensure score stays non-negative
+    }
 }

@@ -3,6 +3,7 @@ package com.example.chaotopia.Controller;
 import com.example.chaotopia.Model.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -440,64 +441,69 @@ public class GameplayAnimationController implements Initializable {
 
         Status status = chao.getStatus();
         State currentState = chao.getState();
-        State newState;
+        State newState = currentState; // Start assuming no change
 
         // Determine the highest priority state based on current stats
         if (status.isDead()) {
             newState = State.DEAD;
         } else if (isSleeping) {
-            // Sleep gets highest priority when sleep flag is set
-            newState = State.SLEEPING;
-
-            // Check if sleep is at 100% to wake up
+            // ... (existing logic for when already sleeping) ...
+            newState = State.SLEEPING; // Keep sleeping state
             if (status.getSleep() >= 100) {
+                // Wake up logic...
                 isSleeping = false;
-
-                // Stop the sleep increase timeline if it's running
+                enableAllInteractions(true);
+                // Determine next state after waking up...
+                if (status.getHappiness() <= 0) newState = State.ANGRY;
+                else if (status.getFullness() <= 0) newState = State.HUNGRY;
+                else newState = State.NORMAL;
+                // Stop sleep increase timeline if running
                 if (sleepIncreaseTimeline != null && sleepIncreaseTimeline.getStatus() == Timeline.Status.RUNNING) {
                     sleepIncreaseTimeline.stop();
                 }
-
-                enableAllInteractions(true);
-
-                // After waking up, determine next highest priority state
-                if (status.getHappiness() <= 0){
-                    newState = State.ANGRY;
-                }
-                else if (status.getFullness() <= 0) {
-                    newState = State.HUNGRY;
-                } else {
-                    newState = State.NORMAL;
-                }
             }
-        } else if (status.getSleep() <= 0) {
-            // Force sleep when sleep drops to 0
+
+        } else if (status.getSleep() <= 0) { // Check if sleep just dropped
+            // Force sleep when sleep drops to 0 or below
             newState = State.SLEEPING;
+
+            System.out.println("Sleep hit <= 0. Applying health penalty.");
+            status.adjustHealth(-15);
+
+            // Update health bar immediately after penalty application
+            // Ensure update happens on the JavaFX Application Thread
+            Platform.runLater(() -> {
+                if (healthBar != null) {
+                    healthBar.updateValue(status.getHealth());
+                }
+            });
+
             isSleeping = true;
             enableAllInteractions(false);
-
-            // Start gradual sleep increase
             startSleepIncrease();
+
         } else if (currentState == State.HAPPY && tempAnimationTimer != null &&
                 tempAnimationTimer.getStatus() == Timeline.Status.RUNNING) {
-            // Keep the HAPPY state if animation timer is active
+            // Return here to prevent overwriting HAPPY state prematurely
             return;
         } else if (status.getHappiness() <= 0 || (currentState == State.ANGRY && status.getHappiness() < 50)) {
             newState = State.ANGRY;
-        } else if(status.getFullness() <= 0){
+        } else if (status.getFullness() <= 0) {
             newState = State.HUNGRY;
-        }else {
+        } else {
             newState = State.NORMAL;
         }
 
         // If the state needs to change, update it immediately
         if (newState != currentState) {
             chao.setState(newState);
-            chaoAnimation.changeState(newState);
-
-            // Always restart animation to ensure it shows immediately
-            chaoAnimation.stopAnimation();
-            chaoAnimation.startAnimation();
+            // Check chaoAnimation is not null before using
+            if(chaoAnimation != null){
+                chaoAnimation.changeState(newState);
+                // Always restart animation to ensure it shows immediately
+                chaoAnimation.stopAnimation();
+                chaoAnimation.startAnimation();
+            }
         }
     }
 

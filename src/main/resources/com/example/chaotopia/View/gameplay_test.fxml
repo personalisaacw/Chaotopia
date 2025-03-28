@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
 
 <BorderPane fx:id="mainContainer" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
@@ -9,26 +11,42 @@
             prefHeight="600.0" prefWidth="800.0">
     <top>
         <HBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
-            <Label fx:id="nameLabel" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
-            <Label fx:id="scoreLabel" style="-fx-font-size: 16px;" />
+            <Label fx:id="nameLabel" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Chao Name"/>
+            <Label fx:id="scoreLabel" style="-fx-font-size: 16px;" text="SCORE: 0"/>
         </HBox>
     </top>
 
     <center>
-        <!-- Use a StackPane to enable overlays -->
         <StackPane fx:id="centerStackPane">
-            <VBox alignment="CENTER" spacing="20">
-                <!-- Chao image view and status bars -->
+            <VBox alignment="CENTER" spacing="20" mouseTransparent="true">
+                <!-- Container for Chao Image -->
                 <StackPane fx:id="chaoImageContainer" prefHeight="200" prefWidth="200"
-                           style="-fx-background-color: #ccaa88; -fx-border-color: #886644; -fx-border-width: 3; -fx-border-radius: 5;" />
-
+                           style="-fx-background-color: #ccaa88; -fx-border-color: #886644; -fx-border-width: 3; -fx-border-radius: 5;">
+                    <!-- Define Chao ImageView HERE -->
+                    <ImageView fx:id="chaoImageView" fitWidth="150" fitHeight="150" preserveRatio="true" />
+                </StackPane>
+                <!-- Status Bars Container -->
                 <VBox fx:id="statusBarsContainer" spacing="10" alignment="CENTER" />
             </VBox>
+
+            <!-- Message Label -->
+            <Label fx:id="messageLabel" text="" visible="false" style="..." StackPane.alignment="BOTTOM_RIGHT" mouseTransparent="true">
+                <StackPane.margin><Insets bottom="20.0" right="20.0" /></StackPane.margin>
+            </Label>
+
+            <!-- Fruit ImageView -->
+            <ImageView fx:id="fruitImageView" fitWidth="80" fitHeight="80" preserveRatio="true"
+                       visible="false" mouseTransparent="true" StackPane.alignment="CENTER">
+                <StackPane.margin><Insets bottom="50.0" /></StackPane.margin>
+            </ImageView>
+
         </StackPane>
     </center>
 
     <bottom>
         <VBox spacing="15" alignment="CENTER" style="-fx-padding: 15;">
+            <!-- Ensure ALL these HBoxes and Buttons are present and NOT commented out -->
+
             <HBox spacing="10" alignment="CENTER">
                 <Button text="Play" onAction="#playChao" />
                 <Button text="Sleep" onAction="#sleepChao" />
@@ -58,6 +76,7 @@
                 <Button text="Save Game" onAction="#saveGame" />
                 <Button text="Main Menu" onAction="#goToMainMenu" />
             </HBox>
+
         </VBox>
     </bottom>
 </BorderPane>
