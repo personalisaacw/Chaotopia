@@ -11,5 +11,6 @@ public enum State {
     HAPPY,
     ANGRY,
     HUNGRY,
-    DEAD
+    DEAD,
+    EVOLVING
 }
