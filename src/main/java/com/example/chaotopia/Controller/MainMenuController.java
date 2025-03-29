@@ -18,6 +18,6 @@ public class MainMenuController extends BaseController {
     }
 
     public void parentalControls(ActionEvent e) throws IOException {
-        switchScene(e, "/com/example/chaotopia/View/ParentalControls.fxml");
+        switchScene(e, "/com/example/chaotopia/View/ParentalPasswordCheck.fxml");
     }
 }
