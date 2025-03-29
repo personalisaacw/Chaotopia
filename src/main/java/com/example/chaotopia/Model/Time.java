@@ -28,7 +28,7 @@ public class Time {
      *
      * @param gamefile the game file to load from
      */
-    public Time(Gamefile gamefile) {
+    public Time(GameFile gamefile) {
         sessionPlaytime = 0;
         secondStart = System.nanoTime();
     }
@@ -62,7 +62,7 @@ public class Time {
      *
      * @param gamefile
      */
-    public void storeTime(Gamefile gamefile) {
+    public void storeTime(GameFile gamefile) {
         gamefile.adjustPlaytime(sessionPlaytime);
         long playtime = gamefile.getPlaytime();
         gamefile.increaseNumSessions();

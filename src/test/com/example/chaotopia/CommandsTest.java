@@ -32,7 +32,7 @@ class CommandsTest {
         Status status = new Status(90, 90, 60, 90);
         Chao chao = new Chao(0, "Bingy", ChaoType.RED, State.ANGRY,
                 status);
-        Item item = new Item("Red Fruit");
+        Item item = new Item("Green Fruit");
         Commands.feed(chao, item);
         assertSame(60, chao.getStatus().getFullness());
 
