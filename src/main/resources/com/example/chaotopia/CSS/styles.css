@@ -67,8 +67,8 @@
     -fx-background-position: center center;
     -fx-background-color: transparent;
     -fx-cursor: hand;
-    -fx-min-width: 40px;
-    -fx-min-height: 40px;
+    -fx-min-width: 45px;
+    -fx-min-height: 45px;
     -fx-content-display: GRAPHIC_ONLY;
     -fx-alignment: CENTER;
     -fx-padding: 0;
@@ -78,13 +78,27 @@
     -fx-background-image: url("/com/example/chaotopia/Assets/Buttons/ButtonSquareHovered.png");
 }
 
-/* Progress Bars + Status Bars */
-/* Basic ProgressBar styling */
+.message-label {
+    -fx-font-family: "Upheaval TT -BRK-";
+    -fx-font-size: 18px; /* Or desired size */
+    -fx-text-fill: white; /* White text usually good against forest */
+    -fx-font-weight: bold;
+     -fx-background-color: rgba(0, 0, 0, 0.5);
+     -fx-background-radius: 5;
+     -fx-padding: 5px 10px;
+    /* Add text shadow */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.9), 2, 0.0, 0, 1);
+}
+
+ /*Progress Bars + Status Bars */
+
 .progress-bar {
     -fx-background-color: white;
     -fx-background-radius: 12px;
     -fx-background-insets: 0;
     -fx-padding: 0;
+    -fx-min-width: 50;
+    -fx-pref-width: 150;
 }
 
 /* Track - the background part of the progress bar */
@@ -92,9 +106,6 @@
     -fx-background-color: #272744;     /* Background color of the track */
     -fx-background-radius: 12px;          /* Corner radius of the track */
     -fx-background-insets: 0;          /* Padding inside the track */
-    -fx-border-color: #000000;         /* Border color around the track */
-    -fx-border-width: 10px;             /* Border thickness */
-    -fx-border-radius: 0;              /* Border corner radius */
 }
 
 /* Bar - the filled part of the progress bar */
@@ -102,7 +113,7 @@
     -fx-background-color: #f6e868;     /* Color of the progress indicator */
     -fx-background-radius: 12px;          /* Corner radius of the bar */
     -fx-background-insets: 0;          /* Padding inside the bar */
-    -fx-padding: 4px;                  /* Padding around the bar */
+    -fx-padding: 0px;                  /* Padding around the bar */
 }
 
 /* Indeterminate bar animation styling */
@@ -129,6 +140,56 @@
     -fx-font-size: 12px;
 }
 
+.low-status-bar > .bar {
+    -fx-background-color: red;
+    animation: flashRed 1s infinite;
+}
+
+@keyframes flashRed {
+  0%, 100% { -fx-opacity: 1; }
+  50% { -fx-opacity: 0.5; }
+}
+
+.stat-label-overlay {
+    -fx-font-family: "Upheaval TT -BRK-";
+    -fx-font-size: 11px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 0;
+    -fx-mouse-transparent: true;
+}
+
+.stat-label {
+    -fx-font-family: "Upheaval TT -BRK-";
+    -fx-font-size: 14px;
+    -fx-padding: 0 0 0 5px;
+    -fx-min-width: 30;
+    -fx-translate-x: -150px;
+    -fx-translate-y: 0px;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 1, 0.0, 0, 1);
+    -fx-max-width: 30;
+}
+
+/*Inventory*/
+.inventory-slot {
+    -fx-alignment: CENTER; /* Center the button within the slot */
+}
+/* Style for the count label */
+.inventory-count-label {
+    -fx-font-family: "Upheaval TT -BRK-";
+    -fx-font-size: 14px; /* Make it large */
+    -fx-font-weight: bold;
+    -fx-text-fill: white; /* White text */
+    -fx-background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent dark background */
+    -fx-background-radius: 8px; /* Rounded corners for background */
+    -fx-padding: 1px 5px; /* Padding inside the label background */
+    -fx-alignment: CENTER; /* Center text within label */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 2, 0.0, 0, 1); /* Text shadow */
+    -fx-mouse-transparent: true; /* Allow clicks to pass through to button */
+    -fx-translate-x: -3px; /* Shift slightly left */
+    -fx-translate-y: 3px;  /* Shift slightly down */
+}
 /* Game Screen - Specifics  */
 
 .time-board {
@@ -187,3 +248,4 @@
     -fx-wrap-text: true;
     -fx-max-width: 100px;
 }
+

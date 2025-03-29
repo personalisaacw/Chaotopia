@@ -279,9 +279,8 @@ public class ChaoAnimation {
             switch (chaoType) {
                 case DARK:
                 case HERO:
-                    // Scale up by 75% (160%)
-                    characterView.setScaleX(1.60);
-                    characterView.setScaleY(1.60);
+                    characterView.setScaleX(1.25);
+                    characterView.setScaleY(1.25);
                     break;
                 case RED:
                 case GREEN:
