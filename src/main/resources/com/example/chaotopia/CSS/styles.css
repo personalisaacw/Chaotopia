@@ -78,6 +78,13 @@
     -fx-background-image: url("/com/example/chaotopia/Assets/Buttons/ButtonSquareHovered.png");
 }
 
+.text-field {
+    -fx-background-color: #c38f6e;
+    -fx-border-color: #272744;
+    -fx-border-radius: 5;
+    -fx-prompt-text-fill: #272744;
+}
+
 /* Progress Bars + Status Bars */
 /* Basic ProgressBar styling */
 .progress-bar {
