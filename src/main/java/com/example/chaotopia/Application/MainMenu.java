@@ -1,5 +1,6 @@
 package com.example.chaotopia.Application;
 
+import com.example.chaotopia.Controller.BaseController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,6 +13,7 @@ public class MainMenu extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/chaotopia/View/MainMenu.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
+        BaseController.addCSS(scene);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Main Menu");
         primaryStage.show();

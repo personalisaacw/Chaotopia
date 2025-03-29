@@ -30,7 +30,7 @@ public class ItemTest {
         assertEquals(20, duck.getEffectValue());
 
         // Test TV item
-        Item tv = new Item("Tv");
+        Item tv = new Item("T.V.");
         assertEquals("T.V.", tv.getName());
         assertEquals(ItemType.GIFT, tv.getItemType());
         assertEquals("This gift item boosts your pet's happiness by 30 points.", tv.getDescription());
@@ -52,17 +52,17 @@ public class ItemTest {
         Item blueFruit = new Item("Blue Fruit");
         assertEquals("Blue Fruit", blueFruit.getName());
         assertEquals(ItemType.FOOD, blueFruit.getItemType());
-        assertEquals("This food item fills your pet's stomach by 30 points. It may also have special effects when fed to a blue Chao.", blueFruit.getDescription());
+        assertEquals("This food item fills your pet's stomach by 40 points. It may also have special effects when fed to a blue Chao.", blueFruit.getDescription());
         assertEquals("A burst of refreshing flavor straight from the blue skies! Your pet will love it!", blueFruit.getFlavorText());
-        assertEquals(30, blueFruit.getEffectValue());
+        assertEquals(40, blueFruit.getEffectValue());
 
         // Test Red Fruit
         Item redFruit = new Item("Red Fruit");
         assertEquals("Red Fruit", redFruit.getName());
         assertEquals(ItemType.FOOD, redFruit.getItemType());
-        assertEquals("This food item fills your pet's stomach by 30 points. It may also have special effects when fed to a red Chao.", redFruit.getDescription());
+        assertEquals("This food item fills your pet's stomach by 50 points. It may also have special effects when fed to a red Chao.", redFruit.getDescription());
         assertEquals("Ripe and juicy with a hint of spice! Your pet can't resist this tasty treat!", redFruit.getFlavorText());
-        assertEquals(30, redFruit.getEffectValue());
+        assertEquals(50, redFruit.getEffectValue());
     }
 
     @Test

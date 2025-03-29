@@ -6,6 +6,7 @@ import java.util.ArrayList;
  * The Status class represents the vital statistics of a Chao character.
  * It tracks sleep, health, happiness, and fullness values, ensuring they
  * remain within valid ranges (0-100).
+ * @author Rosaline Scully
  */
 public class Status {
     private int sleep;

@@ -2,6 +2,7 @@ package com.example.chaotopia.Model;
 
 /**
  * Defines the different states a Chao can be in at any given time.
+ * @author Rosaline Scully
  */
 public enum State {
     NORMAL,
@@ -10,5 +11,6 @@ public enum State {
     HAPPY,
     ANGRY,
     HUNGRY,
-    DEAD
+    DEAD,
+    EVOLVING
 }

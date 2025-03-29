@@ -1,0 +1,251 @@
+/* General Containers*/
+
+.default-background {
+    -fx-background-image: url("/com/example/chaotopia/Assets/Background/BaseBackground.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+.game-default-background {
+    -fx-background-image: url("/com/example/chaotopia/Assets/Background/GameBackground.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: 80% 210%;
+}
+
+.container {
+    -fx-padding: 32px 32px;
+}
+
+.title-board {
+    -fx-background-image: url("/com/example/chaotopia/Assets/Board/TitleBoard.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+    -fx-background-position: center center;
+    -fx-padding: 24px 32px;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+}
+
+.btn {
+    -fx-background-image: url("/com/example/chaotopia/Assets/Buttons/Button.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 12px 24px;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+    -fx-max-width: 250px;
+    -fx-graphic-text-gap: 10;
+}
+
+.btn:hover {
+    -fx-background-image: url("/com/example/chaotopia/Assets/Buttons/ButtonHover.png");
+}
+
+.btn-square {
+    -fx-background-image: url("/com/example/chaotopia/Assets/Buttons/ButtonSquare.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-min-width: 64px;
+    -fx-min-height: 64px;
+    -fx-content-display: GRAPHIC_ONLY;
+    -fx-alignment: CENTER;
+    -fx-padding: 0;
+}
+
+.btn-square-sm {
+    -fx-background-image: url("/com/example/chaotopia/Assets/Buttons/ButtonSquare.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-min-width: 45px;
+    -fx-min-height: 45px;
+    -fx-content-display: GRAPHIC_ONLY;
+    -fx-alignment: CENTER;
+    -fx-padding: 0;
+}
+
+.btn-square:hover, .btn-square-sm:hover {
+    -fx-background-image: url("/com/example/chaotopia/Assets/Buttons/ButtonSquareHovered.png");
+}
+
+.message-label {
+    -fx-font-family: "Upheaval TT -BRK-";
+    -fx-font-size: 18px; /* Or desired size */
+    -fx-text-fill: white; /* White text usually good against forest */
+    -fx-font-weight: bold;
+     -fx-background-color: rgba(0, 0, 0, 0.5);
+     -fx-background-radius: 5;
+     -fx-padding: 5px 10px;
+    /* Add text shadow */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.9), 2, 0.0, 0, 1);
+}
+
+ /*Progress Bars + Status Bars */
+
+.progress-bar {
+    -fx-background-color: white;
+    -fx-background-radius: 12px;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-min-width: 50;
+    -fx-pref-width: 150;
+}
+
+/* Track - the background part of the progress bar */
+.progress-bar > .track {
+    -fx-background-color: #272744;     /* Background color of the track */
+    -fx-background-radius: 12px;          /* Corner radius of the track */
+    -fx-background-insets: 0;          /* Padding inside the track */
+}
+
+/* Bar - the filled part of the progress bar */
+.progress-bar > .bar {
+    -fx-background-color: #f6e868;     /* Color of the progress indicator */
+    -fx-background-radius: 12px;          /* Corner radius of the bar */
+    -fx-background-insets: 0;          /* Padding inside the bar */
+    -fx-padding: 0px;                  /* Padding around the bar */
+}
+
+/* Indeterminate bar animation styling */
+.progress-bar:indeterminate > .bar {
+    -fx-background-color: linear-gradient(to right, #f6e868, #ffb347); /* Gradient for animation */
+}
+
+/* Custom colored progress bars */
+.health-bar > .bar {
+    -fx-background-color: #ff5555;  /* Red for health */
+}
+
+.energy-bar > .bar {
+    -fx-background-color: #55aaff;  /* Blue for energy/mana */
+}
+
+.stamina-bar > .bar {
+    -fx-background-color: #2F5F34;  /* Green for stamina */
+}
+
+/* Styling the progress text if you want to show it */
+.progress-bar > .text {
+    -fx-fill: white;
+    -fx-font-size: 12px;
+}
+
+.low-status-bar > .bar {
+    -fx-background-color: red;
+    animation: flashRed 1s infinite;
+}
+
+@keyframes flashRed {
+  0%, 100% { -fx-opacity: 1; }
+  50% { -fx-opacity: 0.5; }
+}
+
+.stat-label-overlay {
+    -fx-font-family: "Upheaval TT -BRK-";
+    -fx-font-size: 11px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 0;
+    -fx-mouse-transparent: true;
+}
+
+.stat-label {
+    -fx-font-family: "Upheaval TT -BRK-";
+    -fx-font-size: 14px;
+    -fx-padding: 0 0 0 5px;
+    -fx-min-width: 30;
+    -fx-translate-x: -150px;
+    -fx-translate-y: 0px;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 1, 0.0, 0, 1);
+    -fx-max-width: 30;
+}
+
+/*Inventory*/
+.inventory-slot {
+    -fx-alignment: CENTER; /* Center the button within the slot */
+}
+/* Style for the count label */
+.inventory-count-label {
+    -fx-font-family: "Upheaval TT -BRK-";
+    -fx-font-size: 14px; /* Make it large */
+    -fx-font-weight: bold;
+    -fx-text-fill: white; /* White text */
+    -fx-background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent dark background */
+    -fx-background-radius: 8px; /* Rounded corners for background */
+    -fx-padding: 1px 5px; /* Padding inside the label background */
+    -fx-alignment: CENTER; /* Center text within label */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 2, 0.0, 0, 1); /* Text shadow */
+    -fx-mouse-transparent: true; /* Allow clicks to pass through to button */
+    -fx-translate-x: -3px; /* Shift slightly left */
+    -fx-translate-y: 3px;  /* Shift slightly down */
+}
+/* Game Screen - Specifics  */
+
+.time-board {
+    -fx-background-image: url("/com/example/chaotopia/Assets/Board/TimeBoard.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+    -fx-background-position: center center;
+    -fx-padding: 32px 48px;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+}
+
+
+.name-board {
+    -fx-background-image: url("/com/example/chaotopia/Assets/Board/TimeBoard.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+    -fx-background-position: center center;
+    -fx-padding: 24px 24px;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+    -fx-max-width: 300px;
+}
+
+.profile-board {
+    -fx-background-image: url("/com/example/chaotopia/Assets/Board/TitleBoard.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-padding: 8px;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+    -fx-max-width: 400px;
+}
+
+.profile-image-board {
+    -fx-background-image: url("/com/example/chaotopia/Assets/Board/ChaoProfileBoard.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+    -fx-background-position: center center;
+    -fx-padding: 50px;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+    -fx-max-width: 300px;
+}
+
+/* Intended for inventory*/
+.long-board {
+    -fx-background-image: url("/com/example/chaotopia/Assets/Board/LongBoard.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+    -fx-background-position: center center;
+    -fx-padding: 20px;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+    -fx-max-width: 100px;
+}
+

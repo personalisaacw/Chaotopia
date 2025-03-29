@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Stack;
 
 /**
@@ -17,6 +18,8 @@ import java.util.Stack;
  */
 public class BaseController {
     private static Stack<Scene> sceneStack = new Stack<>(); // Static stack to track scenes
+
+    //todo: create a "back to main menu function" that'll pop scenes until you reach main menu
 
     /**
      * Handles the action for the back button. This method pops the previous scene from the
@@ -53,5 +56,10 @@ public class BaseController {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public static void addCSS(Scene scene) {
+        String css = Objects.requireNonNull(BaseController.class.getResource("/com/example/chaotopia/CSS/styles.css")).toExternalForm();
+        scene.getStylesheets().add(css);
     }
 }
