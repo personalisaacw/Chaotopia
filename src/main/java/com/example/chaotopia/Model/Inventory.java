@@ -96,4 +96,11 @@ public class Inventory {
     public void clearInventory() {
         itemQuantities.clear();
     }
+
+    /** Tells you if the inventory is empty
+     * @return true if empty, false otherwise
+     */
+    public boolean isEmpty() {
+        return itemQuantities.isEmpty();
+    }
 }

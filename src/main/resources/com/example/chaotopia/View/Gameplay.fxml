@@ -14,30 +14,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../CSS/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../CSS/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chaotopia.Controller.GameplayController">
    <top>
+      <!-- Top Bar content (Back button, Time, Save button) -->
       <HBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
-             <Button minHeight="50.0" minWidth="50.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="btn-square">
-                 <graphic>
-                     <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                         <Image url="@../Assets/Icon/BackIcon.png" />
-                     </ImageView>
-                 </graphic>
-             </Button>
+            <Button fx:id="backButton" onAction="#goToMainMenu" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="btn-square">
+               <graphic><ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true"><Image url="@../Assets/Icon/BackIcon.png" /></ImageView></graphic>
+            </Button>
             <Region prefHeight="10.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Label styleClass="time-board" stylesheets="@../CSS/styles.css" text="Time:" textFill="#272744">
-               <font>
-                  <Font name="Upheaval TT -BRK-" size="24.0" />
-               </font></Label>
+            <Label fx:id="timeLabel" styleClass="time-board" text="Time: 00:00" textFill="#272744"><font><Font name="Upheaval TT -BRK-" size="24.0" /></font></Label>
             <Region layoutX="77.0" layoutY="10.0" prefHeight="10.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" styleClass="btn-square" stylesheets="@../CSS/styles.css">
-               <graphic>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Assets/Icon/SaveIcon.png" />
-                     </image></ImageView>
-               </graphic>
+            <Button fx:id="saveButton" onAction="#saveGame" mnemonicParsing="false" styleClass="btn-square">
+               <graphic><ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../Assets/Icon/SaveIcon.png" /></image></ImageView></graphic>
             </Button>
          </children>
       </HBox>
@@ -47,193 +36,258 @@
       <String fx:value="default-background" />
    </styleClass>
    <left>
+      <!-- Left Action Buttons (Play, Sleep, etc.) -->
       <VBox alignment="CENTER" prefHeight="426.0" prefWidth="214.0" spacing="12.0" BorderPane.alignment="CENTER">
          <children>
-            <Button alignment="BASELINE_CENTER" graphicTextGap="0.0" mnemonicParsing="false" styleClass="btn" stylesheets="@../CSS/styles.css" text="Play" textFill="#272744">
-               <graphic>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Assets/Icon/PlayIcon.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font name="Upheaval TT -BRK-" size="24.0" />
-               </font>
+            <Button fx:id="playButton" onAction="#playChao" alignment="BASELINE_CENTER" graphicTextGap="0.0" mnemonicParsing="false" styleClass="btn" text="Play" textFill="#272744">
+               <graphic><ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../Assets/Icon/PlayIcon.png" /></image></ImageView></graphic>
+               <font><Font name="Upheaval TT -BRK-" size="24.0" /></font>
             </Button>
-            <Button graphicTextGap="0.0" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" styleClass="btn" text="Sleep" textFill="#272744">
-               <graphic>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Assets/Icon/SleepIcon.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font name="Upheaval TT -BRK-" size="24.0" />
-               </font>
+            <Button fx:id="sleepButton" onAction="#sleepChao" graphicTextGap="0.0" mnemonicParsing="false" styleClass="btn" text="Sleep" textFill="#272744">
+               <graphic><ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../Assets/Icon/SleepIcon.png" /></image></ImageView></graphic>
+               <font><Font name="Upheaval TT -BRK-" size="24.0" /></font>
             </Button>
-            <Button graphicTextGap="0.0" layoutX="10.0" layoutY="51.0" mnemonicParsing="false" styleClass="btn" text="Exercise" textFill="#272744" textOverrun="CLIP">
-               <graphic>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Assets/Icon/BikeIcon.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font name="Upheaval TT -BRK-" size="24.0" />
-               </font>
+            <Button fx:id="exerciseButton" onAction="#exerciseChao" graphicTextGap="0.0" mnemonicParsing="false" styleClass="btn" text="Exercise" textFill="#272744" textOverrun="CLIP">
+               <graphic><ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../Assets/Icon/BikeIcon.png" /></image></ImageView></graphic>
+               <font><Font name="Upheaval TT -BRK-" size="24.0" /></font>
             </Button>
-            <Button graphicTextGap="0.0" layoutX="10.0" layoutY="92.0" mnemonicParsing="false" styleClass="btn" text="Vet" textFill="#272744">
-               <graphic>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Assets/Icon/VetIcon.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font name="Upheaval TT -BRK-" size="24.0" />
-               </font>
+            <Button fx:id="vetButton" onAction="#vetChao" graphicTextGap="0.0" mnemonicParsing="false" styleClass="btn" text="Vet" textFill="#272744">
+               <graphic><ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../Assets/Icon/VetIcon.png" /></image></ImageView></graphic>
+               <font><Font name="Upheaval TT -BRK-" size="24.0" /></font>
             </Button>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" styleClass="btn-square">
-                     <graphic>
-                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Assets/Icon/PetIcon.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
+                  <Button fx:id="petButton" onAction="#petChao" mnemonicParsing="false" styleClass="btn-square">
+                     <graphic><ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../Assets/Icon/PetIcon.png" /></image></ImageView></graphic>
                   </Button>
                   <Region prefHeight="200.0" prefWidth="200.0" />
-                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" styleClass="btn-square">
-                     <graphic>
-                        <ImageView fitHeight="45.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Assets/Icon/BonkIcon.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
+                  <Button fx:id="bonkButton" onAction="#bonkChao" mnemonicParsing="false" styleClass="btn-square">
+                     <graphic><ImageView fitHeight="45.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../Assets/Icon/BonkIcon.png" /></image></ImageView></graphic>
                   </Button>
                </children>
             </HBox>
          </children>
-         <BorderPane.margin>
-            <Insets top="120.0" />
-         </BorderPane.margin>
+         <BorderPane.margin><Insets top="200.0" /></BorderPane.margin>
       </VBox>
    </left>
    <bottom>
+      <!-- Bottom Profile Bar -->
       <StackPane prefHeight="125.0" prefWidth="588.0" styleClass="profile-board" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" styleClass="name-board" text="Chao Name" textFill="#272744" translateY="-80.0">
-               <font>
-                  <Font name="Upheaval TT -BRK-" size="24.0" />
-               </font>
+            <!-- Name Label (remains above) -->
+            <Label fx:id="nameLabel" alignment="CENTER" styleClass="name-board" text="Chao Name" textFill="#272744" translateY="-80.0">
+               <font><Font name="Upheaval TT -BRK-" size="24.0" /></font>
             </Label>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+
+            <!-- Main HBox containing Profile Area and Stats Area -->
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="15.0" alignment="CENTER_LEFT">
                <children>
-                  <StackPane alignment="CENTER_LEFT" styleClass="profile-image-board" HBox.hgrow="NEVER">
+
+                  <VBox alignment="CENTER" minWidth="-Infinity">
                      <children>
-                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
-                           <image>
-                              <Image url="@../sprites/GREEN/NORMAL1.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </StackPane>
-                  <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <HBox alignment="CENTER_LEFT" spacing="24.0">
+                        <StackPane>
                            <children>
-                              <HBox alignment="CENTER" spacing="8.0">
+                              <!-- Profile Image Container -->
+                              <StackPane alignment="CENTER" styleClass="profile-image-board" StackPane.alignment="TOP_CENTER"> <!-- Align container to top -->
                                  <children>
-                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../Assets/Icon/HealthIcon.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ProgressBar progress="0.54" HBox.hgrow="ALWAYS" />
+                                    <ImageView fx:id="profileChaoImageView" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER" />
                                  </children>
-                              </HBox>
-                              <HBox alignment="CENTER" spacing="8.0">
-                                 <children>
-                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../Assets/Icon/HungerIcon.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ProgressBar progress="0.54" HBox.hgrow="ALWAYS" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER" spacing="24.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <HBox alignment="CENTER" spacing="8.0">
-                                 <children>
-                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../Assets/Icon/HappinessIcon.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ProgressBar progress="0.54" HBox.hgrow="ALWAYS" />
-                                    <HBox alignment="CENTER" spacing="8.0">
-                                       <children>
-                                          <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../Assets/Icon/SleepIcon.png" />
-                                             </image>
-                                          </ImageView>
-                                          <ProgressBar progress="0.54" HBox.hgrow="ALWAYS" />
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER" translateY="-10.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" text="Score: 38430" textAlignment="CENTER" textFill="#272744" HBox.hgrow="ALWAYS">
-                                 <font>
-                                    <Font name="Upheaval TT -BRK-" size="18.0" />
-                                 </font>
+                              </StackPane>
+
+                              <!-- Score Label -->
+                              <Label fx:id="scoreLabel" alignment="CENTER" contentDisplay="CENTER" text="Score: 0" textAlignment="CENTER" textFill="#272744"
+                                     StackPane.alignment="BOTTOM_CENTER"> <!-- Align to bottom center -->
+                                 <font><Font name="Upheaval TT -BRK-" size="18.0" /></font>
+                                 <!-- Optional: Use translateY to fine-tune vertical position -->
+                                 <!-- <translateY><Double fx:value="-5.0" /></translateY> -->
+                                 <StackPane.margin><Insets bottom="10.0"/></StackPane.margin> <!-- Add space below score if needed -->
                               </Label>
                            </children>
+                        </StackPane>
+                     </children>
+                     <padding><Insets left="5.0"/></padding>
+                  </VBox>
+
+                  <!-- Stats VBox: Now holds FOUR HBoxes, one for each stat -->
+                  <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <!-- Health Stat Row -->
+                        <HBox alignment="CENTER" spacing="5.0">
+                           <children>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../Assets/Icon/HealthIcon.png" /></image></ImageView>
+                              <ProgressBar fx:id="healthBar" progress="1.0" maxWidth="Infinity" prefHeight="18.0" HBox.hgrow="ALWAYS" />
+                              <Label fx:id="healthLabel" styleClass="stat-label" minWidth="30"/>
+                           </children>
+                        </HBox>
+                        <!-- Fullness Stat Row -->
+                        <HBox alignment="CENTER" spacing="5.0">
+                           <children>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../Assets/Icon/HungerIcon.png" /></image></ImageView>
+                              <ProgressBar fx:id="fullnessBar" progress="1.0" maxWidth="Infinity" prefHeight="18.0" HBox.hgrow="ALWAYS" />
+                              <Label fx:id="fullnessLabel" styleClass="stat-label" minWidth="30"/>
+                           </children>
+                        </HBox>
+                        <!-- Happiness Stat Row -->
+                        <HBox alignment="CENTER" spacing="5.0">
+                           <children>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../Assets/Icon/HappinessIcon.png" /></image></ImageView>
+                              <ProgressBar fx:id="happinessBar" progress="1.0" maxWidth="Infinity" prefHeight="18.0" HBox.hgrow="ALWAYS" />
+                              <Label fx:id="happinessLabel" styleClass="stat-label" minWidth="30"/>
+                           </children>
+                        </HBox>
+                        <!-- Sleep Stat Row -->
+                        <HBox alignment="CENTER" spacing="5.0">
+                           <children>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../Assets/Icon/SleepIcon.png" /></image></ImageView>
+                              <ProgressBar fx:id="sleepBar" progress="1.0" maxWidth="Infinity" prefHeight="18.0" HBox.hgrow="ALWAYS" />
+                              <Label fx:id="sleepLabel" styleClass="stat-label" minWidth="30"/>
+                           </children>
                         </HBox>
                      </children>
-                     <padding>
-                        <Insets right="24.0" top="40.0" />
-                     </padding>
+                     <padding><Insets right="24.0" top="35.0" bottom="5.0" /></padding>
                   </VBox>
+
                </children>
+               <padding><Insets left="10.0" right="10.0" top="25.0" bottom="5.0" /></padding>
             </HBox>
          </children>
       </StackPane>
+
    </bottom>
    <right>
-      <StackPane alignment="BASELINE_RIGHT" styleClass="long-board" translateY="50.0" BorderPane.alignment="BASELINE_RIGHT">
+      <!-- Right Inventory Panel -->
+      <StackPane fx:id="inventoryPane" alignment="BASELINE_RIGHT" styleClass="long-board" translateY="50.0" BorderPane.alignment="BASELINE_RIGHT">
          <children>
-            <VBox alignment="BOTTOM_CENTER" spacing="8.0">
+            <!-- VBox container for item slots -->
+            <VBox fx:id="inventoryVBoxContainer" alignment="BOTTOM_CENTER" spacing="8.0">
                <children>
-                  <Button mnemonicParsing="false" styleClass="btn-square-sm" />
-                  <Button layoutX="82.0" layoutY="130.0" mnemonicParsing="false" styleClass="btn-square-sm" />
-                  <Button layoutX="82.0" layoutY="143.0" mnemonicParsing="false" styleClass="btn-square-sm" />
-                  <Button layoutX="82.0" layoutY="156.0" mnemonicParsing="false" styleClass="btn-square-sm" />
-                  <Button layoutX="82.0" layoutY="169.0" mnemonicParsing="false" styleClass="btn-square-sm" />
-                  <Button layoutX="82.0" layoutY="182.0" mnemonicParsing="false" styleClass="btn-square-sm" />
-                  <Button layoutX="82.0" layoutY="195.0" mnemonicParsing="false" styleClass="btn-square-sm" />
-                  <Button layoutX="82.0" layoutY="208.0" mnemonicParsing="false" styleClass="btn-square-sm" />
-                  <Button layoutX="82.0" layoutY="221.0" mnemonicParsing="false" styleClass="btn-square-sm" />
+
+                  <!-- Item Slot 1: Red Fruit -->
+                  <StackPane styleClass="inventory-slot"> <!-- StackPane for Button + Count Label -->
+                     <children>
+                        <Button fx:id="redFruitButton" onAction="#feedRedFruit" mnemonicParsing="false" styleClass="btn-square-sm">
+                           <graphic>
+                              <!-- Keep ImageView inside Button's graphic -->
+                              <ImageView fx:id="redFruitImageView" fitHeight="40" fitWidth="40" preserveRatio="true">
+                                 <image><Image url="@../Assets/Inventory/REDFRUIT.png" /></image> <!-- Corrected Path -->
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Label fx:id="redFruitCountLabel" styleClass="inventory-count-label" text="0" StackPane.alignment="TOP_RIGHT" /> <!-- Count Label -->
+                     </children>
+                  </StackPane>
+
+                  <!-- Item Slot 2: Blue Fruit -->
+                  <StackPane styleClass="inventory-slot">
+                     <children>
+                        <Button fx:id="blueFruitButton" onAction="#feedBlueFruit" mnemonicParsing="false" styleClass="btn-square-sm">
+                           <graphic><ImageView fx:id="blueFruitImageView" fitHeight="40" fitWidth="40" preserveRatio="true"><image><Image url="@../Assets/Inventory/BLUEFRUIT.png" /></image></ImageView></graphic>
+                        </Button>
+                        <Label fx:id="blueFruitCountLabel" styleClass="inventory-count-label" text="0" StackPane.alignment="TOP_RIGHT" />
+                     </children>
+                  </StackPane>
+
+                  <!-- Item Slot 3: Green Fruit -->
+                  <StackPane styleClass="inventory-slot">
+                     <children>
+                        <Button fx:id="greenFruitButton" onAction="#feedGreenFruit" mnemonicParsing="false" styleClass="btn-square-sm">
+                           <graphic><ImageView fx:id="greenFruitImageView" fitHeight="40" fitWidth="40" preserveRatio="true"><image><Image url="@../Assets/Inventory/GREENFRUIT.png" /></image></ImageView></graphic>
+                        </Button>
+                        <Label fx:id="greenFruitCountLabel" styleClass="inventory-count-label" text="0" StackPane.alignment="TOP_RIGHT" />
+                     </children>
+                  </StackPane>
+
+                  <!-- Item Slot 4: Hero Fruit -->
+                  <StackPane styleClass="inventory-slot">
+                     <children>
+                        <Button fx:id="heroFruitButton" onAction="#feedHeroFruit" mnemonicParsing="false" styleClass="btn-square-sm">
+                           <graphic><ImageView fx:id="heroFruitImageView" fitHeight="40" fitWidth="40" preserveRatio="true"><image><Image url="@../Assets/Inventory/HEROFRUIT.png" /></image></ImageView></graphic>
+                        </Button>
+                        <Label fx:id="heroFruitCountLabel" styleClass="inventory-count-label" text="0" StackPane.alignment="TOP_RIGHT" />
+                     </children>
+                  </StackPane>
+
+                  <!-- Item Slot 5: Dark Fruit -->
+                  <StackPane styleClass="inventory-slot">
+                     <children>
+                        <Button fx:id="darkFruitButton" onAction="#feedDarkFruit" mnemonicParsing="false" styleClass="btn-square-sm">
+                           <graphic><ImageView fx:id="darkFruitImageView" fitHeight="40" fitWidth="40" preserveRatio="true"><image><Image url="@../Assets/Inventory/DARKFRUIT.png" /></image></ImageView></graphic>
+                        </Button>
+                        <Label fx:id="darkFruitCountLabel" styleClass="inventory-count-label" text="0" StackPane.alignment="TOP_RIGHT" />
+                     </children>
+                  </StackPane>
+
+                  <!-- Item Slot 6: Trumpet -->
+                  <StackPane styleClass="inventory-slot">
+                     <children>
+                        <Button fx:id="trumpetButton" onAction="#giftTrumpet" mnemonicParsing="false" styleClass="btn-square-sm">
+                           <graphic><ImageView fx:id="trumpetImageView" fitHeight="40" fitWidth="40" preserveRatio="true"><image><Image url="@../Assets/Inventory/TRUMPET.png" /></image></ImageView></graphic>
+                        </Button>
+                        <Label fx:id="trumpetCountLabel" styleClass="inventory-count-label" text="0" StackPane.alignment="TOP_RIGHT" />
+                     </children>
+                  </StackPane>
+
+                  <!-- Item Slot 7: Duck -->
+                  <StackPane styleClass="inventory-slot">
+                     <children>
+                        <Button fx:id="duckButton" onAction="#giftDuck" mnemonicParsing="false" styleClass="btn-square-sm">
+                           <graphic><ImageView fx:id="duckImageView" fitHeight="40" fitWidth="40" preserveRatio="true"><image><Image url="@../Assets/Inventory/DUCK.png" /></image></ImageView></graphic>
+                        </Button>
+                        <Label fx:id="duckCountLabel" styleClass="inventory-count-label" text="0" StackPane.alignment="TOP_RIGHT" />
+                     </children>
+                  </StackPane>
+
+                  <!-- Item Slot 8: TV -->
+                  <StackPane styleClass="inventory-slot">
+                     <children>
+                        <Button fx:id="tvButton" onAction="#giftTV" mnemonicParsing="false" styleClass="btn-square-sm">
+                           <graphic><ImageView fx:id="tvImageView" fitHeight="40" fitWidth="40" preserveRatio="true"><image><Image url="@../Assets/Inventory/TV.png" /></image></ImageView></graphic>
+                        </Button>
+                        <Label fx:id="tvCountLabel" styleClass="inventory-count-label" text="0" StackPane.alignment="TOP_RIGHT" />
+                     </children>
+                  </StackPane>
                </children>
             </VBox>
          </children>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
+         <BorderPane.margin><Insets /></BorderPane.margin>
       </StackPane>
    </right>
+   <center>
+      <!-- Center Area: Background, Main Chao, Fruit, Messages, Overlays -->
+      <StackPane fx:id="centerStackPane" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+         <children>
+            <!-- Forest Background Image -->
+            <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="false" StackPane.alignment="CENTER">
+               <!-- <image><Image url="@../Assets/Background/BaseBackground.png" /></image> -->
+            </ImageView>
+
+            <!-- Main Animated Chao -->
+            <ImageView fx:id="chaoImageView" fitHeight="175" fitWidth="175" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER" mouseTransparent="true">
+               <StackPane.margin>
+                  <Insets top="0.0" right="130.0" />
+               </StackPane.margin>
+            </ImageView>
+
+            <!-- Fruit Animation -->
+            <ImageView fx:id="fruitImageView" fitWidth="80" fitHeight="80" preserveRatio="true" visible="false" mouseTransparent="true" StackPane.alignment="CENTER">
+               <StackPane.margin><Insets bottom="100.0" right="50.0" /></StackPane.margin> <!-- Example adjustment -->
+            </ImageView>
+
+            <!-- Message Label -->
+            <Label fx:id="messageLabel" text="" visible="false" styleClass="message-label"
+                   StackPane.alignment="TOP_RIGHT"
+                   mouseTransparent="true"
+                   wrapText="true"
+                   maxWidth="200"
+                   textAlignment="CENTER">
+               <StackPane.margin>
+                  <Insets top="30.0" />
+               </StackPane.margin>
+               <font><Font name="Upheaval TT -BRK-" size="18.0" /></font>
+            </Label>
+
+            <!-- GameOver Overlay will be added here programmatically -->
+         </children>
+      </StackPane>
+   </center>
 </BorderPane>
