@@ -67,8 +67,8 @@
     -fx-background-position: center center;
     -fx-background-color: transparent;
     -fx-cursor: hand;
-    -fx-min-width: 40px;
-    -fx-min-height: 40px;
+    -fx-min-width: 45px;
+    -fx-min-height: 45px;
     -fx-content-display: GRAPHIC_ONLY;
     -fx-alignment: CENTER;
     -fx-padding: 0;

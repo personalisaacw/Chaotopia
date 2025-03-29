@@ -406,7 +406,7 @@ public class GameplayController extends BaseController implements Initializable 
         score.updateScore(10);
         updateScoreUI(score.getScore());
         showHappyAnimation();
-        displayMessage(chao.getName() + " enjoyed the " + itemName + "!", 1.5);
+        displayMessage(chao.getName() + " liked the " + itemName + "!", 1.5);
     }
 
 
@@ -916,7 +916,8 @@ public class GameplayController extends BaseController implements Initializable 
         updateScoreUI(score.getScore());
         updateNameLabel();
         updateStatusBars();
-        // TODO: Update inventory display
+        updateInventoryDisplay();
+        updateProfileChaoImage();
 
         // Reset state flags
         isSleeping = false;
