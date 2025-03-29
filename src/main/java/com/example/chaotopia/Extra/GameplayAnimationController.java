@@ -1,5 +1,6 @@
-package com.example.chaotopia.Controller;
+package com.example.chaotopia.Extra;
 
+import com.example.chaotopia.Controller.GameplayController;
 import com.example.chaotopia.Model.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

@@ -1,6 +1,5 @@
 package com.example.chaotopia.Extra;
 
-import com.example.chaotopia.Controller.GameplayAnimationController;
 import com.example.chaotopia.Model.Chao;
 import com.example.chaotopia.Model.ChaoType;
 import com.example.chaotopia.Model.State;
