@@ -17,6 +17,8 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -93,6 +95,7 @@ public class GameplayController extends BaseController implements Initializable 
     private FruitAnimation fruitAnimation;    // Handles fruit sprite animation
     private record InventoryItemUI(Button button, Label countLabel) {} // Helper record
     private Map<String, InventoryItemUI> inventoryUIMap;
+    private List<Button> inventoryButtonsOrdered;
 
     // --- Timelines ---
     private Timeline statDecayTimeline;
@@ -115,6 +118,7 @@ public class GameplayController extends BaseController implements Initializable 
         inventory = new Inventory();
         score = new Score(0);
         inventoryUIMap = new HashMap<>();
+        inventoryButtonsOrdered = new ArrayList<>();
 
         if (fruitImageView != null) {
             fruitAnimation = new FruitAnimation(fruitImageView, FruitType.RED);
@@ -124,10 +128,7 @@ public class GameplayController extends BaseController implements Initializable 
         // --- Load Game Data (or create default) ---
         loadOrCreateChao(); // Now uses random basic type
         initializeInventoryUIMap();
-
-        if (inventory.getItemCount("Red Fruit") == 0) {
-            addDefaultInventory();
-        }
+        populateOrderedInventoryButtons();
 
         if (isNewGameCondition()) { // Replace with your actual new game check
             addDefaultInventory(); // Populate the inventory data model
@@ -142,12 +143,122 @@ public class GameplayController extends BaseController implements Initializable 
         startTimelines();
         updateProfileChaoImage();
         updateInventoryDisplay();
+
+        Platform.runLater(() -> {
+            if (mainContainer != null && mainContainer.getScene() != null) {
+                setupKeybindings(mainContainer.getScene());
+            } else if (mainContainer != null) {
+                // Fallback: Listen for the scene property change
+                mainContainer.sceneProperty().addListener((obs, oldScene, newScene) -> {
+                    if (newScene != null) {
+                        setupKeybindings(newScene);
+                    }
+                });
+            } else {
+                System.err.println("Cannot set up keybindings: mainContainer is null.");
+            }
+        });
     }
 
     private boolean isNewGameCondition() {
         // Example: Check if a loaded save file exists, or check if 'chao' is newly created vs loaded
         // For now, let's check if inventory is empty as a proxy
         return inventory.isEmpty(); // Assuming you add an isEmpty() method to Inventory
+    }
+
+    private void populateOrderedInventoryButtons() {
+        // Add buttons in the exact order you want 1-8 to map to
+        inventoryButtonsOrdered.clear(); // Ensure list is empty before adding
+        inventoryButtonsOrdered.add(redFruitButton);   // 1
+        inventoryButtonsOrdered.add(blueFruitButton);  // 2
+        inventoryButtonsOrdered.add(greenFruitButton); // 3
+        inventoryButtonsOrdered.add(heroFruitButton);  // 4
+        inventoryButtonsOrdered.add(darkFruitButton);  // 5
+        inventoryButtonsOrdered.add(trumpetButton);    // 6
+        inventoryButtonsOrdered.add(duckButton);       // 7
+        inventoryButtonsOrdered.add(tvButton);         // 8
+        // Make sure you have exactly 8 buttons here if you map 1-8
+    }
+
+    private void setupKeybindings(Scene scene) {
+        scene.setOnKeyPressed(this::handleKeyPress);
+        System.out.println("Keybindings setup on scene."); // Debug message
+    }
+
+    private void handleKeyPress(KeyEvent event) {
+        if (event.getCode() == KeyCode.S) {
+            saveGame();
+            event.consume(); // Indicate the event has been handled
+            return;
+        }
+        if (event.getCode() == KeyCode.M) {
+            goToMainMenu();
+            event.consume();
+            return;
+        }
+
+        int buttonIndex = -1;
+        switch (event.getCode()) {
+            case DIGIT1: case NUMPAD1: buttonIndex = 0; break;
+            case DIGIT2: case NUMPAD2: buttonIndex = 1; break;
+            case DIGIT3: case NUMPAD3: buttonIndex = 2; break;
+            case DIGIT4: case NUMPAD4: buttonIndex = 3; break;
+            case DIGIT5: case NUMPAD5: buttonIndex = 4; break;
+            case DIGIT6: case NUMPAD6: buttonIndex = 5; break;
+            case DIGIT7: case NUMPAD7: buttonIndex = 6; break;
+            case DIGIT8: case NUMPAD8: buttonIndex = 7; break;
+        }
+
+        if (buttonIndex != -1) {
+            if (buttonIndex < inventoryButtonsOrdered.size()) {
+                Button targetButton = inventoryButtonsOrdered.get(buttonIndex);
+                // Check if button is not null and is currently enabled (implicitly checks interaction allowed state for items)
+                if (targetButton != null && !targetButton.isDisabled()) {
+                    targetButton.fire(); // Simulate a button click
+                    event.consume();
+                } else {
+                    System.out.println("Inventory slot " + (buttonIndex + 1) + " action denied (button disabled or null).");
+                    // Optionally display a message or play a sound
+                }
+            }
+            return; // Handled (or attempted to handle) inventory key
+        }
+
+        if (!isInteractionAllowed("KEYPRESS")) { // Use a generic type or check within methods
+            System.out.println("Interaction denied by keypress due to Chao state.");
+            // Optionally display a message using handleInteractionDenied
+            // handleInteractionDenied("perform action"); // You might need to adapt this method
+            return;
+        }
+
+        switch (event.getCode()) {
+            case P:
+                playChao();
+                event.consume();
+                break;
+            case Z:
+                sleepChao();
+                event.consume();
+                break;
+            case E:
+                exerciseChao();
+                event.consume();
+                break;
+            case V:
+                vetChao();
+                event.consume();
+                break;
+            case B:
+                bonkChao();
+                event.consume();
+                break;
+            case Q: // Changed from 'P' for Pet as 'P' is Play
+                petChao();
+                event.consume();
+                break;
+            default:
+                break;
+        }
     }
 
     private void initializeInventoryUIMap() {
@@ -1008,15 +1119,24 @@ public class GameplayController extends BaseController implements Initializable 
         if (chao == null) return false;
         State currentState = chao.getState();
 
-        // Deny based on state
-        if (currentState == State.DEAD || currentState == State.EVOLVING || currentState == State.SLEEPING) {
+        // Deny based on state (DEAD, EVOLVING always block)
+        if (currentState == State.DEAD || currentState == State.EVOLVING) {
             return false;
         }
-        // Specific restrictions for ANGRY
-        if (currentState == State.ANGRY) {
-            return commandType.equals("PLAY") || commandType.equals("GIFT"); // Only allow these when angry
+
+        if (currentState == State.SLEEPING) {
+            return false;
         }
-        return true; // Allowed otherwise
+
+        if (currentState == State.ANGRY) {
+            return commandType.equalsIgnoreCase("PLAY") || commandType.equalsIgnoreCase("GIFT") || commandType.equalsIgnoreCase("KEYPRESS"); // Allow specific actions
+        }
+
+        if (commandType.equalsIgnoreCase("KEYPRESS")) {
+            return true;
+        }
+
+        return true;
     }
 
     private void handleInteractionDenied(String commandType) {
