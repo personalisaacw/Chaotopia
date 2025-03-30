@@ -11,10 +11,10 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane onMouseClicked="#step" prefHeight="400.0" prefWidth="600.0" stylesheets="@../Styles/TutorialChooseChaos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chaotopia.Controller.TutorialChooseChaosController">
-    <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#goBack" prefHeight="40.0" prefWidth="40.0" styleClass="back-button" />
+    <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#goBack2Steps" prefHeight="40.0" prefWidth="40.0" styleClass="back-button" />
     <Label layoutX="118.0" layoutY="20.0" opacity="0.52" prefHeight="73.0" prefWidth="365.0" styleClass="title-label" />
 
-    <Button fx:id="chooseRed" layoutX="45.0" layoutY="130.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="140.0" styleClass="red-chao-button" />
+    <Button fx:id="chooseRed" layoutX="45.0" layoutY="130.0" onAction="#gamePlayTutorialPage" mnemonicParsing="false" prefHeight="140.0" prefWidth="140.0" styleClass="red-chao-button" />
     <Button fx:id="chooseGreen" layoutX="230.0" layoutY="130.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="140.0" styleClass="green-chao-button" />
     <Button fx:id="chooseBlue" layoutX="420.0" layoutY="130.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="140.0" styleClass="blue-chao-button" />
 

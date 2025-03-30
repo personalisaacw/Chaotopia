@@ -68,4 +68,12 @@ public class TutorialChooseChaosController extends BaseController{
         tutorialStep++;
 
     }
+
+    public void gamePlayTutorialPage(ActionEvent e) throws IOException {
+        switchScene(e, "/com/example/chaotopia/View/TutorialGameplay2.fxml");
+    }
+    public void goBack2Steps(ActionEvent e) {
+        popStack();
+        goBack(e);
+    }
 }

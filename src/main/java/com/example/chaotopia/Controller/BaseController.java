@@ -63,6 +63,10 @@ public class BaseController {
      *
      * @param e The `ActionEvent` triggered by clicking the back button.
      */
+    public void popStack(){
+        sceneStack.pop();
+    }
+
     public void goBack(ActionEvent e) {
         if (!sceneStack.isEmpty()) {
             Scene previousScene = sceneStack.pop();
