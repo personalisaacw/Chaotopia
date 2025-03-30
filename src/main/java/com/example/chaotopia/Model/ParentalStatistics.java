@@ -1,5 +1,7 @@
 package com.example.chaotopia.Model;
 
+import java.io.IOException;
+
 /**
  * Static entity handling the playtime statistics.
  * <br><br>
@@ -34,8 +36,10 @@ public final class ParentalStatistics {
         numSessions = 0;
         /* Sum playtime and number of sessions across all three game files. */
         for (int i = 0; i < gameFiles.length; i++) {
-            totalPlaytime += gameFiles[i].getPlaytime();
-            numSessions += gameFiles[i].getNumSessions();
+            if (gameFiles[i] != null) {
+                totalPlaytime += gameFiles[i].getPlaytime();
+                numSessions += gameFiles[i].getNumSessions();
+            }
         }
     }
 
@@ -54,6 +58,9 @@ public final class ParentalStatistics {
      * @return The average playtime across all game files.
      */
     public static long getAveragePlaytime() {
+        if (numSessions == 0) {
+            return 0;
+        }
         return (long)(totalPlaytime / numSessions);
     }
 
@@ -71,8 +78,15 @@ public final class ParentalStatistics {
         numSessions = 0;
         /* Reset the save data for playtime statistics. */
         for (int i = 0; i < gameFiles.length; i++) {
-            gameFiles[i].setPlaytime(totalPlaytime);
-            gameFiles[i].setNumSessions(numSessions);
+            if (gameFiles[i] != null) {
+                gameFiles[i].setPlaytime(totalPlaytime);
+                gameFiles[i].setNumSessions(numSessions);
+                try {
+                    gameFiles[i].save();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
 }

@@ -39,11 +39,10 @@ public final class ParentalControls {
      *
      * @param gameFile the game file containing the Chao to be revived
      */
-//    TODO: Integration with GameFile
-    public static void reviveChao(int slotIndex) throws IOException {
-        GameFile gameFile = new GameFile(slotIndex);
+    public static void reviveChao(GameFile gameFile) throws IOException {
         Chao chao = gameFile.getChao();
         chao.getStatus().updateStats(100,100,100,100);
+        chao.setState(State.NORMAL);
         gameFile.save();
     }
 }
