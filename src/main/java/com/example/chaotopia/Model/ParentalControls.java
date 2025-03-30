@@ -42,6 +42,7 @@ public final class ParentalControls {
     public static void reviveChao(GameFile gameFile) throws IOException {
         Chao chao = gameFile.getChao();
         chao.getStatus().updateStats(100,100,100,100);
+        chao.setState(State.NORMAL);
         gameFile.save();
     }
 }
