@@ -17,7 +17,7 @@ public class FruitAnimation {
     private final int totalFrames = 6;
     private FruitType fruitType;
     private Timeline timeline;
-    private double frameSpeed = 0.2; // 0.2 seconds per frame
+    private double frameSpeed = 0.5;
 
     /**
      * Constructs a new FruitAnimation instance.
