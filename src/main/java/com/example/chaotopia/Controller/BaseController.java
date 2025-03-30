@@ -9,6 +9,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Stack;
+import java.util.function.Consumer;
+
+import javafx.scene.control.Alert;
+
 
 /**
  * The `BaseController` class serves as a base class for all controllers in the application.
@@ -46,20 +50,47 @@ public class BaseController {
      * @throws IOException If the FXML file cannot be loaded.
      */
     protected void switchScene(ActionEvent e, String fxmlPath) throws IOException {
+        switchScene(e, fxmlPath, null);
+    }
+
+    protected void switchScene(ActionEvent e, String fxmlPath, Consumer<Object> controllerConfigurator) throws IOException {
         // Push the current scene to the stack
         sceneStack.push(((Node)e.getSource()).getScene());
 
         // Load the new scene
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
         Parent root = loader.load();
+
+        // Configure the controller if provided
+        if (controllerConfigurator != null) {
+            Object controller = loader.getController();
+            controllerConfigurator.accept(controller);
+        }
+
         Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
 
+    /**
+     * Adds CSS to the file
+     * @param scene The scene to add CSS
+     */
     public static void addCSS(Scene scene) {
         String css = Objects.requireNonNull(BaseController.class.getResource("/com/example/chaotopia/CSS/styles.css")).toExternalForm();
         scene.getStylesheets().add(css);
+    }
+
+    /**
+     * Displays an error message to the user
+     * @param message The error message to display
+     */
+    protected void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

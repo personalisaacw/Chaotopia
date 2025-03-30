@@ -91,6 +91,23 @@ public class Inventory {
     }
 
     /**
+     * Gets a copy of all items in the inventory
+     * @return Map containing all items and their quantities
+     */
+    public Map<String, Integer> getItems() {
+        return new HashMap<>(itemQuantities);
+    }
+
+    /**
+     * Constructs a new Inventory with the specified items.
+     *
+     * @param items A map containing initial items and quantities
+     */
+    public Inventory(Map<String, Integer> items) {
+        this.itemQuantities = new HashMap<>(items);
+    }
+
+    /**
      * Clears all items from the inventory, resetting it to an empty state.
      */
     public void clearInventory() {
