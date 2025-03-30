@@ -42,15 +42,25 @@ public class GameFile {
         this.load();
     }
 
-    // Constructor for initializing a new game and saving a game (COMPLETE)
-    public GameFile(int slotId, Chao chao, Inventory inventory, Score score) {
+    /**
+     * Constructor for initializing a new game or updating an existing one.
+     * @param slotId The save slot (1-3)
+     * @param chao The Chao object (can be null)
+     * @param inventory The Inventory object (can be null)
+     * @param score The Score object (can be null)
+     * @param playtime (Optional) Total playtime in ms (default: 0)
+     * @param numSessions (Optional) Number of play sessions (default: 1)
+     * @param averagePlaytime (Optional) Average playtime per session (default: 0)
+     */
+    public GameFile(int slotId, Chao chao, Inventory inventory, Score score,
+                    Long playtime, Integer numSessions, Long averagePlaytime) {
         this.slotId = slotId;
         this.chao = chao;
         this.inventory = inventory;
         this.score = score;
-        this.playtime = 0;
-        this.numSessions = 1;
-        this.averagePlaytime = 0;
+        this.playtime = (playtime != null) ? playtime : 0L;
+        this.numSessions = (numSessions != null) ? numSessions : 1;
+        this.averagePlaytime = (averagePlaytime != null) ? averagePlaytime : 0L;
     }
 
     // Save game to file (COMPLETE)

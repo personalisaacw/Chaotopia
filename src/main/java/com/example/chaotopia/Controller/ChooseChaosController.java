@@ -56,7 +56,7 @@ public class ChooseChaosController extends BaseController {
         //todo: add the save game functionality Faye will implement
 
         // Creates a new save file
-        GameFile game = new GameFile(slotIndex, chao, new Inventory(), new Score(0));
+        GameFile game = new GameFile(slotIndex, chao, new Inventory(), new Score(0), 0L, 1, 0L);
         try {
             game.save();
             System.out.println("Game saved successfully!");
