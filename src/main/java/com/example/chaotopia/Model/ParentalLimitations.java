@@ -1,8 +1,6 @@
 package com.example.chaotopia.Model;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.JSONParserConfiguration;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -104,7 +102,7 @@ public final class ParentalLimitations {
                     .get(LIMITATIONS_FILE)));
             JSONObject jsonData = new JSONObject(content);
 
-            /* Load the values from the .json file. */
+            /* Save values to the .json file. */
             jsonData.put("enabled", enabled);
             jsonData.put("allowedStartTime", allowedStartTime);
             jsonData.put("allowedEndTime", allowedEndTime);
