@@ -13,8 +13,8 @@ public class ParentalControlsController extends BaseController{
     @FXML
     private Label playtimeStats;
 
-    private String totalPlayTime;
-    private String averagePlayTime;
+    private String totalPlayTime = "0";
+    private String averagePlayTime = "0";
 
     public void initialize() {
         //todo: load playtime data
