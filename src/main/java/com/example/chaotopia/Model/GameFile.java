@@ -11,25 +11,70 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Represents a game save file with all associated data including Chao, inventory,
+ * scores, and game statistics. Handles loading, saving, and managing game save slots.
+ */
 public class GameFile {
-    // Directory for save files
+    /** Directory for save files */
     public static final String SAVES_DIR = "src/main/resources/com/example/chaotopia/Saves/";
 
-    // Save slot properties
+    /** Maximum number of save slots available */
+    private static final int MAX_SLOTS = 2;
+
     private int slotId;
-    private int MAX_SLOTS = 2;
     private Chao chao;
     private Inventory inventory;
     private Score score;
-
-    // Game statistics
     private long playtime;
     private int numSessions;
     private long averagePlaytime;
 
+    // Static methods ----------------------------------------------------------
+
     /**
-     * Constructor for loading an existing game from a save slot
-     * @param slotId The save slot to load (1-3)
+     * Deletes the save file for the specified slot.
+     *
+     * @param slotId The slot number to delete (1-MAX_SLOTS)
+     * @throws IOException If there's an error deleting the file
+     */
+    public static void deleteFile(int slotId) throws IOException {
+        Path path = Paths.get(SAVES_DIR + "slot_" + slotId + ".json");
+        if (Files.exists(path)) {
+            Files.delete(path);
+        }
+    }
+
+    /**
+     * Checks if a slot is empty or contains no valid save data.
+     *
+     * @param slotId The slot number to check (1-MAX_SLOTS)
+     * @return true if the slot is empty or contains invalid data, false otherwise
+     * @throws IOException If there's an error reading the file
+     */
+    public static boolean isEmptySlot(int slotId) throws IOException {
+        Path path = Paths.get(SAVES_DIR + "slot_" + slotId + ".json");
+
+        // If file doesn't exist, slot is empty
+        if (!Files.exists(path)) {
+            return true;
+        }
+
+        // If file exists but can't be read as JSON, treat as empty
+        try {
+            String content = Files.readString(path);
+            return !new JSONObject(content).optBoolean("ActiveSlot", false);
+        } catch (JSONException e) {
+            return true; // If corrupted, treat it as empty
+        }
+    }
+
+    // Constructors ------------------------------------------------------------
+
+    /**
+     * Constructs a GameFile by loading data from the specified save slot.
+     *
+     * @param slotId The save slot to load (1-MAX_SLOTS)
      * @throws IOException If the save file cannot be read
      * @throws JSONException If the save data is corrupted
      * @throws IllegalArgumentException If slotId is invalid
@@ -43,14 +88,15 @@ public class GameFile {
     }
 
     /**
-     * Constructor for initializing a new game or updating an existing one.
-     * @param slotId The save slot (1-3)
+     * Constructs a new GameFile with the specified data, typically for a new game or updating an existing one.
+     *
+     * @param slotId The save slot (1-MAX_SLOTS)
      * @param chao The Chao object (can be null)
      * @param inventory The Inventory object (can be null)
      * @param score The Score object (can be null)
-     * @param playtime (Optional) Total playtime in ms (default: 0)
-     * @param numSessions (Optional) Number of play sessions (default: 1)
-     * @param averagePlaytime (Optional) Average playtime per session (default: 0)
+     * @param playtime Total playtime in ms (default: 0)
+     * @param numSessions Number of play sessions (default: 0)
+     * @param averagePlaytime Average playtime per session (default: 0)
      */
     public GameFile(int slotId, Chao chao, Inventory inventory, Score score,
                     Long playtime, Integer numSessions, Long averagePlaytime) {
@@ -59,11 +105,17 @@ public class GameFile {
         this.inventory = inventory;
         this.score = score;
         this.playtime = (playtime != null) ? playtime : 0L;
-        this.numSessions = (numSessions != null) ? numSessions : 1;
+        this.numSessions = (numSessions != null) ? numSessions : 0;
         this.averagePlaytime = (averagePlaytime != null) ? averagePlaytime : 0L;
     }
 
-    // Save game to file (COMPLETE)
+    // Public instance methods -------------------------------------------------
+
+    /**
+     * Saves the current game state to the assigned slot.
+     *
+     * @throws IOException If there's an error writing the file
+     */
     public void save() throws IOException {
         JSONObject json = new JSONObject();
 
@@ -101,13 +153,50 @@ public class GameFile {
         // Ensure directory exists
         Files.createDirectories(Paths.get(SAVES_DIR));
 
-        // Write to file if it exists and creates a new one if it doesn't
+        // Write to file
         try (FileWriter writer = new FileWriter(SAVES_DIR + "slot_" + slotId + ".json")) {
             writer.write(json.toString(4));
         }
     }
 
-    // Load game from file
+    // Getters and setters -----------------------------------------------------
+
+    public long getPlaytime() {
+        return playtime;
+    }
+
+    public void setPlaytime(long newPlaytime) {
+        playtime = newPlaytime;
+    }
+
+    public int getNumSessions() {
+        return numSessions;
+    }
+
+    public void setNumSessions(int newNumSessions) {
+        numSessions = newNumSessions;
+    }
+
+    public Chao getChao() {
+        return this.chao;
+    }
+
+    public Inventory getInventory() {
+        return this.inventory;
+    }
+
+    public Score getScore() {
+        return this.score;
+    }
+
+    // Private methods ---------------------------------------------------------
+
+    /**
+     * Loads game data from the assigned slot's save file.
+     *
+     * @throws IOException If the file cannot be read
+     * @throws JSONException If the data is corrupted
+     */
     private void load() throws IOException, JSONException {
         Path path = Paths.get(SAVES_DIR + "slot_" + slotId + ".json");
         if (!Files.exists(path)) {
@@ -156,62 +245,4 @@ public class GameFile {
             this.score = new Score(json.getInt("score"));
         }
     }
-
-
-    // Delete a save file (COMPLETE)
-    public static void deleteFile(int slotId) throws IOException {
-        Path path = Paths.get(SAVES_DIR + "slot_" + slotId + ".json");
-        if (Files.exists(path)) {
-            Files.delete(path);
-        }
-    }
-
-    // Check if slot is empty (COMPLETE)
-    public static boolean isEmptySlot(int slotId) throws IOException {
-        Path path = Paths.get(SAVES_DIR + "slot_" + slotId + ".json");
-
-        // If file doesn't exist, slot is empty
-        if (!Files.exists(path)) {
-            return true;
-        }
-
-        // If file exists but can't be read as JSON, treat as empty
-        try {
-            String content = Files.readString(path);
-            return !new JSONObject(content).optBoolean("ActiveSlot", false);
-        } catch (JSONException e) {
-            return true; // If corrupted, treat it as true
-        }
-    }
-
-
-    // Getters and setters
-    public long getPlaytime() {
-        return playtime;
-    }
-
-    public void setPlaytime(long newPlaytime) {
-        playtime = newPlaytime;
-    }
-
-    public int getNumSessions() {
-        return numSessions;
-    }
-
-    public void setNumSessions(int newNumSessions) {
-        numSessions = newNumSessions;
-    }
-
-    public Chao getChao() {
-        return this.chao;
-    }
-
-    public Inventory getInventory() {
-        return this.inventory;
-    }
-
-    public Score getScore() {
-        return this.score;
-    }
-
 }
