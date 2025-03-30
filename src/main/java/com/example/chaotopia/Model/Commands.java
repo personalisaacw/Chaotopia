@@ -118,12 +118,24 @@ public final class Commands {
 
     /**
      * Play command that makes the Chao happier through play.
+     * Checks consciousness and cooldown.
      * @param chao the Chao being commanded
+     * @return null if the command succeeded, or a String message indicating the reason for failure (e.g., "Too soon!").
      */
-    public static void play(Chao chao) {
-        if (isConscious(chao) != null) return; // If Chao is not conscious...
-        if (cooldownActive(playCooldown, CooldownType.PLAY) != null) return;
+    public static String play(Chao chao) {
+        String consciousCheck = isConscious(chao);
+        if (consciousCheck != null) {
+            System.out.println("Commands.play: Conscious check failed: " + consciousCheck); // DEBUG LOG
+            return consciousCheck;
+        }
+        String cooldownCheck = cooldownActive(playCooldown, CooldownType.PLAY);
+        if (cooldownCheck != null) {
+            System.out.println("Commands.play: Cooldown check failed: " + cooldownCheck); // DEBUG LOG
+            return cooldownCheck;
+        }
+        System.out.println("Commands.play: SUCCESS - Applying happiness."); // DEBUG LOG
         chao.getStatus().adjustHappiness(PLAY_HAPPINESS);
+        return null;
     }
 
     /**
@@ -242,4 +254,5 @@ public final class Commands {
             return "Too soon!";
         }
     }
+
 }

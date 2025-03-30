@@ -16,15 +16,14 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*; // Fixed import
-import javafx.util.Duration; // Use this Duration
+import javafx.scene.layout.*;
+import javafx.util.Duration;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-// javafx.util.Duration is already imported above, remove duplicate if present
 
 import java.io.InputStream;
 import java.net.URL;
@@ -628,21 +627,26 @@ public class GameplayController extends BaseController implements Initializable 
     public void playChao() {
         playSoundEffect(buttonClickPlayer);
         if (isInteractionAllowed("PLAY")) {
-            stopAllLoops();
-            Commands.play(chao);
-            updateStatusBars();
-            score.updateScore(10);
-            updateScoreUI(score.getScore());
-
-            playSoundEffect(happyPlayer);
-            showHappyAnimation();
             lastUserActionTime = System.currentTimeMillis();
+            String commandResult = Commands.play(chao);
 
-            // Special handling if we're angry
-            if (chao.getState() == State.ANGRY && chao.getStatus().getHappiness() >= 50) {
-                chao.setState(State.NORMAL);
-                syncChaoAnimationToState(State.NORMAL, true);
-                // No need to call monitor here, next cycle will handle sound loop stop
+            if (commandResult == null) {
+                stopAllLoops();
+                Commands.play(chao);
+                updateStatusBars();
+                score.updateScore(10);
+                updateScoreUI(score.getScore());
+
+                playSoundEffect(happyPlayer);
+                showHappyAnimation();
+
+                // Special handling if we're angry
+                if (chao.getState() == State.ANGRY && chao.getStatus().getHappiness() >= 50) {
+                    chao.setState(State.NORMAL);
+                    syncChaoAnimationToState(State.NORMAL, true);
+                }
+            }else {
+                displayMessage(commandResult, 1.5);
             }
         } else {
             handleInteractionDenied("PLAY");
@@ -691,6 +695,7 @@ public class GameplayController extends BaseController implements Initializable 
     public void exerciseChao() {
         playSoundEffect(buttonClickPlayer);
         if (isInteractionAllowed("EXERCISE")) {
+            lastUserActionTime = System.currentTimeMillis();
             stopAllLoops();
             Commands.exercise(chao);
             updateStatusBars();
@@ -699,7 +704,6 @@ public class GameplayController extends BaseController implements Initializable 
 
             playSoundEffect(happyPlayer);
             showHappyAnimation();
-            lastUserActionTime = System.currentTimeMillis();
         } else {
             handleInteractionDenied("EXERCISE");
         }
@@ -752,12 +756,12 @@ public class GameplayController extends BaseController implements Initializable 
                 lastUserActionTime = System.currentTimeMillis();
                 triggerEvolution(true); // True for Hero
             } else {
+                lastUserActionTime = System.currentTimeMillis();
                 stopAllLoops();
                 playSoundEffect(happyPlayer);
                 score.updateScore(3);
                 updateScoreUI(score.getScore());
                 showHappyAnimation();
-                lastUserActionTime = System.currentTimeMillis();
             }
         } else {
             handleInteractionDenied("PET");
@@ -784,10 +788,10 @@ public class GameplayController extends BaseController implements Initializable 
                 triggerEvolution(false); // False for Dark
                 lastUserActionTime = System.currentTimeMillis();
             } else {
+                lastUserActionTime = System.currentTimeMillis();
                 stopAllLoops();
                 playSoundEffect(bonkSoundPlayer);
                 showTemporaryStateAnimation(AnimationState.HUNGRY, 2);
-                lastUserActionTime = System.currentTimeMillis();
             }
         } else {
             handleInteractionDenied("BONK");
@@ -945,10 +949,10 @@ public class GameplayController extends BaseController implements Initializable 
         updateStatusBars(); // Update stats display
 
         if (!evolutionTriggered) {
+            lastUserActionTime = System.currentTimeMillis();
             score.updateScore(5);
             updateScoreUI(score.getScore());
             showTemporaryStateAnimation(AnimationState.HAPPY,3);
-            lastUserActionTime = System.currentTimeMillis();
         }
 
     }
@@ -971,15 +975,13 @@ public class GameplayController extends BaseController implements Initializable 
                 (!isHeroEvolution && currentType != ChaoType.DARK && currentAlignment <= -7);
         if (!canEvolve) return; // Exit if conditions somehow changed
 
-        System.out.println("Starting Evolution: isHero=" + isHeroEvolution);
-
         // --- Setup Evolution State ---
+        lastUserActionTime = System.currentTimeMillis();
         chao.setState(State.EVOLVING);
         isSleeping = false; // Can't sleep while evolving
         stopAllLoops();
         playSoundEffect(evolutionSoundPlayer); // Play evolution SFX
         enableAllInteractions(false); // Disable UI interactions
-        lastUserActionTime = System.currentTimeMillis();
 
         // Update score
         int evolutionScore = isHeroEvolution ? 50 : 25;
@@ -1260,7 +1262,7 @@ public class GameplayController extends BaseController implements Initializable 
         sleepIncreaseTimeline = new Timeline(
                 new KeyFrame(Duration.millis(500), e -> {
                     if (chao != null && isSleeping && chao.getStatus().getSleep() < 100) {
-                        chao.getStatus().adjustSleep(2);
+                        chao.getStatus().adjustSleep(4);
                         updateStatusBars(); // Update UI
                     } else {
                         // Stop condition (sleep full or no longer 'isSleeping')
@@ -1432,8 +1434,8 @@ public class GameplayController extends BaseController implements Initializable 
      * Called by the statDecayTimeline.
      */
     private void decreaseStats() {
-        if (chao == null || chao.getState() == State.DEAD || isSleeping) {
-            return; // No decay when dead or sleeping
+        if (chao == null || chao.getState() == State.DEAD) {
+            return;
         }
 
         Status status = chao.getStatus();
