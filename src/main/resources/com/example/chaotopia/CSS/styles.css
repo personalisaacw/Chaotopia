@@ -249,3 +249,32 @@
     -fx-max-width: 100px;
 }
 
+#timeLabel {
+    -fx-font-family: "Upheaval TT -BRK-";
+    -fx-font-size: 18px;
+    -fx-text-fill: #272744;
+}
+
+#playButton {
+    -fx-font-family: "Upheaval TT -BRK-";
+    -fx-font-size: 20px;
+    -fx-text-fill: #272744;
+}
+
+#sleepButton {
+    -fx-font-family: "Upheaval TT -BRK-";
+    -fx-font-size: 20px;
+    -fx-text-fill: #272744;
+}
+
+#exerciseButton {
+    -fx-font-family: "Upheaval TT -BRK-";
+    -fx-font-size: 20px;
+    -fx-text-fill: #272744;
+}
+
+#vetButton {
+    -fx-font-family: "Upheaval TT -BRK-";
+    -fx-font-size: 20px;
+    -fx-text-fill: #272744;
+}

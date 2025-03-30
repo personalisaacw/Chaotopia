@@ -1,4 +1,4 @@
-package com.example.chaotopia.Controller;
+package com.example.chaotopia.Extra;
 
 import com.example.chaotopia.Model.FruitAnimation;
 import com.example.chaotopia.Model.FruitType;
