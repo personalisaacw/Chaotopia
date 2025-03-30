@@ -2,6 +2,7 @@ package com.example.chaotopia.Controller;
 
 // Added Model import assuming it contains necessary classes like Chao, State, etc.
 import com.example.chaotopia.Model.*;
+import com.example.chaotopia.Model.GameFile;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -20,6 +21,8 @@ import javafx.scene.layout.*;
 import javafx.util.Duration;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+
+import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import javafx.scene.media.Media;
@@ -125,7 +128,6 @@ public class GameplayController extends BaseController implements Initializable 
     private MediaPlayer sleepingSoundPlayer;
     private MediaPlayer bonkSoundPlayer;
     private MediaPlayer evolutionSoundPlayer;
-    private MediaPlayer oneShotAngryPlayer;
 
     // --- State Management ---
     private boolean isSleeping = false;
@@ -146,11 +148,41 @@ public class GameplayController extends BaseController implements Initializable 
     public void setSlotIndex(int slotIndex) {
         this.slotIndex = slotIndex;
     }
+
+    GameFile loadedGame = null;
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources){
+        try {
+            loadedGame = new GameFile(slotIndex);
+            System.out.println("This is the slot index" + slotIndex);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (loadedGame.getChao() != null) {
+            chao = loadedGame.getChao();
+            System.out.println("- Initial type: " + chao.getType());
+            loadOrCreateChao(chao);
+            System.out.println("\nChao: " + chao.getName());
+            System.out.println("- Type: " + chao.getType());
+            System.out.println("- State: " + chao.getState());
+            System.out.println("- Alignment: " + chao.getAlignment());
+            System.out.println("- Status: " + chao.getStatus().getCurrStats());
+        }
+
+        if (loadedGame.getInventory() != null) {
+            inventory = loadedGame.getInventory();
+            System.out.println("\nInventory:");
+            for (Map.Entry<String, Integer> entry : loadedGame.getInventory().getItems().entrySet()) {
+                System.out.println("- " + entry.getKey() + ": " + entry.getValue());
+            }
+        }
+
+        if (loadedGame.getScore() != null) {
+            System.out.println("\nScore: " + loadedGame.getScore().getScore());
+            score = loadedGame.getScore();
+        }
         loadSounds();
-        inventory = new Inventory();
-        score = new Score(0);
         inventoryUIMap = new HashMap<>();
         inventoryButtonsOrdered = new ArrayList<>();
         initializeItemLists();
@@ -162,19 +194,21 @@ public class GameplayController extends BaseController implements Initializable 
             System.err.println("FXML Warning: fruitImageView is null.");
         }
 
+        //inventory = new Inventory();
+        //this.chao = loadedGame.getChao();
         // --- Load Game Data (or create default) ---
-        loadOrCreateChao(); // Now uses random basic type
+        //loadOrCreateChao(); // Now uses random basic type
         initializeInventoryUIMap();
         populateOrderedInventoryButtons();
         if (backgroundMusicPlayer != null) {
             backgroundMusicPlayer.play();
         }
 
-        if (isNewGameCondition()) { // Replace with your actual new game check
-            addDefaultInventory(); // Populate the inventory data model
-        } else {
-            // TODO: Load inventory data from save file
-        }
+//        if (isNewGameCondition()) { // Replace with your actual new game check
+//            addDefaultInventory(); // Populate the inventory data model
+//        } else {
+//            // TODO: Load inventory data from save file
+//        }
 
         updateScoreUI(score.getScore());
         updateNameLabel();
@@ -452,34 +486,26 @@ public class GameplayController extends BaseController implements Initializable 
         });
     }
 
-    /**
-     * Selects a random basic Chao type (Blue, Red, or Green).
-     *
-     * @return A randomly chosen basic ChaoType.
-     */
-    private ChaoType getRandomBasicChaoType() {
-        ChaoType[] basicTypes = {ChaoType.BLUE, ChaoType.RED, ChaoType.GREEN};
-        return basicTypes[random.nextInt(basicTypes.length)];
-    }
+//    /**
+//     * Selects a random basic Chao type (Blue, Red, or Green).
+//     *
+//     * @return A randomly chosen basic ChaoType.
+//     */
+//    private ChaoType getRandomBasicChaoType() {
+//        ChaoType[] basicTypes = {ChaoType.BLUE, ChaoType.RED, ChaoType.GREEN};
+//        return basicTypes[random.nextInt(basicTypes.length)];
+//    }
 
     /**
      * Loads Chao data (placeholder) or creates a new default Chao.
      * If restarting via "Play Again", reuses the base Chao type selected at the start of the session.
      * Initializes or updates the main Chao animation display.
      */
-    private void loadOrCreateChao() {
-        // TODO: Implement actual load logic here.
-        if (this.currentSessionBaseType == null) {
-            System.out.println("First time load/new session: Picking random basic Chao type.");
-            this.currentSessionBaseType = getRandomBasicChaoType(); // Pick AND store for reuse
-        } else {
-            System.out.println("Restarting game: Reusing base Chao type: " + this.currentSessionBaseType);
-        }
+    private void loadOrCreateChao(Chao chao) {
         // Create the Chao instance
-        System.out.println("Creating Chao with type: " + this.currentSessionBaseType);
-        Status initialStatus = new Status(100, 100, 100, 100); // Reset stats
-        this.chao = new Chao(0, "Bubbles", this.currentSessionBaseType, State.NORMAL, initialStatus);
+        this.chao = chao;
         this.isSleeping = false; // Reset state flag
+        this.currentSessionBaseType = chao.getType();
 
         // --- Initialize or Update Animation ---
         if (chaoImageView != null) {
@@ -1544,7 +1570,7 @@ public class GameplayController extends BaseController implements Initializable 
         inventory = new Inventory();
         addDefaultInventory();
 
-        loadOrCreateChao(); // Create new Chao (reuses base type if set)
+        //loadOrCreateChao(); // Create new Chao (reuses base type if set)
 
         // Restart Background Music
         if (backgroundMusicPlayer != null) {

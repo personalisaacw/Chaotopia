@@ -5,20 +5,20 @@
     "score": 0,
     "playtime": 0,
     "inventory": {
-        "Dark Fruit": 6,
-        "Hero Fruit": 6,
-        "T.V.": 2,
-        "Green Fruit": 6,
-        "Red Fruit": 6,
-        "Blue Fruit": 6,
-        "Duck": 2,
-        "Trumpet": 2
+        "Dark Fruit": 3,
+        "Hero Fruit": 3,
+        "T.V.": 1,
+        "Green Fruit": 3,
+        "Red Fruit": 3,
+        "Blue Fruit": 3,
+        "Duck": 1,
+        "Trumpet": 1
     },
     "averagePlaytime": 0,
     "chao": {
         "name": "Chao",
         "state": "NORMAL",
-        "type": "RED",
+        "type": "GREEN",
         "alignment": 0,
         "status": {
             "sleep": 100,
