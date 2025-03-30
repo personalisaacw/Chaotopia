@@ -1,39 +1,34 @@
 package com.example.chaotopia.Controller;
-import com.example.chaotopia.Model.Chao;
-import com.example.chaotopia.Model.Status;
-import com.example.chaotopia.Model.State;
-import com.example.chaotopia.Model.ChaoType;
+import com.example.chaotopia.Model.*;
 
 import javafx.fxml.FXML;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
 
 public class ChooseChaosController extends BaseController {
-
     private static final boolean EXISTING_SLOT = true;
+    private int slotIndex;
     private int lastSlotClickedIndex;
-    private static String SAVE_SLOT_FILE = "src/main/resources/com/example/chaotopia/Saves/save_slot_data.json";
-    private static String SAVE_SLOT_INDEX_FILE = "src/main/resources/com/example/chaotopia/Saves/save_slot_index.txt";
 
     public void initialize() {
-        lastSlotClickedIndex = loadSlotIndex();
+//        lastSlotClickedIndex = loadSlotIndex();
         System.out.println("last slot clicked index: " + lastSlotClickedIndex);
     }
 
-    public static int loadSlotIndex() {
-        try {
-            String content = new String(Files.readAllBytes(Paths.get(SAVE_SLOT_INDEX_FILE)));
-            return Integer.parseInt(content.trim());
-        } catch (IOException | NumberFormatException e) {
-            e.printStackTrace();
-            return -1; // Default value if file doesn't exist or error occurs
-        }
+    public void setSlotIndex(int slotIndex) {
+        this.slotIndex = slotIndex;
     }
+
+    // TODO: Implement load game (Faye - Why are we loading the game?)
+//    public static int loadSlotIndex() {
+//        try {
+//            String content = new String(Files.readAllBytes(Paths.get(SAVE_SLOT_INDEX_FILE)));
+//            return Integer.parseInt(content.trim());
+//        } catch (IOException | NumberFormatException e) {
+//            e.printStackTrace();
+//            return -1; // Default value if file doesn't exist or error occurs
+//        }
+//    }
 
     @FXML
     private void selectRedChao() {
@@ -53,42 +48,66 @@ public class ChooseChaosController extends BaseController {
         handleChaoSelection(chao);
     }
 
-    //handle chao selection
+    // Selects the new Chao that the player picks and initializes a new game file
     private void handleChaoSelection(Chao chao) {
         //todo: add confirm selection button when player clicks on chao
 
-        //save the save slot information
-        updateSaveSlot(lastSlotClickedIndex);
 
         //todo: add the save game functionality Faye will implement
-        //save the game state
-            //create inventory
-            //use the chao and inventory to instantiate a json file
+
+        // Creates a new save file
+        GameFile game = new GameFile(slotIndex, chao, new Inventory(), new Score(0));
+        try {
+            game.save();
+            System.out.println("Game saved successfully!");
+        } catch (IOException e) {
+            System.err.println("Failed to save game: " + e.getMessage());
+        }
 
         //todo: create the new save file here using the Chao param
         goToGameScreen();
     }
 
-    private static void updateSaveSlot(int index) {
-        try {
-            String content = new String(Files.readAllBytes(Paths.get(SAVE_SLOT_FILE))); // Read file
-            JSONObject jsonData = new JSONObject(content); // Convert to JSONObject
+//    @FXML
+//    private void handleSlotSelection(int slotId) {
+//        this.selectedSlot = slotId;
+//        try {
+//            if (GameFile.isEmptySlot(slotId)) {
+//                // Load existing game
+//                goToGameScreen();
+//            } else {
+//                // Show character selection UI
+////                showChaoSelection();
+//            }
+//        } catch (IOException e) {
+//            showError("Could not access save files");
+//        }
+//    }
 
-            JSONArray saveSlots = jsonData.getJSONArray("saveSlots");
 
-            // Update the specific index
-            saveSlots.put(index, EXISTING_SLOT);
+    // What is this for?
+//    private static void updateSaveSlot(int index) {
+//        try {
+//            String content = new String(Files.readAllBytes(Paths.get(SAVE_SLOT_FILE))); // Read file
+//            JSONObject jsonData = new JSONObject(content); // Convert to JSONObject
+//            System.out.println(jsonData.toString());
+//
+//            JSONArray saveSlots = jsonData.getJSONArray("saveSlots");
+//
+//            // Update the specific index
+//            saveSlots.put(index, EXISTING_SLOT);
+//
+//            // Write the updated JSON back to the file
+//            try (FileWriter writer = new FileWriter(SAVE_SLOT_FILE)) {
+//                writer.write(jsonData.toString(4)); // Pretty print JSON
+//                writer.flush();
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-            // Write the updated JSON back to the file
-            try (FileWriter writer = new FileWriter(SAVE_SLOT_FILE)) {
-                writer.write(jsonData.toString(4)); // Pretty print JSON
-                writer.flush();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
+    // TODO: Make it global since it is used in multiple places.
     private void goToGameScreen() {
         System.out.println("Go to game screen");
     }

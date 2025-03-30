@@ -1,5 +1,7 @@
 package com.example.chaotopia.Model;
 
+import java.io.IOException;
+
 /**
  * Entity that allows the parent or admin to set restrictions on
  * the game files.
@@ -37,9 +39,11 @@ public final class ParentalControls {
      *
      * @param gameFile the game file containing the Chao to be revived
      */
-    public static void reviveChao(GameFile gameFile) {
+//    TODO: Integration with GameFile
+    public static void reviveChao(int slotIndex) throws IOException {
+        GameFile gameFile = new GameFile(slotIndex);
         Chao chao = gameFile.getChao();
         chao.getStatus().updateStats(100,100,100,100);
-        gameFile.setChao(chao);
+        gameFile.save();
     }
 }
