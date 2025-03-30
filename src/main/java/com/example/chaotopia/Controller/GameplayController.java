@@ -147,11 +147,13 @@ public class GameplayController extends BaseController implements Initializable 
     private int slotIndex;
     public void setSlotIndex(int slotIndex) {
         this.slotIndex = slotIndex;
+        System.out.println("This is the index before initialize" + slotIndex);
     }
 
     GameFile loadedGame = null;
     @Override
     public void initialize(URL location, ResourceBundle resources){
+
         try {
             loadedGame = new GameFile(slotIndex);
             System.out.println("This is the slot index" + slotIndex);
