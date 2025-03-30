@@ -6,6 +6,8 @@ import com.example.chaotopia.Model.GameFile;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -105,6 +107,7 @@ public class GameplayController extends BaseController implements Initializable 
     private Map<String, InventoryItemUI> inventoryUIMap;
     private List<Button> inventoryButtonsOrdered;
     private ChaoType currentSessionBaseType = null;
+    private GameFile game = null;
 
     // --- Timelines ---
     private Timeline statDecayTimeline;
@@ -143,27 +146,29 @@ public class GameplayController extends BaseController implements Initializable 
     private List<String> giftItemNames;
 
     // --- Initialization ---
+    private final IntegerProperty slotIndex = new SimpleIntegerProperty(-1);
 
-    private int slotIndex;
-    public void setSlotIndex(int slotIndex) {
-        this.slotIndex = slotIndex;
-        System.out.println("This is the index before initialize" + slotIndex);
+    public GameplayController() {
+        slotIndex.addListener((obs, oldVal, newVal) -> {
+            if (newVal.intValue() != -1) {
+                initializeGame(newVal.intValue());
+            }
+        });
     }
 
-    GameFile loadedGame = null;
-    @Override
-    public void initialize(URL location, ResourceBundle resources){
+    public void setSlotIndex(int slotIndex) {
+        this.slotIndex.set(slotIndex);
+    }
 
+    private void initializeGame(int slotIndex) {
         try {
-            loadedGame = new GameFile(slotIndex);
-            System.out.println("This is the slot index" + slotIndex);
+            game = new GameFile(slotIndex);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        if (loadedGame.getChao() != null) {
-            chao = loadedGame.getChao();
-            System.out.println("- Initial type: " + chao.getType());
+        if (game.getChao() != null) {
+            chao = game.getChao();
             loadOrCreateChao(chao);
             System.out.println("\nChao: " + chao.getName());
             System.out.println("- Type: " + chao.getType());
@@ -172,18 +177,19 @@ public class GameplayController extends BaseController implements Initializable 
             System.out.println("- Status: " + chao.getStatus().getCurrStats());
         }
 
-        if (loadedGame.getInventory() != null) {
-            inventory = loadedGame.getInventory();
+        if (game.getInventory() != null) {
+            inventory = game.getInventory();
             System.out.println("\nInventory:");
-            for (Map.Entry<String, Integer> entry : loadedGame.getInventory().getItems().entrySet()) {
+            for (Map.Entry<String, Integer> entry : game.getInventory().getItems().entrySet()) {
                 System.out.println("- " + entry.getKey() + ": " + entry.getValue());
             }
         }
 
-        if (loadedGame.getScore() != null) {
-            System.out.println("\nScore: " + loadedGame.getScore().getScore());
-            score = loadedGame.getScore();
+        if (game.getScore() != null) {
+            System.out.println("\nScore: " + game.getScore().getScore());
+            score = game.getScore();
         }
+
         loadSounds();
         inventoryUIMap = new HashMap<>();
         inventoryButtonsOrdered = new ArrayList<>();
@@ -196,21 +202,11 @@ public class GameplayController extends BaseController implements Initializable 
             System.err.println("FXML Warning: fruitImageView is null.");
         }
 
-        //inventory = new Inventory();
-        //this.chao = loadedGame.getChao();
-        // --- Load Game Data (or create default) ---
-        //loadOrCreateChao(); // Now uses random basic type
         initializeInventoryUIMap();
         populateOrderedInventoryButtons();
         if (backgroundMusicPlayer != null) {
             backgroundMusicPlayer.play();
         }
-
-//        if (isNewGameCondition()) { // Replace with your actual new game check
-//            addDefaultInventory(); // Populate the inventory data model
-//        } else {
-//            // TODO: Load inventory data from save file
-//        }
 
         updateScoreUI(score.getScore());
         updateNameLabel();
@@ -221,6 +217,11 @@ public class GameplayController extends BaseController implements Initializable 
         //Setup Time
         setupTimelines();
         startTimelines();
+    }
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources){
 
         Platform.runLater(() -> {
             Scene scene = mainContainer.getScene();
@@ -1611,9 +1612,14 @@ public class GameplayController extends BaseController implements Initializable 
     @FXML
     public void saveGame() {
         playSoundEffect(buttonClickPlayer);
-        // TODO: Implement actual saving mechanism
+        try {
+            game.save();
+            System.out.println("Game saved successfully!");
+        } catch (IOException exp) {
+            System.err.println("Failed to save game: " + exp.getMessage());
+        }
         System.out.println("Attempting to save game...");
-        displayMessage("Game Saved! (Placeholder)", 2.0);
+        displayMessage("Game Saved!", 2.0);
     }
 
     /**
