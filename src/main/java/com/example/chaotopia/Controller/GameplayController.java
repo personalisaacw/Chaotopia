@@ -142,6 +142,10 @@ public class GameplayController extends BaseController implements Initializable 
 
     // --- Initialization ---
 
+    private int slotIndex;
+    public void setSlotIndex(int slotIndex) {
+        this.slotIndex = slotIndex;
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadSounds();
