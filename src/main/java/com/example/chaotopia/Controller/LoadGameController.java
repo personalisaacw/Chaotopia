@@ -63,12 +63,14 @@ public class LoadGameController extends BaseController {
         if (saveSlots[slotIndex] == EMPTY_SLOT) {
             switchScene(e, "/com/example/chaotopia/View/NewGame.fxml", controller -> {
                 if (controller instanceof NewGameController) {
+                    System.out.println("This is the slot index new game" + slotIndex);
                     ((NewGameController) controller).setSlotIndex(slotIndex);
                 }
             });
         } else {
             switchScene(e, "/com/example/chaotopia/View/Gameplay.fxml", controller -> {
                 if (controller instanceof GameplayController) {
+                    System.out.println("This is the slot index load game" + slotIndex);
                     ((GameplayController) controller).setSlotIndex(slotIndex);
                 }
             });
