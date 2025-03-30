@@ -126,6 +126,7 @@ public class GameplayController extends BaseController implements Initializable 
     private MediaPlayer sleepingSoundPlayer;
     private MediaPlayer bonkSoundPlayer;
     private MediaPlayer evolutionSoundPlayer;
+    private MediaPlayer oneShotAngryPlayer;
 
     // --- State Management ---
     private boolean isSleeping = false;
@@ -133,6 +134,8 @@ public class GameplayController extends BaseController implements Initializable 
     private Node gameOverOverlay = null; // Reference to the game over screen
     private final Random random = new Random(); // Final because initialized once
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+    private long lastUserActionTime = 0;
+    private static final long SOUND_LOOP_COOLDOWN_MS = 2000;
 
     // --- Item Spawning ---
     private List<String> fruitItemNames;
@@ -625,12 +628,15 @@ public class GameplayController extends BaseController implements Initializable 
     public void playChao() {
         playSoundEffect(buttonClickPlayer);
         if (isInteractionAllowed("PLAY")) {
-            playSoundEffect(happyPlayer);
+            stopAllLoops();
             Commands.play(chao);
             updateStatusBars();
             score.updateScore(10);
             updateScoreUI(score.getScore());
+
+            playSoundEffect(happyPlayer);
             showHappyAnimation();
+            lastUserActionTime = System.currentTimeMillis();
 
             // Special handling if we're angry
             if (chao.getState() == State.ANGRY && chao.getStatus().getHappiness() >= 50) {
@@ -652,6 +658,7 @@ public class GameplayController extends BaseController implements Initializable 
     public void sleepChao() {
         playSoundEffect(buttonClickPlayer);
         if (isInteractionAllowed("SLEEP")) {
+            stopAllLoops();
             Commands.sleep(chao);
             if (chao.getState() == State.SLEEPING) {
                 // Start sleeping sound loop
@@ -684,13 +691,15 @@ public class GameplayController extends BaseController implements Initializable 
     public void exerciseChao() {
         playSoundEffect(buttonClickPlayer);
         if (isInteractionAllowed("EXERCISE")) {
+            stopAllLoops();
             Commands.exercise(chao);
-            playSoundEffect(happyPlayer);
             updateStatusBars();
             score.updateScore(10);
             updateScoreUI(score.getScore());
+
+            playSoundEffect(happyPlayer);
             showHappyAnimation();
-            // monitorChaoState(); // Let the regular monitor handle state changes
+            lastUserActionTime = System.currentTimeMillis();
         } else {
             handleInteractionDenied("EXERCISE");
         }
@@ -711,13 +720,14 @@ public class GameplayController extends BaseController implements Initializable 
                 return; // Don't proceed if message shown
             }
 
+            stopAllLoops();
             playSoundEffect(happyPlayer);
-            // If vet was needed (no message returned)
+
             updateStatusBars();
             score.updateScore(-20); // Cost for vet visit
             updateScoreUI(score.getScore());
             showHappyAnimation(); // Happy after being healed
-            // monitorChaoState(); // Let regular monitor handle state updates
+            lastUserActionTime = System.currentTimeMillis();
 
         } else {
             handleInteractionDenied("VET");
@@ -739,13 +749,15 @@ public class GameplayController extends BaseController implements Initializable 
 
             // Check for Hero evolution only if it's a basic type and not already evolved
             if (previousAlignment < 7 && chao.getAlignment() >= 7 && chao.getType() != ChaoType.HERO) {
+                lastUserActionTime = System.currentTimeMillis();
                 triggerEvolution(true); // True for Hero
             } else {
+                stopAllLoops();
                 playSoundEffect(happyPlayer);
                 score.updateScore(3);
                 updateScoreUI(score.getScore());
                 showHappyAnimation();
-                // Let monitor handle potential state change out of angry
+                lastUserActionTime = System.currentTimeMillis();
             }
         } else {
             handleInteractionDenied("PET");
@@ -763,9 +775,6 @@ public class GameplayController extends BaseController implements Initializable 
         if (isInteractionAllowed("BONK")) {
             int previousAlignment = chao.getAlignment();
             Commands.bonk(chao); // Apply model changes
-            if(!(previousAlignment > -7 && chao.getAlignment() <= -7)){
-                playSoundEffect(bonkSoundPlayer); // Play bonk sound
-            }
             updateStatusBars(); // Update UI
             score.updateScore(-3);
             updateScoreUI(score.getScore());
@@ -773,9 +782,12 @@ public class GameplayController extends BaseController implements Initializable 
             // Check for Dark evolution only if basic type and not already evolved
             if (previousAlignment > -7 && chao.getAlignment() <= -7 && chao.getType() != ChaoType.DARK) {
                 triggerEvolution(false); // False for Dark
+                lastUserActionTime = System.currentTimeMillis();
             } else {
-                showTemporaryStateAnimation(AnimationState.HUNGRY, 2); // Show temporary angry visual
-                // monitorChaoState(); // Let monitor handle if state actually becomes ANGRY
+                stopAllLoops();
+                playSoundEffect(bonkSoundPlayer);
+                showTemporaryStateAnimation(AnimationState.HUNGRY, 2);
+                lastUserActionTime = System.currentTimeMillis();
             }
         } else {
             handleInteractionDenied("BONK");
@@ -819,6 +831,8 @@ public class GameplayController extends BaseController implements Initializable 
         }
 
         // Apply logic
+        stopAllLoops();
+        lastUserActionTime = System.currentTimeMillis();
         playSoundEffect(happyPlayer);
         Commands.give(chao, new Item(itemName)); // Apply effect to model
         inventory.removeItem(itemName);          // Update model
@@ -828,7 +842,6 @@ public class GameplayController extends BaseController implements Initializable 
         updateScoreUI(score.getScore());         // Update UI
         showHappyAnimation();                    // Show visual reaction
         displayMessage(chao.getName() + " liked the " + itemName + "!", 1.5); // Show text feedback
-        // monitorChaoState();                  // Let monitor handle state changes
     }
 
     /**
@@ -904,6 +917,7 @@ public class GameplayController extends BaseController implements Initializable 
         }
 
         // Play sound & start animation
+        stopAllLoops();
         playSoundEffect(eatingPlayer);
         fruitAnimation.changeFruitType(fruitType);
 
@@ -934,6 +948,7 @@ public class GameplayController extends BaseController implements Initializable 
             score.updateScore(5);
             updateScoreUI(score.getScore());
             showTemporaryStateAnimation(AnimationState.HAPPY,3);
+            lastUserActionTime = System.currentTimeMillis();
         }
 
     }
@@ -961,11 +976,10 @@ public class GameplayController extends BaseController implements Initializable 
         // --- Setup Evolution State ---
         chao.setState(State.EVOLVING);
         isSleeping = false; // Can't sleep while evolving
-        if (angryPlayer != null) angryPlayer.stop();
-        if (cryingPlayer != null) cryingPlayer.stop();
-        if (sleepingSoundPlayer != null) sleepingSoundPlayer.stop();
+        stopAllLoops();
         playSoundEffect(evolutionSoundPlayer); // Play evolution SFX
         enableAllInteractions(false); // Disable UI interactions
+        lastUserActionTime = System.currentTimeMillis();
 
         // Update score
         int evolutionScore = isHeroEvolution ? 50 : 25;
@@ -1000,10 +1014,9 @@ public class GameplayController extends BaseController implements Initializable 
                             new KeyFrame(Duration.seconds(postEvolutionPoseDuration), e2 -> {
                                 if (chao == null) return;
                                 // Revert state if still in post-evolution pose
-                                State expectedPostEvoState = StateUtility.fromAnimationState(finalPose);
-                                if (chao.getState() == State.EVOLVING || chao.getState() == expectedPostEvoState) {
+                                if (chao.getState() == State.EVOLVING) {
                                     chao.setState(State.NORMAL);
-                                    monitorChaoState(); // Sync visuals/sounds to NORMAL
+                                    syncChaoAnimationToState(State.NORMAL, true);
                                 }
                                 enableAllInteractions(true); // Re-enable UI
                             })
@@ -1370,28 +1383,48 @@ public class GameplayController extends BaseController implements Initializable 
         updateSoundLoops(determinedState); // Ensure sounds match final state
     }
 
-    /** Helper method to start/stop looping sounds based on the given state. */
+    /** Helper method to start/stop looping sounds based on the given state, respecting cooldown. */
     private void updateSoundLoops(State state) {
-        // Stop incorrect loops first to prevent overlap
-        if (state != State.ANGRY && angryPlayer != null && angryPlayer.getStatus() == MediaPlayer.Status.PLAYING) angryPlayer.stop();
-        if (state != State.HUNGRY && cryingPlayer != null && cryingPlayer.getStatus() == MediaPlayer.Status.PLAYING) cryingPlayer.stop();
-        if (state != State.SLEEPING && sleepingSoundPlayer != null && sleepingSoundPlayer.getStatus() == MediaPlayer.Status.PLAYING) sleepingSoundPlayer.stop();
+        long currentTime = System.currentTimeMillis();
 
-        // Start the correct loop if not already playing
-        if (state == State.ANGRY && angryPlayer != null && angryPlayer.getStatus() != MediaPlayer.Status.PLAYING) {
-            angryPlayer.seek(Duration.ZERO); angryPlayer.play();
-        } else if (state == State.HUNGRY && cryingPlayer != null && cryingPlayer.getStatus() != MediaPlayer.Status.PLAYING) {
-            cryingPlayer.seek(Duration.ZERO); cryingPlayer.play();
-        } else if (state == State.SLEEPING && sleepingSoundPlayer != null && sleepingSoundPlayer.getStatus() != MediaPlayer.Status.PLAYING) {
-            sleepingSoundPlayer.seek(Duration.ZERO); sleepingSoundPlayer.play();
+        // --- Stop incorrect loops first (always safe) ---
+        if (state != State.ANGRY && angryPlayer != null && angryPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+            angryPlayer.stop();
+        }
+        if (state != State.HUNGRY && cryingPlayer != null && cryingPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+            cryingPlayer.stop();
+        }
+        if (state != State.SLEEPING && sleepingSoundPlayer != null && sleepingSoundPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+            sleepingSoundPlayer.stop();
+        }
+
+        // --- Check Cooldown before STARTING a loop ---
+        if (currentTime - lastUserActionTime < SOUND_LOOP_COOLDOWN_MS) {
+            return;
+        }
+
+        // --- Start the correct loop if not already playing AND not in cooldown ---
+        try {
+            if (state == State.ANGRY && angryPlayer != null && angryPlayer.getStatus() != MediaPlayer.Status.PLAYING) {
+                angryPlayer.seek(Duration.ZERO); angryPlayer.play();
+            } else if (state == State.HUNGRY && cryingPlayer != null && cryingPlayer.getStatus() != MediaPlayer.Status.PLAYING) {
+                cryingPlayer.seek(Duration.ZERO); cryingPlayer.play();
+            } else if (state == State.SLEEPING && sleepingSoundPlayer != null && sleepingSoundPlayer.getStatus() != MediaPlayer.Status.PLAYING) {
+                sleepingSoundPlayer.seek(Duration.ZERO); sleepingSoundPlayer.play();
+            }
+        } catch (Exception e) {
+            System.err.println("Error trying to start sound loop for state " + state + ": " + e.getMessage());
         }
     }
 
     /** Helper method to explicitly stop all state-based looping sounds. */
     private void stopAllLoops() {
-        if (angryPlayer != null) angryPlayer.stop();
-        if (cryingPlayer != null) cryingPlayer.stop();
-        if (sleepingSoundPlayer != null) sleepingSoundPlayer.stop();
+        if (angryPlayer != null) {angryPlayer.stop();
+        }
+        if (cryingPlayer != null) { cryingPlayer.stop();
+        }
+        if (sleepingSoundPlayer != null) {sleepingSoundPlayer.stop();
+        }
     }
 
     /**
