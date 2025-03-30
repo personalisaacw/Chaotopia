@@ -1,7 +1,7 @@
 {
     "ActiveSlot": true,
     "SlotId": 1,
-    "numSessions": 1,
+    "numSessions": 0,
     "score": 0,
     "playtime": 0,
     "inventory": {},
@@ -17,6 +17,5 @@
             "fullness": 100,
             "health": 100
         }
-    },
-    "isDead": false
+    }
 }

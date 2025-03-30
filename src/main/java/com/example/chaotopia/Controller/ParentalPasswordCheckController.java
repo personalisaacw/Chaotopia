@@ -1,23 +1,22 @@
 package com.example.chaotopia.Controller;
 
+import com.example.chaotopia.Model.ParentalControls;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.PasswordField;
 
 import java.io.IOException;
 
 public class ParentalPasswordCheckController extends BaseController {
-    private String password;
-
-    public void initialize() {
-        //todo: call parental controls class to set password variable
-    }
+    @FXML
+    private PasswordField passwordField;
 
     public void checkPassword(ActionEvent e) throws IOException {
-        //used for testing
-        switchScene(e, "/com/example/chaotopia/View/ParentalControls.fxml");
+        String enteredPassword = passwordField.getText();
 
-        //if password correct:
-            //todo: call parental controls
-            //go to parental controls screen
+        if (ParentalControls.authenticate(enteredPassword)) {
+            switchScene(e, "/com/example/chaotopia/View/ParentalControls.fxml");
+        }
         //else:
             //todo: show error when password incorrect
     }

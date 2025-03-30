@@ -37,9 +37,9 @@
                               <Font name="Upheaval TT -BRK-" size="30.0" />
                         </font>
                   </Label>
-         <TextField maxWidth="-Infinity" promptText="Start Time" stylesheets="@../CSS/styles.css" styleClass="text-field" style="-fx-font-family: 'Upheaval TT -BRK-'; -fx-font-size: 12px;"/>
-         <TextField maxWidth="-Infinity" promptText="End Time" stylesheets="@../CSS/styles.css" styleClass="text-field" style="-fx-font-family: 'Upheaval TT -BRK-'; -fx-font-size: 12px;"/>
-         <CheckBox fx:id="playRangeCheckBox" mnemonicParsing="false" text="Enable?" onAction="#enablePlayRange" style="-fx-background-color: rgb(195,143,110); -fx-padding: 5px; -fx-background-radius: 5px; -fx-border-color: #272744; -fx-border-radius: 5; -fx-font-family: 'Upheaval TT -BRK-'; -fx-font-size: 12px;"/>
+         <TextField fx:id="startTimeField" maxWidth="-Infinity" promptText="Start Time" stylesheets="@../CSS/styles.css" styleClass="text-field" style="-fx-font-family: 'Upheaval TT -BRK-'; -fx-font-size: 12px;"/>
+         <TextField fx:id="endTimeField" maxWidth="-Infinity" promptText="End Time" stylesheets="@../CSS/styles.css" styleClass="text-field" style="-fx-font-family: 'Upheaval TT -BRK-'; -fx-font-size: 12px;"/>
+         <CheckBox fx:id="playRangeCheckBox" mnemonicParsing="false" text="Enable?" onAction="#togglePlayRange" style="-fx-background-color: rgb(195,143,110); -fx-padding: 5px; -fx-background-radius: 5px; -fx-border-color: #272744; -fx-border-radius: 5; -fx-font-family: 'Upheaval TT -BRK-'; -fx-font-size: 12px;"/>
                   <Button mnemonicParsing="false" onAction="#submitPlaytimeRange" styleClass="btn" stylesheets="@../CSS/styles.css" text="Submit Times" textAlignment="CENTER" textFill="#272744">
                         <font>
                               <Font name="Upheaval TT -BRK-" size="24.0" />
