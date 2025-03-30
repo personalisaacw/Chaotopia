@@ -6,7 +6,7 @@ import java.io.IOException;
 public class MainMenuController extends BaseController {
 
     public void newGame(ActionEvent e) throws IOException {
-        switchScene(e, "/com/example/chaotopia/View/PlayGame.fxml");
+        switchScene(e, "/com/example/chaotopia/View/LoadGame.fxml");
     }
 
     public void loadGame(ActionEvent e) throws IOException {
