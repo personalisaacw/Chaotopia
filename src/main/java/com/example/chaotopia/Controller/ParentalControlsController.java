@@ -1,5 +1,6 @@
 package com.example.chaotopia.Controller;
 
+import com.example.chaotopia.Components.Popup;
 import com.example.chaotopia.Model.GameFile;
 import com.example.chaotopia.Model.ParentalControls;
 import com.example.chaotopia.Model.ParentalLimitations;
@@ -56,20 +57,48 @@ public class ParentalControlsController extends BaseController{
         String endTime = endTimeField.getText();
 
         try {
-            // Parse the strings into LocalTime objects
-            LocalTime parsedStartTime = LocalTime.parse(startTime);
-            LocalTime parsedEndTime = LocalTime.parse(endTime);
+            String title = "Set Playtime";
+            String content = "Are you sure you want to set the playtime?";
+            Popup dialog = new Popup(title, content);
 
-            ParentalLimitations.setAllowedTime(parsedStartTime, parsedEndTime);
+            dialog.addButton("Yes", () -> {
+                LocalTime parsedStartTime = LocalTime.parse(startTime);
+                LocalTime parsedEndTime = LocalTime.parse(endTime);
+                ParentalLimitations.setAllowedTime(parsedStartTime, parsedEndTime);
+            }, "btn-submit");
+
+            dialog.addButton("No", () -> {
+                // Do nothing
+            }, "btn-cancel");
+
+            dialog.showAndWait();
+
         } catch (DateTimeParseException e) {
-            // Handle cases where the string format is incorrect
+            String title = "Set Playtime";
+            String content = "You entered an invalid time. Please enter your time in 24-hour format (e.g. 13:30).";
+            Popup dialog = new Popup(title, content);
+
+            dialog.addButton("Okay", () -> {
+
+            }, "btn-submit");
+
+            dialog.showAndWait();
             System.err.println("Error parsing time string: " + e.getMessage());
-            // You might want to show an error message to the user, log the error,
-            // or use default values here.
+
         } catch (Exception e) {
-            // Catch other potential exceptions
+            System.err.println("Error parsing time string: " + e.getMessage());
             System.err.println("An unexpected error occurred: " + e.getMessage());
             e.printStackTrace();
+
+            String title = "Set Playtime";
+            String content = "An unknown error occurred. Please try again.";
+            Popup dialog = new Popup(title, content);
+
+            dialog.addButton("Okay", () -> {
+
+            }, "btn-submit");
+
+            dialog.showAndWait();
         }
 
         //save the limitations
@@ -82,8 +111,20 @@ public class ParentalControlsController extends BaseController{
     }
 
     public void resetPlaytimeStats() {
-        ParentalStatistics.resetStatistics(gameFiles);
-        updatePlaytimeStatsLabel();
+        String title = "Reset Statistics";
+        String content = "Are you sure you want to reset the statistics?";
+        Popup dialog = new Popup(title, content);
+
+        dialog.addButton("Yes", () -> {
+            ParentalStatistics.resetStatistics(gameFiles);
+            updatePlaytimeStatsLabel();
+        }, "btn-submit");
+
+        dialog.addButton("No", () -> {
+            // Do nothing
+        }, "btn-cancel");
+
+        dialog.showAndWait();
     }
 
     public void reviveSlot1() {
@@ -99,15 +140,49 @@ public class ParentalControlsController extends BaseController{
     }
 
     private void handleRevive(GameFile gameFile) {
-        if (gameFile != null) {
-            if (gameFile.getChao().getStatus().getHealth() == 0) {
-                try {
-                    ParentalControls.reviveChao(gameFile);
-                } catch (Exception e) {
-                    System.err.println(e.getMessage());
-                }
-            }
+        if (gameFile == null) {
+            return;
         }
+
+        if (gameFile.getChao().getStatus().getHealth() == 0) {
+            showReviveConfirmationDialog(gameFile);
+        } else {
+            showCannotReviveDialog();
+        }
+    }
+
+    private void showReviveConfirmationDialog(GameFile gameFile) {
+        String title = "Revive Pet";
+        String content = "Are you sure you want to revive the pet?";
+        Popup dialog = new Popup(title, content);
+
+        dialog.addButton("Yes", () -> {
+            try {
+                ParentalControls.reviveChao(gameFile);
+            } catch (IOException e) {
+                showErrorDialog("Revival Failed", "An error occurred while reviving the pet: " + e.getMessage());
+            }
+        }, "btn-submit");
+
+        dialog.addButton("No", () -> {}, "btn-cancel");
+
+        dialog.showAndWait();
+    }
+
+    private void showCannotReviveDialog() {
+        String title = "Cannot Revive Pet";
+        String content = "You cannot revive the pet. The pet is alive.";
+        Popup dialog = new Popup(title, content);
+
+        dialog.addButton("Okay", () -> {}, "btn-submit");
+
+        dialog.showAndWait();
+    }
+
+    private void showErrorDialog(String title, String message) {
+        Popup errorDialog = new Popup(title, message);
+        errorDialog.addButton("Okay", () -> {}, "btn-submit");
+        errorDialog.showAndWait();
     }
 
     private void updatePlaytimeStatsLabel() {

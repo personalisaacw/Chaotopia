@@ -1,14 +1,14 @@
 {
     "ActiveSlot": true,
     "SlotId": 1,
-    "numSessions": 48,
+    "numSessions": 0,
     "score": 70,
-    "playtime": 258,
+    "playtime": 0,
     "inventory": {
         "Dark Fruit": 5,
         "Hero Fruit": 4,
         "T.V.": 2,
-        "Green Fruit": 4,
+        "Green Fruit": 5,
         "Red Fruit": 5,
         "Blue Fruit": 6,
         "Duck": 2,
@@ -21,9 +21,9 @@
         "type": "RED",
         "alignment": 0,
         "status": {
-            "sleep": 88,
-            "happiness": 88,
-            "fullness": 82,
+            "sleep": 82,
+            "happiness": 82,
+            "fullness": 73,
             "health": 100
         }
     }

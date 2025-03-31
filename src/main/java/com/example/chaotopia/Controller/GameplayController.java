@@ -2,6 +2,7 @@ package com.example.chaotopia.Controller;
 
 // Added Model import assuming it contains necessary classes like Chao, State, etc.
 import com.example.chaotopia.Application.BackgroundMusic;
+import com.example.chaotopia.Components.Popup;
 import com.example.chaotopia.Model.*;
 import com.example.chaotopia.Model.GameFile;
 import javafx.animation.KeyFrame;
@@ -556,15 +557,23 @@ public class GameplayController extends BaseController implements Initializable 
                     monitorChaoState();
                     time.stepTime();
                     if(!time.canPlay()){
-                        //TODO: show popup for game
                         System.out.println("Chao timed out.");
-                        time.storeTime(game);
                         try{
                             game.save();
                         }catch (IOException exp){
                             exp.printStackTrace();
                         }
+                        String title = "Chao Gameplay";
+                        String content = "Chao timed out.";
+                        Popup dialog = new Popup(title, content);
 
+                        dialog.addButton("Okay", () -> {
+                            time.storeTime(game);
+                        }, "btn-submit");
+
+                        dialog.showAndWait();
+
+                        // TODO: What is this?
                         enableAllInteractions(true);
 
                     };
@@ -1598,7 +1607,18 @@ public class GameplayController extends BaseController implements Initializable 
         playSoundEffect(buttonClickPlayer);
         try {
             game.save();
+            // TODO: Do we want a popup for this or not?
+//            String title = "Save Game";
+//            String content = "Your game has been saved!";
+//            Popup dialog = new Popup(title, content);
+//
+//            dialog.addButton("Okay", () -> {
+//
+//            }, "btn-submit");
+//
+//            dialog.showAndWait();
             System.out.println("Game saved successfully!");
+            displayMessage("Game Saved!", 2.0);
         } catch (IOException exp) {
             System.err.println("Failed to save game: " + exp.getMessage());
         }
@@ -1613,14 +1633,41 @@ public class GameplayController extends BaseController implements Initializable 
     @FXML
     public void goToMenu(ActionEvent event) {
         System.out.println("Returning to Main Menu... (Implement Navigation)");
-        displayMessage("Returning to Menu...", 1.5);
-        shutdown(); // Clean up current game
-        try{
-            goToMainMenu(event);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        try {
+            game.save();
+            String title = "Back to Main Menu";
+            String content = "Are you sure you want to go back to the main menu? Your progress will be saved.";
+            Popup dialog = new Popup(title, content);
 
+            dialog.addButton("Stay", () -> {
+            }, "btn-submit");
+
+            dialog.addButton("Leave", () -> {
+                shutdown();
+                try {
+                    goToMainMenu(event);
+                } catch (IOException e) {
+                    String failedMainMenuContent = "Failed to go back to the main menu.";
+                    Popup failDialog = new Popup(title, failedMainMenuContent);
+                    failDialog.addButton("Okay", () -> {
+
+                    }, "btn-red");
+                    throw new RuntimeException(e);
+                }
+
+            }, "btn-cancel");
+
+            dialog.showAndWait();
+        } catch (IOException exp) {
+            System.err.println("Failed to save game: " + exp.getMessage());
+            String title = "Failed to Save Game";
+            String content = "Your game failed to save.";
+            Popup dialog = new Popup(title, content);
+
+            dialog.addButton("Okay", () -> {
+
+            }, "btn-submit");
+        }
     }
 
     /**

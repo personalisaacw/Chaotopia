@@ -17,14 +17,14 @@
     "averagePlaytime": 0,
     "chao": {
         "name": "Chao",
-        "state": "DEAD",
+        "state": "NORMAL",
         "type": "DARK",
         "alignment": -7,
         "status": {
-            "sleep": 78,
-            "happiness": 0,
-            "fullness": 0,
-            "health": 0
+            "sleep": 100,
+            "happiness": 100,
+            "fullness": 100,
+            "health": 100
         }
     }
 }
