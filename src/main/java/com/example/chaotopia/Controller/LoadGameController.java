@@ -140,6 +140,19 @@ public class LoadGameController extends BaseController {
             slot1Button.setDisable(true);
             slot2Button.setDisable(true);
             slot3Button.setDisable(true);
+
+            String title = "Play Not Allowed";
+            String content = "You are not allowed to play during this time!\n" +
+                    "You can only play from " + ParentalLimitations
+                    .getAllowedStartTime() + " to " + ParentalLimitations
+                    .getAllowedEndTime() + ".";
+            Popup dialog = new Popup(title, content);
+
+            dialog.addButton("Okay", () -> {
+                popStack();
+            }, "btn-submit");
+
+            dialog.showAndWait();
         }
     }
 }
