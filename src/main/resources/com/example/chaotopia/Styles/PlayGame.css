@@ -37,7 +37,7 @@
     -fx-alignment: center;
 }
 
-.save-slots {
+.btn-lrg {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-background-radius: 0;
@@ -45,7 +45,7 @@
     -fx-transition: all 0.2s ease-in-out;
 }
 
-.save-slots:hover {
+.btn-lrg:hover {
     -fx-scale-x: 1.05; /* Increases width */
     -fx-scale-y: 1.05; /* Increases height */
 }

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="1000.0" stylesheets="@../CSS/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chaotopia.Controller.LoadGameController">
+<BorderPane prefHeight="800.0" prefWidth="1200.0" stylesheets="@../CSS/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chaotopia.Controller.NewGameController">
     <top>
 
     </top>
@@ -32,26 +32,30 @@
                         </ImageView>
                     </graphic></Button>
                 <Region prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
-                <Label alignment="CENTER" maxWidth="485.0" prefHeight="73.0" prefWidth="485.0" styleClass="profile-board" stylesheets="@../CSS/styles.css" text="Choose Your Chao" textAlignment="CENTER" wrapText="true">
+                <Label alignment="CENTER" maxHeight="157.0" maxWidth="514.0" prefHeight="157.0" prefWidth="400.0" textAlignment="CENTER" wrapText="true">
                     <font>
                         <Font name="Upheaval TT -BRK-" size="48.0" />
-                    </font></Label>
+                    </font>
+               <graphic>
+                  <ImageView fitHeight="150.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/ChooseChaosScreen/title.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Label>
                 <Region prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
                 <Button mnemonicParsing="false" opacity="0.0" prefHeight="50.0" prefWidth="50.0" />
             </children>
         </HBox>
     </top>
-    <center>
-
-    </center>
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="32.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Button mnemonicParsing="false">
+                  <Button mnemonicParsing="false" onAction="#selectRedChao" styleClass="btn-lrg">
                      <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="200.0" fitWidth="266.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Assets/ChooseChaosScreen/red-chao-button.png" />
                            </image>
@@ -60,7 +64,7 @@
                   </Button>
                   <Label>
                      <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="200.0" fitWidth="266.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Assets/ChooseChaosScreen/red-description.png" />
                            </image>
@@ -71,9 +75,9 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="32.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Button mnemonicParsing="false">
+                  <Button mnemonicParsing="false" onAction="#selectGreenChao" styleClass="btn-lrg">
                      <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="200.0" fitWidth="266.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Assets/ChooseChaosScreen/green-chao-button.png" />
                            </image>
@@ -82,7 +86,7 @@
                   </Button>
                   <Label>
                      <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="200.0" fitWidth="266.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Assets/ChooseChaosScreen/green-description.png" />
                            </image>
@@ -92,9 +96,9 @@
                </children></VBox>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="32.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Button mnemonicParsing="false">
+                  <Button mnemonicParsing="false" onAction="#selectBlueChao" styleClass="btn-lrg">
                      <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="200.0" fitWidth="266.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Assets/ChooseChaosScreen/blue-chao-button.png" />
                            </image>
@@ -103,7 +107,7 @@
                   </Button>
                   <Label>
                      <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="200.0" fitWidth="266.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Assets/ChooseChaosScreen/blue-description.png" />
                            </image>

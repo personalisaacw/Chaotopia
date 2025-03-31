@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="1000.0" stylesheets="@../CSS/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chaotopia.Controller.LoadGameController">
+<BorderPane prefHeight="800.0" prefWidth="1200.0" stylesheets="@../CSS/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chaotopia.Controller.LoadGameController">
       <top>
 
       </top>
@@ -46,7 +46,7 @@
          <children>
             <VBox alignment="CENTER" spacing="32.0" HBox.hgrow="ALWAYS">
                <children>
-                              <Button fx:id="slot1Button" onAction="#slot1Click" styleClass="save-slots">
+                              <Button fx:id="slot1Button" onAction="#slot1Click" styleClass="btn-lrg">
                                     <graphic>
                                           <ImageView fx:id="slot1Image" fitHeight="160" fitWidth="120" />
                                     </graphic>
@@ -63,7 +63,7 @@
             </VBox>
             <VBox alignment="CENTER" spacing="32.0" HBox.hgrow="ALWAYS">
                <children>
-                              <Button fx:id="slot2Button" onAction="#slot2Click" styleClass="save-slots">
+                              <Button fx:id="slot2Button" onAction="#slot2Click" styleClass="btn-lrg">
                                     <graphic>
                                           <ImageView fx:id="slot2Image" fitHeight="160" fitWidth="120" />
                                     </graphic>
@@ -80,7 +80,7 @@
             </VBox>
             <VBox alignment="CENTER" spacing="32.0" HBox.hgrow="ALWAYS">
                <children>
-                              <Button fx:id="slot3Button" onAction="#slot3Click" styleClass="save-slots">
+                              <Button fx:id="slot3Button" onAction="#slot3Click" styleClass="btn-lrg">
                                     <graphic>
                                           <ImageView fx:id="slot3Image" fitHeight="160" fitWidth="120" />
                                     </graphic>
