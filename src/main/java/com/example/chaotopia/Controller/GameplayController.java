@@ -193,6 +193,7 @@ public class GameplayController extends BaseController implements Initializable 
             score = game.getScore();
         }
 
+        time = new Time(game);
         loadSounds();
         inventoryUIMap = new HashMap<>();
         inventoryButtonsOrdered = new ArrayList<>();
@@ -377,13 +378,6 @@ public class GameplayController extends BaseController implements Initializable 
         if (event.getCode() == KeyCode.S) {
             playSoundEffect(buttonClickPlayer);
             saveGame();
-            event.consume();
-            return;
-        }
-        if (event.getCode() == KeyCode.M) {
-            playSoundEffect(buttonClickPlayer);
-            ActionEvent actionEvent = new ActionEvent(event.getSource(), event.getTarget());
-            goToMenu(actionEvent);
             event.consume();
             return;
         }
