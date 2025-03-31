@@ -557,6 +557,14 @@ public class GameplayController extends BaseController implements Initializable 
                         //TODO: show popup for game
                         System.out.println("Chao timed out.");
                         time.storeTime(game);
+                        try{
+                            game.save();
+                        }catch (IOException exp){
+                            exp.printStackTrace();
+                        }
+
+                        enableAllInteractions(true);
+
                     };
                 })
         );
@@ -1523,7 +1531,7 @@ public class GameplayController extends BaseController implements Initializable 
 
                 Button newGameButton = new Button("Play Again?");
                 newGameButton.setStyle("-fx-background-color: #A0522D; -fx-text-fill: white; -fx-font-family: 'Upheaval TT -BRK-'; -fx-font-size: 12px; -fx-padding: 10 20; -fx-background-radius: 8; -fx-border-color: #DEB887; -fx-border-radius: 8;");
-                newGameButton.setOnAction(e -> startNewGame());
+                newGameButton.setOnAction(e -> startNewGame(e));
 
                 Button mainMenuButton = new Button("Main Menu");
                 mainMenuButton.setStyle("-fx-background-color: #A0522D; -fx-text-fill: white; -fx-font-family: 'Upheaval TT -BRK-'; -fx-font-size: 12px; -fx-padding: 10 20; -fx-background-radius: 8; -fx-border-color: #DEB887; -fx-border-radius: 8;");
@@ -1567,50 +1575,16 @@ public class GameplayController extends BaseController implements Initializable 
     }
 
     /**
-     * Resets game state for a new session: removes overlay, resets models,
-     * restarts sounds/timelines, updates UI, enables interactions.
+     * Leads to the Load Game / New Game Screen
      */
-    private void startNewGame() {
-        System.out.println("Starting new game...");
-        removeGameOverScreen();
-        stopAllSounds(); // Stop sounds from previous session
-
-        // Reset Models
-        score = new Score(0);
-        inventory = new Inventory();
-        addDefaultInventory();
-
-        //loadOrCreateChao(); // Create new Chao (reuses base type if set)
-
-        // Restart Background Music
-        if (backgroundMusicPlayer != null) {
-            backgroundMusicPlayer.seek(Duration.ZERO);
-            backgroundMusicPlayer.play();
-        } else {
-            loadSounds(); // Attempt to reload sounds
-            if(backgroundMusicPlayer != null) backgroundMusicPlayer.play();
+    private void startNewGame(ActionEvent e) {
+        saveGame();
+        try{
+            switchScene(e, "/com/example/chaotopia/View/LoadGame.fxml");
+        }catch (IOException exp){
+            exp.printStackTrace();
         }
 
-        // Update UI
-        updateScoreUI(score.getScore());
-        updateNameLabel();
-        updateStatusBars();
-        updateInventoryDisplay();
-        updateProfileChaoImage();
-
-        // Reset State Flags (handled by loadOrCreateChao)
-        isSleeping = false;
-        previousState = State.NORMAL;
-
-        // Restart Timelines & Interactions
-        stopTimelines(); // Stop old before setup
-        setupTimelines();
-        startTimelines();
-        enableAllInteractions(true);
-
-        // Ensure Animation is Correct (handled by loadOrCreateChao->sync)
-
-        System.out.println("New game started.");
     }
 
     // --- System Actions ---
@@ -1645,17 +1619,6 @@ public class GameplayController extends BaseController implements Initializable 
         }
 
     }
-
-//    public void goToM(KeyEvent event) {
-//        System.out.println("Returning to Main Menu... (Implement Navigation)");
-//        displayMessage("Returning to Menu...", 1.5);
-//        shutdown(); // Clean up current game
-//        try{
-//            goToMainMenu(event);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//    }
 
     /**
      * Stops all running timelines, sounds, and animations. Called before closing stage or navigating away.
