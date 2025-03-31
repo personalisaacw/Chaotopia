@@ -7,6 +7,13 @@
     -fx-background-position: center center;
 }
 
+.mainMenu-background {
+    -fx-background-image: url("/com/example/chaotopia/Assets/Background/MainMenuBackground.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
 .game-default-background {
     -fx-background-image: url("/com/example/chaotopia/Assets/Background/Flowers.jpg");
     -fx-background-repeat: no-repeat;
