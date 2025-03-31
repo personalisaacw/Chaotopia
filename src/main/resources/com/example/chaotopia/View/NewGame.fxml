@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../Styles/ChooseChaos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chaotopia.Controller.ChooseChaosController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../Styles/ChooseChaos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chaotopia.Controller.NewGameController">
     <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#goBack" prefHeight="40.0" prefWidth="40.0" styleClass="back-button" />
     <Label layoutX="118.0" layoutY="20.0" prefHeight="73.0" prefWidth="365.0" styleClass="title-label" />
 

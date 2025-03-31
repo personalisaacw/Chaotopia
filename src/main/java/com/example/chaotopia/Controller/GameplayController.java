@@ -1,10 +1,15 @@
 package com.example.chaotopia.Controller;
 
 // Added Model import assuming it contains necessary classes like Chao, State, etc.
+import com.example.chaotopia.Application.BackgroundMusic;
 import com.example.chaotopia.Model.*;
+import com.example.chaotopia.Model.GameFile;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -20,6 +25,9 @@ import javafx.scene.layout.*;
 import javafx.util.Duration;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+
+import java.awt.event.InputEvent;
+import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import javafx.scene.media.Media;
@@ -102,6 +110,7 @@ public class GameplayController extends BaseController implements Initializable 
     private Map<String, InventoryItemUI> inventoryUIMap;
     private List<Button> inventoryButtonsOrdered;
     private ChaoType currentSessionBaseType = null;
+    private GameFile game = null;
 
     // --- Timelines ---
     private Timeline statDecayTimeline;
@@ -125,7 +134,6 @@ public class GameplayController extends BaseController implements Initializable 
     private MediaPlayer sleepingSoundPlayer;
     private MediaPlayer bonkSoundPlayer;
     private MediaPlayer evolutionSoundPlayer;
-    private MediaPlayer oneShotAngryPlayer;
 
     // --- State Management ---
     private boolean isSleeping = false;
@@ -135,18 +143,60 @@ public class GameplayController extends BaseController implements Initializable 
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
     private long lastUserActionTime = 0;
     private static final long SOUND_LOOP_COOLDOWN_MS = 2000;
+    private Time time;
 
     // --- Item Spawning ---
     private List<String> fruitItemNames;
     private List<String> giftItemNames;
 
     // --- Initialization ---
+    private final IntegerProperty slotIndex = new SimpleIntegerProperty(-1);
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public GameplayController() {
+        slotIndex.addListener((obs, oldVal, newVal) -> {
+            if (newVal.intValue() != -1) {
+                initializeGame(newVal.intValue());
+            }
+        });
+    }
+
+    public void setSlotIndex(int slotIndex) {
+        this.slotIndex.set(slotIndex);
+    }
+
+    private void initializeGame(int slotIndex) {
+        BackgroundMusic.stopMenuMusic();
+        try {
+            game = new GameFile(slotIndex);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (game.getChao() != null) {
+            chao = game.getChao();
+            loadOrCreateChao(chao);
+            System.out.println("\nChao: " + chao.getName());
+            System.out.println("- Type: " + chao.getType());
+            System.out.println("- State: " + chao.getState());
+            System.out.println("- Alignment: " + chao.getAlignment());
+            System.out.println("- Status: " + chao.getStatus().getCurrStats());
+        }
+
+        if (game.getInventory() != null) {
+            inventory = game.getInventory();
+            System.out.println("\nInventory:");
+            for (Map.Entry<String, Integer> entry : game.getInventory().getItems().entrySet()) {
+                System.out.println("- " + entry.getKey() + ": " + entry.getValue());
+            }
+        }
+
+        if (game.getScore() != null) {
+            System.out.println("\nScore: " + game.getScore().getScore());
+            score = game.getScore();
+        }
+
+        time = new Time(game);
         loadSounds();
-        inventory = new Inventory();
-        score = new Score(0);
         inventoryUIMap = new HashMap<>();
         inventoryButtonsOrdered = new ArrayList<>();
         initializeItemLists();
@@ -158,18 +208,10 @@ public class GameplayController extends BaseController implements Initializable 
             System.err.println("FXML Warning: fruitImageView is null.");
         }
 
-        // --- Load Game Data (or create default) ---
-        loadOrCreateChao(); // Now uses random basic type
         initializeInventoryUIMap();
         populateOrderedInventoryButtons();
         if (backgroundMusicPlayer != null) {
             backgroundMusicPlayer.play();
-        }
-
-        if (isNewGameCondition()) { // Replace with your actual new game check
-            addDefaultInventory(); // Populate the inventory data model
-        } else {
-            // TODO: Load inventory data from save file
         }
 
         updateScoreUI(score.getScore());
@@ -181,6 +223,11 @@ public class GameplayController extends BaseController implements Initializable 
         //Setup Time
         setupTimelines();
         startTimelines();
+    }
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources){
 
         Platform.runLater(() -> {
             Scene scene = mainContainer.getScene();
@@ -336,12 +383,6 @@ public class GameplayController extends BaseController implements Initializable 
             event.consume();
             return;
         }
-        if (event.getCode() == KeyCode.M) {
-            playSoundEffect(buttonClickPlayer);
-            goToMainMenu();
-            event.consume();
-            return;
-        }
 
         // Inventory actions
         int buttonIndex = -1;
@@ -448,34 +489,26 @@ public class GameplayController extends BaseController implements Initializable 
         });
     }
 
-    /**
-     * Selects a random basic Chao type (Blue, Red, or Green).
-     *
-     * @return A randomly chosen basic ChaoType.
-     */
-    private ChaoType getRandomBasicChaoType() {
-        ChaoType[] basicTypes = {ChaoType.BLUE, ChaoType.RED, ChaoType.GREEN};
-        return basicTypes[random.nextInt(basicTypes.length)];
-    }
+//    /**
+//     * Selects a random basic Chao type (Blue, Red, or Green).
+//     *
+//     * @return A randomly chosen basic ChaoType.
+//     */
+//    private ChaoType getRandomBasicChaoType() {
+//        ChaoType[] basicTypes = {ChaoType.BLUE, ChaoType.RED, ChaoType.GREEN};
+//        return basicTypes[random.nextInt(basicTypes.length)];
+//    }
 
     /**
      * Loads Chao data (placeholder) or creates a new default Chao.
      * If restarting via "Play Again", reuses the base Chao type selected at the start of the session.
      * Initializes or updates the main Chao animation display.
      */
-    private void loadOrCreateChao() {
-        // TODO: Implement actual load logic here.
-        if (this.currentSessionBaseType == null) {
-            System.out.println("First time load/new session: Picking random basic Chao type.");
-            this.currentSessionBaseType = getRandomBasicChaoType(); // Pick AND store for reuse
-        } else {
-            System.out.println("Restarting game: Reusing base Chao type: " + this.currentSessionBaseType);
-        }
+    private void loadOrCreateChao(Chao chao) {
         // Create the Chao instance
-        System.out.println("Creating Chao with type: " + this.currentSessionBaseType);
-        Status initialStatus = new Status(100, 100, 100, 100); // Reset stats
-        this.chao = new Chao(0, "Bubbles", this.currentSessionBaseType, State.NORMAL, initialStatus);
+        this.chao = chao;
         this.isSleeping = false; // Reset state flag
+        this.currentSessionBaseType = chao.getType();
 
         // --- Initialize or Update Animation ---
         if (chaoImageView != null) {
@@ -519,8 +552,25 @@ public class GameplayController extends BaseController implements Initializable 
 
         // Frequent State Monitor (e.g., every 250ms)
         stateMonitorTimeline = new Timeline(
-                new KeyFrame(Duration.millis(250), e -> monitorChaoState())
+                new KeyFrame(Duration.millis(250), e -> {
+                    monitorChaoState();
+                    time.stepTime();
+                    if(!time.canPlay()){
+                        //TODO: show popup for game
+                        System.out.println("Chao timed out.");
+                        time.storeTime(game);
+                        try{
+                            game.save();
+                        }catch (IOException exp){
+                            exp.printStackTrace();
+                        }
+
+                        enableAllInteractions(true);
+
+                    };
+                })
         );
+
         stateMonitorTimeline.setCycleCount(Timeline.INDEFINITE);
 
         // Clock Update Timeline (every second)
@@ -584,7 +634,7 @@ public class GameplayController extends BaseController implements Initializable 
         inventory.addItem(itemName, 1);
         updateInventoryDisplay();
         // Display message
-        displayMessage("Found a " + itemName + "!", 2.0);
+        displayMessage("Received a " + itemName + "!", 2.0);
     }
 
     /**
@@ -1482,12 +1532,12 @@ public class GameplayController extends BaseController implements Initializable 
                 buttonBox.setPadding(new Insets(15, 0, 0, 0));
 
                 Button newGameButton = new Button("Play Again?");
-                newGameButton.setStyle("-fx-background-color: #A0522D; -fx-text-fill: white; -fx-font-family: 'Upheaval TT -BRK-'; -fx-font-size: 12px; -fx-padding: 10 20; -fx-background-radius: 8; -fx-border-color: #DEB887; -fx-border-radius: 8;");
-                newGameButton.setOnAction(e -> startNewGame());
+                newGameButton.getStyleClass().add("game-over-button");
+                newGameButton.setOnAction(e -> startNewGame(e));
 
                 Button mainMenuButton = new Button("Main Menu");
-                mainMenuButton.setStyle("-fx-background-color: #A0522D; -fx-text-fill: white; -fx-font-family: 'Upheaval TT -BRK-'; -fx-font-size: 12px; -fx-padding: 10 20; -fx-background-radius: 8; -fx-border-color: #DEB887; -fx-border-radius: 8;");
-                mainMenuButton.setOnAction(e -> goToMainMenu());
+                mainMenuButton.getStyleClass().add("game-over-button");
+                mainMenuButton.setOnAction(e -> goToMenu(e));
 
                 buttonBox.getChildren().addAll(newGameButton, mainMenuButton);
                 gameOverBox.getChildren().addAll(gameOverLabel, finalScoreLabel, buttonBox);
@@ -1527,50 +1577,17 @@ public class GameplayController extends BaseController implements Initializable 
     }
 
     /**
-     * Resets game state for a new session: removes overlay, resets models,
-     * restarts sounds/timelines, updates UI, enables interactions.
+     * Leads to the Load Game / New Game Screen
      */
-    private void startNewGame() {
-        System.out.println("Starting new game...");
-        removeGameOverScreen();
-        stopAllSounds(); // Stop sounds from previous session
-
-        // Reset Models
-        score = new Score(0);
-        inventory = new Inventory();
-        addDefaultInventory();
-
-        loadOrCreateChao(); // Create new Chao (reuses base type if set)
-
-        // Restart Background Music
-        if (backgroundMusicPlayer != null) {
-            backgroundMusicPlayer.seek(Duration.ZERO);
-            backgroundMusicPlayer.play();
-        } else {
-            loadSounds(); // Attempt to reload sounds
-            if(backgroundMusicPlayer != null) backgroundMusicPlayer.play();
+    private void startNewGame(ActionEvent e) {
+        saveGame();
+        try{
+            BackgroundMusic.startMenuMusic();
+            switchScene(e, "/com/example/chaotopia/View/LoadGame.fxml");
+        }catch (IOException exp){
+            exp.printStackTrace();
         }
 
-        // Update UI
-        updateScoreUI(score.getScore());
-        updateNameLabel();
-        updateStatusBars();
-        updateInventoryDisplay();
-        updateProfileChaoImage();
-
-        // Reset State Flags (handled by loadOrCreateChao)
-        isSleeping = false;
-        previousState = State.NORMAL;
-
-        // Restart Timelines & Interactions
-        stopTimelines(); // Stop old before setup
-        setupTimelines();
-        startTimelines();
-        enableAllInteractions(true);
-
-        // Ensure Animation is Correct (handled by loadOrCreateChao->sync)
-
-        System.out.println("New game started.");
     }
 
     // --- System Actions ---
@@ -1579,9 +1596,14 @@ public class GameplayController extends BaseController implements Initializable 
     @FXML
     public void saveGame() {
         playSoundEffect(buttonClickPlayer);
-        // TODO: Implement actual saving mechanism
+        try {
+            game.save();
+            System.out.println("Game saved successfully!");
+        } catch (IOException exp) {
+            System.err.println("Failed to save game: " + exp.getMessage());
+        }
         System.out.println("Attempting to save game...");
-        displayMessage("Game Saved! (Placeholder)", 2.0);
+        displayMessage("Game Saved!", 2.0);
     }
 
     /**
@@ -1589,12 +1611,16 @@ public class GameplayController extends BaseController implements Initializable 
      * and should trigger navigation (placeholder).
      */
     @FXML
-    public void goToMainMenu() {
-        // TODO: Implement scene switching logic
+    public void goToMenu(ActionEvent event) {
         System.out.println("Returning to Main Menu... (Implement Navigation)");
         displayMessage("Returning to Menu...", 1.5);
         shutdown(); // Clean up current game
-        // Example: SceneManager.loadScene("MainMenu.fxml", mainContainer.getScene());
+        try{
+            goToMainMenu(event);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     /**

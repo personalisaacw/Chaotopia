@@ -6,12 +6,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.awt.event.InputEvent;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Stack;
 import java.util.function.Consumer;
 
 import javafx.scene.control.Alert;
+
+import javax.swing.*;
 
 
 /**
@@ -22,8 +26,35 @@ import javafx.scene.control.Alert;
  */
 public class BaseController {
     private static Stack<Scene> sceneStack = new Stack<>(); // Static stack to track scenes
+    private static final String MAIN_MENU_FXML_PATH = "/com/example/chaotopia/View/MainMenu.fxml";
 
-    //todo: create a "back to main menu function" that'll pop scenes until you reach main menu
+    /**
+     * Navigates directly to the main menu scene, clearing the navigation history.
+     * Requires the calling controller to perform any necessary cleanup first.
+     *
+     * @param e The ActionEvent from the button press (used to get the Stage).
+     * @throws IOException If the Main Menu FXML file cannot be loaded.
+     */
+    public void goToMainMenu(ActionEvent e) throws IOException {
+        sceneStack.clear(); // Clear the entire navigation history
+        // Get the current stage
+        Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+        // Load the Main Menu FXML
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(MAIN_MENU_FXML_PATH));
+        if (loader.getLocation() == null) {
+            throw new IOException("Cannot find Main Menu FXML at: " + MAIN_MENU_FXML_PATH);
+        }
+        Parent root = loader.load();
+
+        // Create a new scene for the main menu
+        Scene mainMenuScene = new Scene(root);
+        addCSS(mainMenuScene); // Apply CSS
+
+        // Set the stage to the main menu scene
+        stage.setScene(mainMenuScene);
+        stage.show();
+        System.out.println("Main Menu loaded.");
+    }
 
     /**
      * Handles the action for the back button. This method pops the previous scene from the
