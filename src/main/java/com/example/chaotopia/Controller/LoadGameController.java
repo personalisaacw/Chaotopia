@@ -89,12 +89,10 @@ public class LoadGameController extends BaseController {
         String content = "Are you sure you want to delete this game? This cannot be undone!";
         Popup dialog = new Popup(title, content);
 
-        dialog.addButton("No", () -> updateDeletion(slotNumber, slotImage), "btn-submit");
-        dialog.addButton("Yes", () -> {}, "btn-cancel");
+        dialog.addButton("No", () -> {}, "btn-submit");
+        dialog.addButton("Yes", () -> {updateDeletion(slotNumber, slotImage);}, "btn-cancel");
 
         dialog.showAndWait();
-
-        updateDeletion(slotNumber, slotImage);
     }
 
     private void updateDeletion(int slotIndex, ImageView slotImage) {
