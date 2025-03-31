@@ -1,9 +1,11 @@
 package com.example.chaotopia.Controller;
+import com.example.chaotopia.Components.InputPopup;
 import com.example.chaotopia.Model.*;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicReference;
 
 
 public class NewGameController extends BaseController {
@@ -17,19 +19,22 @@ public class NewGameController extends BaseController {
 
     @FXML
     private void selectRedChao(ActionEvent e) {
-        Chao chao = new Chao(0, "Chao", ChaoType.RED, State.NORMAL, new Status());
+        String name = getNameFromUser();
+        Chao chao = new Chao(0, name, ChaoType.RED, State.NORMAL, new Status());
         handleChaoSelection(e,chao);
     }
 
     @FXML
     private void selectBlueChao(ActionEvent e) {
-        Chao chao = new Chao(0, "Chao", ChaoType.BLUE, State.NORMAL, new Status());
+        String name = getNameFromUser();
+        Chao chao = new Chao(0, name, ChaoType.BLUE, State.NORMAL, new Status());
         handleChaoSelection(e,chao);
     }
 
     @FXML
     private void selectGreenChao(ActionEvent e) {
-        Chao chao = new Chao(0, "Chao", ChaoType.GREEN, State.NORMAL, new Status());
+        String name = getNameFromUser();
+        Chao chao = new Chao(0, name, ChaoType.GREEN, State.NORMAL, new Status());
         handleChaoSelection(e,chao);
     }
 
@@ -72,5 +77,19 @@ public class NewGameController extends BaseController {
                 ((GameplayController) controller).setSlotIndex(slotIndex);
             }
         });
+    }
+
+    private String getNameFromUser() {
+        /* Default name of Chao */
+        AtomicReference<String> name = new AtomicReference<>("Chao");
+        String title = "Name Your Chao";
+        String content = "Please name your Chao in the text box below!";
+        InputPopup dialog = new InputPopup(title, content);
+        dialog.addButton("Okay", () -> {
+            name.set(dialog.getUserInput());
+            System.out.println("User entered: " + name);
+        }, "btn-submit");
+        dialog.showAndWait();
+        return name.get();
     }
 }
