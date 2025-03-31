@@ -8,6 +8,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -24,6 +25,7 @@ import javafx.util.Duration;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+import java.awt.event.InputEvent;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -140,6 +142,7 @@ public class GameplayController extends BaseController implements Initializable 
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
     private long lastUserActionTime = 0;
     private static final long SOUND_LOOP_COOLDOWN_MS = 2000;
+    private Time time;
 
     // --- Item Spawning ---
     private List<String> fruitItemNames;
@@ -379,7 +382,8 @@ public class GameplayController extends BaseController implements Initializable 
         }
         if (event.getCode() == KeyCode.M) {
             playSoundEffect(buttonClickPlayer);
-            goToMainMenu();
+            ActionEvent actionEvent = new ActionEvent(event.getSource(), event.getTarget());
+            goToMenu(actionEvent);
             event.consume();
             return;
         }
@@ -552,8 +556,17 @@ public class GameplayController extends BaseController implements Initializable 
 
         // Frequent State Monitor (e.g., every 250ms)
         stateMonitorTimeline = new Timeline(
-                new KeyFrame(Duration.millis(250), e -> monitorChaoState())
+                new KeyFrame(Duration.millis(250), e -> {
+                    monitorChaoState();
+                    time.stepTime();
+                    if(!time.canPlay()){
+                        //TODO: show popup for game
+                        System.out.println("Chao timed out.");
+                        time.storeTime(game);
+                    };
+                })
         );
+
         stateMonitorTimeline.setCycleCount(Timeline.INDEFINITE);
 
         // Clock Update Timeline (every second)
@@ -1520,7 +1533,7 @@ public class GameplayController extends BaseController implements Initializable 
 
                 Button mainMenuButton = new Button("Main Menu");
                 mainMenuButton.setStyle("-fx-background-color: #A0522D; -fx-text-fill: white; -fx-font-family: 'Upheaval TT -BRK-'; -fx-font-size: 12px; -fx-padding: 10 20; -fx-background-radius: 8; -fx-border-color: #DEB887; -fx-border-radius: 8;");
-                mainMenuButton.setOnAction(e -> goToMainMenu());
+                mainMenuButton.setOnAction(e -> goToMenu(e));
 
                 buttonBox.getChildren().addAll(newGameButton, mainMenuButton);
                 gameOverBox.getChildren().addAll(gameOverLabel, finalScoreLabel, buttonBox);
@@ -1627,13 +1640,28 @@ public class GameplayController extends BaseController implements Initializable 
      * and should trigger navigation (placeholder).
      */
     @FXML
-    public void goToMainMenu() {
-        // TODO: Implement scene switching logic
+    public void goToMenu(ActionEvent event) {
         System.out.println("Returning to Main Menu... (Implement Navigation)");
         displayMessage("Returning to Menu...", 1.5);
         shutdown(); // Clean up current game
-        // Example: SceneManager.loadScene("MainMenu.fxml", mainContainer.getScene());
+        try{
+            goToMainMenu(event);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
+
+//    public void goToM(KeyEvent event) {
+//        System.out.println("Returning to Main Menu... (Implement Navigation)");
+//        displayMessage("Returning to Menu...", 1.5);
+//        shutdown(); // Clean up current game
+//        try{
+//            goToMainMenu(event);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * Stops all running timelines, sounds, and animations. Called before closing stage or navigating away.

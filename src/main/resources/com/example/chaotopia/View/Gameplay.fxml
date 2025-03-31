@@ -19,7 +19,7 @@
       <!-- Top Bar content (Back button, Time, Save button) -->
       <HBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="backButton" onAction="#goToMainMenu" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="btn-square">
+            <Button fx:id="backButton" onAction="#goToMenu" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="btn-square">
                <graphic><ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true"><Image url="@../Assets/Icon/BackIcon.png" /></ImageView></graphic>
             </Button>
             <Region prefHeight="10.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />

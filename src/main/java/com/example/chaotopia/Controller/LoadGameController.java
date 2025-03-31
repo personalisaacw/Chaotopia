@@ -74,30 +74,6 @@ public class LoadGameController extends BaseController {
                     ((GameplayController) controller).setSlotIndex(slotIndex);
                 }
             });
-            // TODO: Filler for now because for implementation into gameplay, you will need the getters. I would pass the slotIndex parameter into the gameplay for initialization to occur
-//            GameFile loadedGame = new GameFile(slotIndex);
-
-//            if (loadedGame.getChao() != null) {
-//                Chao chao = loadedGame.getChao();
-//                System.out.println("\nChao: " + chao.getName());
-//                System.out.println("- Type: " + chao.getType());
-//                System.out.println("- State: " + chao.getState());
-//                System.out.println("- Alignment: " + chao.getAlignment());
-//                System.out.println("- Status: " + chao.getStatus().getCurrStats());
-//            }
-//
-//            if (loadedGame.getInventory() != null) {
-//                System.out.println("\nInventory:");
-//                for (Map.Entry<String, Integer> entry : loadedGame.getInventory().getItems().entrySet()) {
-//                    System.out.println("- " + entry.getKey() + ": " + entry.getValue());
-//                }
-//            }
-//
-//            if (loadedGame.getScore() != null) {
-//                System.out.println("\nScore: " + loadedGame.getScore().getScore());
-//            }
-
-            //goToGameplay();
         }
     }
 
