@@ -73,6 +73,24 @@ public final class ParentalLimitations {
     }
 
     /**
+     * Accessor method that returns the allowed start time.
+     *
+     * @return allowedStartTime the allowed start time on a 24-hour clock
+     */
+    public static LocalTime getAllowedStartTime() {
+        return allowedStartTime;
+    }
+
+    /**
+     * Accessor method that returns the allowed end time.
+     *
+     * @return allowedEndTime the allowed end time on a 24-hour clock
+     */
+    public static LocalTime getAllowedEndTime() {
+        return allowedEndTime;
+    }
+
+    /**
      * Mutator method that sets the start and end times for the parental
      * limitations.
      *
