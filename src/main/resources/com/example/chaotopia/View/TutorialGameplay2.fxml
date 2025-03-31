@@ -25,7 +25,7 @@
                <graphic><ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true"><Image url="@../Assets/Icon/BackIcon.png" /></ImageView></graphic>
             </Button>
             <Region prefHeight="10.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Label fx:id="timeLabel" styleClass="time-board" text="Time: 00:00" textFill="#272744"><font><Font name="Upheaval TT -BRK-" size="24.0" /></font></Label>
+            <Label fx:id="timeLabel" styleClass="time-board" text="Time: 00:00" textFill="#272744"><font><Font name="Querina Handwritten" size="24.0" /></font></Label>
             <Region layoutX="77.0" layoutY="10.0" prefHeight="10.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
             <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveGame" styleClass="btn-square">
                <graphic><ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../Assets/Icon/SaveIcon.png" /></image></ImageView></graphic>
@@ -43,19 +43,19 @@
          <children>
             <Button fx:id="playButton" alignment="BASELINE_CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#playChao" styleClass="btn" text="Play" textFill="#272744">
                <graphic><ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../Assets/Icon/PlayIcon.png" /></image></ImageView></graphic>
-               <font><Font name="Upheaval TT -BRK-" size="24.0" /></font>
+               <font><Font name="Querina Handwritten" size="24.0" /></font>
             </Button>
             <Button fx:id="sleepButton" graphicTextGap="0.0" mnemonicParsing="false" onAction="#sleepChao" styleClass="btn" text="Sleep" textFill="#272744">
                <graphic><ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../Assets/Icon/SleepIcon.png" /></image></ImageView></graphic>
-               <font><Font name="Upheaval TT -BRK-" size="24.0" /></font>
+               <font><Font name="Querina Handwritten" size="24.0" /></font>
             </Button>
             <Button fx:id="exerciseButton" graphicTextGap="0.0" mnemonicParsing="false" onAction="#exerciseChao" styleClass="btn" text="Exercise" textFill="#272744" textOverrun="CLIP">
                <graphic><ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../Assets/Icon/BikeIcon.png" /></image></ImageView></graphic>
-               <font><Font name="Upheaval TT -BRK-" size="24.0" /></font>
+               <font><Font name="Querina Handwritten" size="24.0" /></font>
             </Button>
             <Button fx:id="vetButton" graphicTextGap="0.0" mnemonicParsing="false" onAction="#vetChao" styleClass="btn" text="Vet" textFill="#272744">
                <graphic><ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../Assets/Icon/VetIcon.png" /></image></ImageView></graphic>
-               <font><Font name="Upheaval TT -BRK-" size="24.0" /></font>
+               <font><Font name="Querina Handwritten" size="24.0" /></font>
             </Button>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
@@ -78,7 +78,7 @@
          <children>
             <!-- Name Label (remains above) -->
             <Label fx:id="nameLabel" alignment="CENTER" styleClass="name-board" text="Chao Name" textFill="#272744" translateY="-80.0">
-               <font><Font name="Upheaval TT -BRK-" size="24.0" /></font>
+               <font><Font name="Querina Handwritten" size="24.0" /></font>
             </Label>
 
             <!-- Main HBox containing Profile Area and Stats Area -->
@@ -98,7 +98,7 @@
 
                               <!-- Score Label -->
                               <Label fx:id="scoreLabel" alignment="CENTER" contentDisplay="CENTER" text="Score: 0" textAlignment="CENTER" textFill="#272744" StackPane.alignment="BOTTOM_CENTER"> <!-- Align to bottom center -->
-                                 <font><Font name="Upheaval TT -BRK-" size="18.0" /></font>
+                                 <font><Font name="Querina Handwritten" size="18.0" /></font>
                                  <!-- Optional: Use translateY to fine-tune vertical position -->
                                  <!-- <translateY><Double fx:value="-5.0" /></translateY> -->
                                  <StackPane.margin><Insets bottom="10.0" /></StackPane.margin> <!-- Add space below score if needed -->
@@ -279,7 +279,7 @@
                <StackPane.margin>
                   <Insets top="30.0" />
                </StackPane.margin>
-               <font><Font name="Upheaval TT -BRK-" size="18.0" /></font>
+               <font><Font name="Querina Handwritten" size="18.0" /></font>
             </Label>
             <StackPane fx:id="step1" mouseTransparent="true" prefHeight="150.0" prefWidth="200.0">
                <children>
@@ -288,9 +288,9 @@
                         <Insets right="130.0" />
                      </StackPane.margin>
                   </Rectangle>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Great! What you're seeing now is the game play screen. This page has everything you can do with your Chao." textAlignment="CENTER" wrappingWidth="200.0">
+                  <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" text="Great! What you're seeing now is the game play screen. This page has everything you can do with your Chao." textAlignment="CENTER" wrappingWidth="200.0">
                      <font>
-                        <Font name="Upheaval TT -BRK-" size="16.0" />
+                        <Font name="Querina Handwritten" size="16.0" />
                      </font>
                      <StackPane.margin>
                         <Insets right="130.0" />
@@ -305,9 +305,9 @@
                         <Insets left="380.0" top="-150.0" />
                      </StackPane.margin>
                   </Rectangle>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="You can always use the save game button here to save your progress." textAlignment="CENTER" wrappingWidth="200.0">
+                  <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" text="You can always use the save game button here to save your progress." textAlignment="CENTER" wrappingWidth="200.0">
                      <font>
-                        <Font name="Upheaval TT -BRK-" size="16.0" />
+                        <Font name="Querina Handwritten" size="16.0" />
                      </font>
                      <StackPane.margin>
                         <Insets left="510.0" right="130.0" top="-150.0" />
@@ -338,9 +338,9 @@
                         <Insets right="-600.0" top="150.0" />
                      </StackPane.margin>
                   </ImageView>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="On the side here you'll see your inventory. The first 5 are different kinds of fruits, which can increase fullness. The last 3 are things you can use to play with your Chao, which will inscrease its happiness! All inventory items will spawn automatically over time." textAlignment="CENTER" wrappingWidth="300.0">
+                  <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" text="On the side here you'll see your inventory. The first 5 are different kinds of fruits, which can increase fullness. The last 3 are things you can use to play with your Chao, which will inscrease its happiness! All inventory items will spawn automatically over time." textAlignment="CENTER" wrappingWidth="300.0">
                      <font>
-                        <Font name="Upheaval TT -BRK-" size="16.0" />
+                        <Font name="Querina Handwritten" size="16.0" />
                      </font>
                      <StackPane.margin>
                         <Insets right="-250.0" top="150.0" />
@@ -363,9 +363,9 @@
                         <Insets right="130.0" top="60.0" />
                      </StackPane.margin>
                   </Rectangle>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Below you'll see your Chao's name, the status of your Chao, and a score counter. All actions will have an effect on the score." textAlignment="CENTER" wrappingWidth="300.0">
+                  <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" text="Below you'll see your Chao's name, the status of your Chao, and a score counter. All actions will have an effect on the score." textAlignment="CENTER" wrappingWidth="300.0">
                      <font>
-                        <Font name="Upheaval TT -BRK-" size="16.0" />
+                        <Font name="Querina Handwritten" size="16.0" />
                      </font>
                      <StackPane.margin>
                         <Insets right="130.0" top="60.0" />
@@ -388,9 +388,9 @@
                         <Insets right="80.0" top="190.0" />
                      </StackPane.margin>
                   </Rectangle>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="This is the health bar. It will only  decrease if the Chao's fullness bar is at 0 (continuous penalty) or if the sleep bar is at 0 (one-time penalty). When the health bar is at 0, the Chao dies and the game ends." textAlignment="CENTER" wrappingWidth="300.0">
+                  <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" text="This is the health bar. It will only  decrease if the Chao's fullness bar is at 0 (continuous penalty) or if the sleep bar is at 0 (one-time penalty). When the health bar is at 0, the Chao dies and the game ends." textAlignment="CENTER" wrappingWidth="300.0">
                      <font>
-                        <Font name="Upheaval TT -BRK-" size="16.0" />
+                        <Font name="Querina Handwritten" size="16.0" />
                      </font>
                      <StackPane.margin>
                         <Insets right="80.0" top="190.0" />
@@ -405,9 +405,9 @@
                         <Insets top="260.0" />
                      </StackPane.margin>
                   </Rectangle>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="This is the fullness bar. Look! Your Chao is hungry. Feed your Chao with a fruit. Quick! (in a real game, your fullness will decrease continuously over time)" textAlignment="CENTER" wrappingWidth="200.0">
+                  <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" text="This is the fullness bar. Look! Your Chao is hungry. Feed your Chao with a fruit. Quick! (in a real game, your fullness will decrease continuously over time)" textAlignment="CENTER" wrappingWidth="200.0">
                      <font>
-                        <Font name="Upheaval TT -BRK-" size="16.0" />
+                        <Font name="Querina Handwritten" size="16.0" />
                      </font>
                      <StackPane.margin>
                         <Insets top="260.0" />
@@ -430,9 +430,9 @@
                         <Insets top="320.0" />
                      </StackPane.margin>
                   </Rectangle>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Awesome! But now it seems like the Chao is no longer happy. It's angry at you! I just gave you a few toys . Make you Chao happy again!" textAlignment="CENTER" wrappingWidth="200.0">
+                  <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" text="Awesome! But now it seems like the Chao is no longer happy. It's angry at you! I just gave you a few toys . Make you Chao happy again!" textAlignment="CENTER" wrappingWidth="200.0">
                      <font>
-                        <Font name="Upheaval TT -BRK-" size="16.0" />
+                        <Font name="Querina Handwritten" size="16.0" />
                      </font>
                      <StackPane.margin>
                         <Insets top="320.0" />
@@ -455,9 +455,9 @@
                         <Insets right="130.0" />
                      </StackPane.margin>
                   </Rectangle>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Yay! Your Chao is happy again and no longer mad at you. Good job! Do note that the play button  has a cool down time of 1 minute. So you can't just spam play. There's no cool down on the toys, though." textAlignment="CENTER" wrappingWidth="300.0">
+                  <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" text="Yay! Your Chao is happy again and no longer mad at you. Good job! Do note that the play button  has a cool down time of 1 minute. So you can't just spam play. There's no cool down on the toys, though." textAlignment="CENTER" wrappingWidth="300.0">
                      <font>
-                        <Font name="Upheaval TT -BRK-" size="16.0" />
+                        <Font name="Querina Handwritten" size="16.0" />
                      </font>
                      <StackPane.margin>
                         <Insets right="130.0" />
@@ -472,9 +472,9 @@
                         <Insets right="130.0" />
                      </StackPane.margin>
                   </Rectangle>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Moreover, when happiness is at 0, you won't be able to do ANYTHING ELSE apart from play and use toys." textAlignment="CENTER" wrappingWidth="300.0">
+                  <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" text="Moreover, when happiness is at 0, you won't be able to do ANYTHING ELSE apart from play and use toys." textAlignment="CENTER" wrappingWidth="300.0">
                      <font>
-                        <Font name="Upheaval TT -BRK-" size="16.0" />
+                        <Font name="Querina Handwritten" size="16.0" />
                      </font>
                      <StackPane.margin>
                         <Insets right="130.0" />
@@ -489,9 +489,9 @@
                         <Insets top="320.0" />
                      </StackPane.margin>
                   </Rectangle>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Great. I just unlocked the play button. Try that too." textAlignment="CENTER" wrappingWidth="200.0">
+                  <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" text="Great. I just unlocked the play button. Try that too." textAlignment="CENTER" wrappingWidth="200.0">
                      <font>
-                        <Font name="Upheaval TT -BRK-" size="16.0" />
+                        <Font name="Querina Handwritten" size="16.0" />
                      </font>
                      <StackPane.margin>
                         <Insets top="320.0" />
@@ -514,9 +514,9 @@
                         <Insets top="380.0" />
                      </StackPane.margin>
                   </Rectangle>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Now look at that. Your Chao is so tired! When the Sleepiness bar is at 0, your chao will be forced into sleep no matter what. So now we wait..." textAlignment="CENTER" wrappingWidth="200.0">
+                  <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" text="Now look at that. Your Chao is so tired! When the Sleepiness bar is at 0, your chao will be forced into sleep no matter what. So now we wait..." textAlignment="CENTER" wrappingWidth="200.0">
                      <font>
-                        <Font name="Upheaval TT -BRK-" size="16.0" />
+                        <Font name="Querina Handwritten" size="16.0" />
                      </font>
                      <StackPane.margin>
                         <Insets top="380.0" />
@@ -539,9 +539,9 @@
                         <Insets right="350.0" top="60.0" />
                      </StackPane.margin>
                   </Rectangle>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="To avoid being forced into sleep, you can manually make the Chao sleep so you have more control." textAlignment="CENTER" wrappingWidth="200.0">
+                  <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" text="To avoid being forced into sleep, you can manually make the Chao sleep so you have more control." textAlignment="CENTER" wrappingWidth="200.0">
                      <font>
-                        <Font name="Upheaval TT -BRK-" size="16.0" />
+                        <Font name="Querina Handwritten" size="16.0" />
                      </font>
                      <StackPane.margin>
                         <Insets right="350.0" top="60.0" />
@@ -564,9 +564,9 @@
                         <Insets right="350.0" top="200.0" />
                      </StackPane.margin>
                   </Rectangle>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Exercise increases health but decreases sleep and fullness." textAlignment="CENTER" wrappingWidth="200.0">
+                  <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" text="Exercise increases health but decreases sleep and fullness." textAlignment="CENTER" wrappingWidth="200.0">
                      <font>
-                        <Font name="Upheaval TT -BRK-" size="16.0" />
+                        <Font name="Querina Handwritten" size="16.0" />
                      </font>
                      <StackPane.margin>
                         <Insets right="350.0" top="200.0" />
@@ -589,9 +589,9 @@
                         <Insets right="350.0" top="350.0" />
                      </StackPane.margin>
                   </Rectangle>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Going to the vet increases health significantly but decreases score!" textAlignment="CENTER" wrappingWidth="200.0">
+                  <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" text="Going to the vet increases health significantly but decreases score!" textAlignment="CENTER" wrappingWidth="200.0">
                      <font>
-                        <Font name="Upheaval TT -BRK-" size="16.0" />
+                        <Font name="Querina Handwritten" size="16.0" />
                      </font>
                      <StackPane.margin>
                         <Insets right="350.0" top="350.0" />
@@ -614,9 +614,9 @@
                         <Insets right="150.0" top="500.0" />
                      </StackPane.margin>
                   </Rectangle>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Lastly is the pet and bonk. One increases happiness and the other one decreases happiness. They also have special effects that you should discover during your own game play (as well as 2 sepcial fruits). Explore!" textAlignment="CENTER" wrappingWidth="400.0">
+                  <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" text="Lastly is the pet and bonk. One increases happiness and the other one decreases happiness. They also have special effects that you should discover during your own game play (as well as 2 sepcial fruits). Explore!" textAlignment="CENTER" wrappingWidth="400.0">
                      <font>
-                        <Font name="Upheaval TT -BRK-" size="16.0" />
+                        <Font name="Querina Handwritten" size="16.0" />
                      </font>
                      <StackPane.margin>
                         <Insets right="150.0" top="500.0" />
@@ -639,9 +639,9 @@
                         <Insets right="130.0" />
                      </StackPane.margin>
                   </Rectangle>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="This is the end of the tutorial! Happy gaming! Click the back button to be brought back to the main menu." textAlignment="CENTER" wrappingWidth="200.0">
+                  <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" text="This is the end of the tutorial! Happy gaming! Click the back button to be brought back to the main menu." textAlignment="CENTER" wrappingWidth="200.0">
                      <font>
-                        <Font name="Upheaval TT -BRK-" size="16.0" />
+                        <Font name="Querina Handwritten" size="16.0" />
                      </font>
                      <StackPane.margin>
                         <Insets right="130.0" />
@@ -664,9 +664,9 @@
                         <Insets right="80.0" top="230.0" />
                      </StackPane.margin>
                   </Rectangle>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Notice how the health bar took a hit because your Chao was exhausted!" textAlignment="CENTER" wrappingWidth="300.0">
+                  <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" text="Notice how the health bar took a hit because your Chao was exhausted!" textAlignment="CENTER" wrappingWidth="300.0">
                      <font>
-                        <Font name="Upheaval TT -BRK-" size="16.0" />
+                        <Font name="Querina Handwritten" size="16.0" />
                      </font>
                      <StackPane.margin>
                         <Insets right="80.0" top="230.0" />
