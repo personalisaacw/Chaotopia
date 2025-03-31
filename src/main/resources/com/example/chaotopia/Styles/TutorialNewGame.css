@@ -21,6 +21,10 @@
     -fx-scale-y: 1.1; /* Increases height */
 }
 
+.text{
+    -fx-background-color: #c38f6e;
+}
+
 @font-face {
     font-family: "Upheaval";
     src: url("../Assets/upheavtt.ttf");
@@ -63,7 +67,37 @@
 
 }
 
+.newGameButton{
+    -fx-background-image: url("../Assets/PlayGameScreen/empty-save-button.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;  /* removes default gray */
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-transition: all 0.2s ease-in-out;
+}
+.newGameButton:hover {
+    -fx-scale-x: 1.05; /* Increases width */
+    -fx-scale-y: 1.05; /* Increases height */
+}
+
+.button:disabled {
+    -fx-opacity: 0.52;
+}
+
 .trash-button:hover {
     -fx-scale-x: 1.1; /* Increases width */
     -fx-scale-y: 1.1; /* Increases height */
+}
+
+.overallPane {
+    -fx-background-color: rgba(0, 0, 0, 1);
+
+}
+
+.highlightPane {
+    -fx-background-color: rgb(0, 0, 0);
+
 }

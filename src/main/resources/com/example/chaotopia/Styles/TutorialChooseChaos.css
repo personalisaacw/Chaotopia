@@ -5,6 +5,10 @@
     -fx-background-repeat: no-repeat;
 }
 
+.button:disabled {
+    -fx-opacity: 0.52;
+}
+
 .title-label {
     -fx-background-image: url("../Assets/ChooseChaosScreen/title.png");
     -fx-background-repeat: no-repeat;

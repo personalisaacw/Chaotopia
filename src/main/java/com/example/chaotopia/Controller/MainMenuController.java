@@ -20,7 +20,7 @@ public class MainMenuController extends BaseController {
 
     @FXML
     public void tutorial(ActionEvent e) throws IOException {
-        switchScene(e, "/com/example/chaotopia/View/Tutorial.fxml");
+        switchScene(e, "/com/example/chaotopia/View/TutorialNewGame.fxml");
     }
 
     @FXML
