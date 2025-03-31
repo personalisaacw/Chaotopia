@@ -5,6 +5,7 @@ import com.example.chaotopia.Application.BackgroundMusic;
 import com.example.chaotopia.Components.Popup;
 import com.example.chaotopia.Model.*;
 import com.example.chaotopia.Model.GameFile;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -23,6 +24,7 @@ import javafx.scene.image.Image;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -556,27 +558,48 @@ public class GameplayController extends BaseController implements Initializable 
                 new KeyFrame(Duration.millis(250), e -> {
                     monitorChaoState();
                     time.stepTime();
-                    if(!time.canPlay()){
-                        System.out.println("Chao timed out.");
-                        try{
-                            game.save();
-                        }catch (IOException exp){
-                            exp.printStackTrace();
-                        }
-                        String title = "Chao Gameplay";
-                        String content = "Chao timed out.";
-                        Popup dialog = new Popup(title, content);
+                    updateClock();
 
-                        dialog.addButton("Okay", () -> {
-                            time.storeTime(game);
-                        }, "btn-submit");
+                    if (!time.canPlay() && stateMonitorTimeline.getStatus() == Animation.Status.RUNNING) {
+                        // --- Stop the timer FIRST ---
+                        stateMonitorTimeline.stop();
 
-                        dialog.showAndWait();
+                        // --- Schedule the dialog display ---
+                        Platform.runLater(() -> {
+                            try {
+                                game.save();
+                                System.out.println("Game saved.");
+                            } catch (IOException exp) {
+                                System.err.println("Error saving game on timeout:");
+                                exp.printStackTrace();
+                                // Optionally show an error message to the user here too
+                            }
 
-                        // TODO: What is this?
-                        enableAllInteractions(false);
-                        shutdown();
-                    };
+                            String title = "Playtime Limit Reached";
+                            String content = "Your allowed playtime for this session has ended. Game saved.";
+                            Popup dialog = new Popup(title, content);
+
+                            dialog.addButton("Okay", () -> {
+                                System.out.println("Okay button clicked.");
+                                time.storeTime(game);
+                                shutdown();
+                                Node sourceNode = mainContainer;
+                                try{
+                                    if (sourceNode != null && sourceNode.getScene() != null && sourceNode.getScene().getWindow() != null) {
+                                        ActionEvent dummyEvent = new ActionEvent(sourceNode, sourceNode);
+                                        goToMainMenu(dummyEvent);
+                                    }
+                                }catch(Exception ex){
+                                    ex.printStackTrace();
+                                }
+
+                            }, "btn-submit");
+
+                            enableAllInteractions(false);
+                            dialog.showAndWait();
+                        });
+                    }
+
                 })
         );
 
@@ -1557,8 +1580,8 @@ public class GameplayController extends BaseController implements Initializable 
                     overlayContainer.setStyle("-fx-background-color: rgba(0, 0, 0, 0.6);");
                     overlayContainer.setAlignment(Pos.CENTER);
                     // Optional positioning:
-                    // overlayContainer.setTranslateX(-75);
-                    // overlayContainer.setTranslateY(100);
+                    overlayContainer.setTranslateX(-75);
+                    overlayContainer.setTranslateY(100);
                     this.gameOverOverlay = overlayContainer;
                     centerStackPane.getChildren().add(overlayContainer);
                 } else {
@@ -1607,16 +1630,6 @@ public class GameplayController extends BaseController implements Initializable 
         playSoundEffect(buttonClickPlayer);
         try {
             game.save();
-            // TODO: Do we want a popup for this or not?
-//            String title = "Save Game";
-//            String content = "Your game has been saved!";
-//            Popup dialog = new Popup(title, content);
-//
-//            dialog.addButton("Okay", () -> {
-//
-//            }, "btn-submit");
-//
-//            dialog.showAndWait();
             System.out.println("Game saved successfully!");
             displayMessage("Game Saved!", 2.0);
         } catch (IOException exp) {
