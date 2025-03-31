@@ -1,6 +1,7 @@
 package com.example.chaotopia.Controller;
 
 // Added Model import assuming it contains necessary classes like Chao, State, etc.
+import com.example.chaotopia.Application.BackgroundMusic;
 import com.example.chaotopia.Model.*;
 import com.example.chaotopia.Model.GameFile;
 import javafx.animation.KeyFrame;
@@ -164,6 +165,7 @@ public class GameplayController extends BaseController implements Initializable 
     }
 
     private void initializeGame(int slotIndex) {
+        BackgroundMusic.stopMenuMusic();
         try {
             game = new GameFile(slotIndex);
         } catch (IOException e) {
@@ -632,7 +634,7 @@ public class GameplayController extends BaseController implements Initializable 
         inventory.addItem(itemName, 1);
         updateInventoryDisplay();
         // Display message
-        displayMessage("Found a " + itemName + "!", 2.0);
+        displayMessage("Received a " + itemName + "!", 2.0);
     }
 
     /**
@@ -1530,11 +1532,11 @@ public class GameplayController extends BaseController implements Initializable 
                 buttonBox.setPadding(new Insets(15, 0, 0, 0));
 
                 Button newGameButton = new Button("Play Again?");
-                newGameButton.setStyle("-fx-background-color: #A0522D; -fx-text-fill: white; -fx-font-family: 'Upheaval TT -BRK-'; -fx-font-size: 12px; -fx-padding: 10 20; -fx-background-radius: 8; -fx-border-color: #DEB887; -fx-border-radius: 8;");
+                newGameButton.getStyleClass().add("game-over-button");
                 newGameButton.setOnAction(e -> startNewGame(e));
 
                 Button mainMenuButton = new Button("Main Menu");
-                mainMenuButton.setStyle("-fx-background-color: #A0522D; -fx-text-fill: white; -fx-font-family: 'Upheaval TT -BRK-'; -fx-font-size: 12px; -fx-padding: 10 20; -fx-background-radius: 8; -fx-border-color: #DEB887; -fx-border-radius: 8;");
+                mainMenuButton.getStyleClass().add("game-over-button");
                 mainMenuButton.setOnAction(e -> goToMenu(e));
 
                 buttonBox.getChildren().addAll(newGameButton, mainMenuButton);
@@ -1580,6 +1582,7 @@ public class GameplayController extends BaseController implements Initializable 
     private void startNewGame(ActionEvent e) {
         saveGame();
         try{
+            BackgroundMusic.startMenuMusic();
             switchScene(e, "/com/example/chaotopia/View/LoadGame.fxml");
         }catch (IOException exp){
             exp.printStackTrace();
