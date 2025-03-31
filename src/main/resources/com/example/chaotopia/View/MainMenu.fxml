@@ -30,7 +30,7 @@
                <font>
                   <Font name="Upheaval TT -BRK-" size="24.0" />
                </font></Button>
-            <Button mnemonicParsing="false" styleClass="btn" stylesheets="@../CSS/styles.css" text="Exit" textFill="#272744">
+            <Button mnemonicParsing="false" onAction="#handleExitButton" styleClass="btn" stylesheets="@../CSS/styles.css" text="Exit" textFill="#272744">
                <font>
                   <Font name="Upheaval TT -BRK-" size="24.0" />
                </font></Button>
