@@ -1597,8 +1597,8 @@ public class GameplayController extends BaseController implements Initializable 
     public void saveGame() {
         playSoundEffect(buttonClickPlayer);
         try {
-            game.save();
             time.storeTime(game);
+            game.save();
             System.out.println("Game saved successfully!");
         } catch (IOException exp) {
             System.err.println("Failed to save game: " + exp.getMessage());

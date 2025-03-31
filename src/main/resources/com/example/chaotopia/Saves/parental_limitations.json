@@ -1,5 +1,5 @@
 {
-    "allowedEndTime": "02:24",
-    "allowedStartTime": "01:00",
+    "allowedEndTime": "23:59",
+    "allowedStartTime": "00:00",
     "enabled": false
 }

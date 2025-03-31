@@ -1,30 +1,30 @@
 {
     "ActiveSlot": true,
     "SlotId": 0,
-    "numSessions": 1,
-    "score": 0,
-    "playtime": 60,
+    "numSessions": 3,
+    "score": 74,
+    "playtime": 25,
     "inventory": {
-        "Dark Fruit": 5,
+        "Dark Fruit": 6,
         "Hero Fruit": 6,
-        "T.V.": 4,
-        "Green Fruit": 5,
-        "Red Fruit": 7,
+        "T.V.": 1,
+        "Green Fruit": 6,
+        "Red Fruit": 1,
         "Blue Fruit": 6,
-        "Duck": 4,
-        "Trumpet": 2
+        "Duck": 3,
+        "Trumpet": 1
     },
     "averagePlaytime": 0,
     "chao": {
         "name": "Chao",
-        "state": "HUNGRY",
+        "state": "NORMAL",
         "type": "RED",
         "alignment": 0,
         "status": {
-            "sleep": 28,
-            "happiness": 24,
-            "fullness": 0,
-            "health": 90
+            "sleep": 86,
+            "happiness": 92,
+            "fullness": 85,
+            "health": 100
         }
     }
 }
