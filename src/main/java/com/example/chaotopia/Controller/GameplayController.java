@@ -574,8 +574,8 @@ public class GameplayController extends BaseController implements Initializable 
                         dialog.showAndWait();
 
                         // TODO: What is this?
-                        enableAllInteractions(true);
-
+                        enableAllInteractions(false);
+                        shutdown();
                     };
                 })
         );
