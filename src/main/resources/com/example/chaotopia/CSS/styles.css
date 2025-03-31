@@ -32,7 +32,7 @@
     -fx-wrap-text: true;
 }
 
-.btn {
+.btn, .custom-popup .btn {
     -fx-background-image: url("/com/example/chaotopia/Assets/Buttons/Button.png");
     -fx-background-repeat: no-repeat;
     -fx-background-size: 100% 100%;
@@ -48,6 +48,32 @@
 
 .btn:hover {
     -fx-background-image: url("/com/example/chaotopia/Assets/Buttons/ButtonHover.png");
+}
+
+.btn-submit, .custom-popup .btn-submit {
+    -fx-background-color: #198036;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+
+.btn-submit:hover, .custom-popup .btn-submit:hover {
+    -fx-background-color: #5bbf78;
+}
+
+.btn-cancel, .custom-popup .btn-cancel {
+    -fx-background-color: #93292c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+
+.btn-cancel:hover, .custom-popup .btn-cancel:hover {
+    -fx-background-color: #cc5052;
 }
 
 .btn-square {
@@ -315,4 +341,33 @@
 .game-over-button:pressed {
     -fx-background-color: #804A22;
     -fx-effect: none;
+}
+
+
+/* Popup Styling */
+.custom-popup {
+    -fx-background-image: url("/com/example/chaotopia/Assets/Board/TitleBoard.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+    -fx-background-position: center center;
+    -fx-padding: 24px 32px;
+    -fx-text-alignment: center;
+}
+
+/* Style content text */
+.custom-popup .content.label {
+    -fx-font-size: 18px;
+    -fx-font-family: "Querina Handwritten";
+    -fx-text-fill: #272744;
+    -fx-wrap-text: true;
+}
+
+.custom-popup .text {
+    -fx-text-alignment: center;
+    -fx-wrapping-width: 300px;
+}
+
+/* Style header panel */
+.custom-popup .header-panel {
+    -fx-background-color: #e0e0e0;
 }

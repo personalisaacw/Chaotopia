@@ -2,6 +2,7 @@ package com.example.chaotopia.Controller;
 
 import com.example.chaotopia.Model.Chao;
 import com.example.chaotopia.Model.GameFile;
+import com.example.chaotopia.Components.Popup;
 import javafx.event.ActionEvent;
 import java.io.IOException;
 import javafx.fxml.FXML;
@@ -45,17 +46,17 @@ public class LoadGameController extends BaseController {
 
     @FXML
     private void deleteSlot1() {
-        updateDeletion(0, slot1Image);
+        deleteSlot(0, slot1Image);
     }
 
     @FXML
     private void deleteSlot2() {
-        updateDeletion(1, slot2Image);
+        deleteSlot(1, slot2Image);
     }
 
     @FXML
     private void deleteSlot3() {
-        updateDeletion(2, slot3Image);
+        deleteSlot(2, slot3Image);
     }
 
     // Takes to ChooseChaos or Gameplay, depending on if it is empty
@@ -81,12 +82,25 @@ public class LoadGameController extends BaseController {
         System.out.println("Go to gameplay screen...");
     }
 
+    @FXML
+    private void deleteSlot(int slotNumber, ImageView slotImage) {
+        String title = "Delete Game";
+        String content = "Are you sure you want to delete this game? This cannot be undone!";
+        Popup dialog = new Popup(title, content);
+
+        dialog.addButton("No", () -> updateDeletion(slotNumber, slotImage), "btn-submit");
+        dialog.addButton("Yes", () -> {}, "btn-cancel");
+
+        dialog.showAndWait();
+
+        updateDeletion(slotNumber, slotImage);
+    }
+
     private void updateDeletion(int slotIndex, ImageView slotImage) {
         if (saveSlots[slotIndex] == EXISTING_SLOT) {
             try {
                 // Delete the save file
                 deleteFile(slotIndex);
-
                 // Update UI and state
                 saveSlots[slotIndex] = EMPTY_SLOT;
                 slotImage.setImage(emptySaveImage);
