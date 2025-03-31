@@ -108,6 +108,19 @@
     -fx-background-image: url("/com/example/chaotopia/Assets/Buttons/ButtonSquareHovered.png");
 }
 
+.btn-lrg {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.btn-lrg:hover {
+    -fx-scale-x: 1.05; /* Increases width */
+    -fx-scale-y: 1.05; /* Increases height */
+}
+
 .text-field {
     -fx-background-color: #c38f6e;
     -fx-border-color: #272744;

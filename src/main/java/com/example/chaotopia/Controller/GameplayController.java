@@ -1629,6 +1629,7 @@ public class GameplayController extends BaseController implements Initializable 
     public void saveGame() {
         playSoundEffect(buttonClickPlayer);
         try {
+            time.storeTime(game);
             game.save();
             System.out.println("Game saved successfully!");
             displayMessage("Game Saved!", 2.0);
@@ -1684,10 +1685,11 @@ public class GameplayController extends BaseController implements Initializable 
     }
 
     /**
-     * Stops all running timelines, sounds, and animations. Called before closing stage or navigating away.
+     * Stops all running timelines, sounds, and animations. Saves the game. Called before closing stage or navigating away.
      */
     public void shutdown() {
         System.out.println("Gameplay Controller Shutting Down...");
+        saveGame();
         stopTimelines();
         stopAllSounds();
         if (chaoAnimation != null) chaoAnimation.stopAnimation();

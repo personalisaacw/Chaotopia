@@ -190,17 +190,21 @@ public class ParentalControlsController extends BaseController{
         ParentalStatistics.loadParentalStatistics(gameFiles);
 
         //format the total and average playtime
-        long totalPlayTimeHrs = (ParentalStatistics.getTotalPlaytime() / 60);
-        long totalPlayTimeMins = (ParentalStatistics.getTotalPlaytime() % 60);
-        long averagePlayTimeHrs = (ParentalStatistics.getAveragePlaytime() / 60);
-        long averagePlayTimeMins = (ParentalStatistics.getAveragePlaytime() % 60);
+        long totalPlayTimeHrs = (ParentalStatistics.getTotalPlaytime() / 3600);
+        long totalPlayTimeMins = (ParentalStatistics.getTotalPlaytime() / 60);
+        long totalPlayTimeSecs = (ParentalStatistics.getTotalPlaytime() % 60);
+        long averagePlayTimeHrs = (ParentalStatistics.getAveragePlaytime() / 3600);
+        long averagePlayTimeMins = (ParentalStatistics.getAveragePlaytime() / 60);
+        long averagePlayTimeSecs = (ParentalStatistics.getAveragePlaytime() % 60);
 
         String formattedStats = String.format(
-                "Total Playtime: %02d:%02d\nAverage Playtime: %02d:%02d",
+                "Total Playtime: %02d:%02d:%02d\nAverage Playtime: %02d:%02d:%02d",
                 totalPlayTimeHrs,
                 totalPlayTimeMins,
+                totalPlayTimeSecs,
                 averagePlayTimeHrs,
-                averagePlayTimeMins
+                averagePlayTimeMins,
+                averagePlayTimeSecs
         );
 
         //print the total and average playtime to the label

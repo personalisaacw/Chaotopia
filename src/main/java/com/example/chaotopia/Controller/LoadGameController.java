@@ -3,18 +3,19 @@ package com.example.chaotopia.Controller;
 import com.example.chaotopia.Model.Chao;
 import com.example.chaotopia.Model.GameFile;
 import com.example.chaotopia.Components.Popup;
+import com.example.chaotopia.Model.ParentalLimitations;
 import javafx.event.ActionEvent;
 import java.io.IOException;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import java.util.Map;
 
 import static com.example.chaotopia.Model.GameFile.deleteFile;
 
 public class LoadGameController extends BaseController {
-    @FXML
-    private ImageView slot1Image, slot2Image, slot3Image;
+    @FXML private ImageView slot1Image, slot2Image, slot3Image;
+    @FXML private Button slot1Button, slot2Button, slot3Button;
 
     private boolean[] saveSlots = new boolean[3];
     private static final boolean EMPTY_SLOT = false;
@@ -131,6 +132,14 @@ public class LoadGameController extends BaseController {
             } else {
                 images[i].setImage(emptySaveImage);
             }
+        }
+
+        ParentalLimitations.loadParentalLimitations();
+        java.time.LocalTime currentTime = java.time.LocalTime.now();
+        if (!ParentalLimitations.isPlayAllowed(currentTime) && ParentalLimitations.isEnabled()) {
+            slot1Button.setDisable(true);
+            slot2Button.setDisable(true);
+            slot3Button.setDisable(true);
         }
     }
 }
