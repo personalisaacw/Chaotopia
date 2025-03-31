@@ -556,7 +556,6 @@ public class GameplayController extends BaseController implements Initializable 
                     monitorChaoState();
                     time.stepTime();
                     if(!time.canPlay()){
-                        //TODO: show popup for game
                         System.out.println("Chao timed out.");
                         time.storeTime(game);
                         try{
@@ -566,6 +565,7 @@ public class GameplayController extends BaseController implements Initializable 
                         }
 
                         enableAllInteractions(true);
+                        //TODO: show popup for game
 
                     };
                 })
