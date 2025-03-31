@@ -57,9 +57,9 @@
    <StackPane fx:id="step5" layoutX="200.0" layoutY="232.0" opacity="0.0" prefHeight="172.0" prefWidth="307.0" mouseTransparent="true">
       <children>
          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c38f6e" height="122.0" stroke="BLACK" strokeType="INSIDE" width="261.0" />
-         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="For now, let's create a new chao for yourself! (this is just a tutorial example and will not be saved as a game file)" textAlignment="CENTER" wrappingWidth="200.0">
+         <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="For now, let's create a new chao for yourself! (this is just a tutorial example and will not be saved as a game file)" textAlignment="CENTER" wrappingWidth="200.0">
             <font>
-               <Font name="Upheaval TT -BRK-" size="15.0" />
+               <Font name="Querina Handwritten" size="15.0" />
             </font>
          </Text>
       </children>
@@ -67,9 +67,9 @@
    <StackPane fx:id="step4" layoutX="330.0" layoutY="270.0" opacity="0.0" prefHeight="116.0" prefWidth="254.0" mouseTransparent="true">
       <children>
          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c38f6e" height="78.0" stroke="BLACK" strokeType="INSIDE" width="223.0" />
-         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="You can delete your game files by clicking here." textAlignment="CENTER" wrappingWidth="200.0">
+         <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="You can delete your game files by clicking here." textAlignment="CENTER" wrappingWidth="200.0">
             <font>
-               <Font name="Upheaval TT -BRK-" size="15.0" />
+               <Font name="Querina Handwritten" size="15.0" />
             </font>
          </Text>
       </children>
@@ -77,9 +77,9 @@
    <StackPane fx:id="step3" layoutX="80.0" layoutY="169.0" opacity="0.0" prefHeight="109.0" prefWidth="239.0" mouseTransparent="true">
       <children>
          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c38f6e" height="78.0" stroke="BLACK" strokeType="INSIDE" width="223.0" />
-         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="If you have a game file saved, it will show up as green here." textAlignment="CENTER" wrappingWidth="200.0">
+         <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="If you have a game file saved, it will show up as green here." textAlignment="CENTER" wrappingWidth="200.0">
             <font>
-               <Font name="Upheaval TT -BRK-" size="15.0" />
+               <Font name="Querina Handwritten" size="15.0" />
             </font>
          </Text>
       </children>
@@ -87,9 +87,9 @@
    <StackPane fx:id="step2" layoutX="20.0" layoutY="280.0" opacity="0.0" prefHeight="109.0" prefWidth="239.0" mouseTransparent="true">
       <children>
          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c38f6e" height="78.0" stroke="BLACK" strokeType="INSIDE" width="223.0" />
-         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="What you're seeing now is the load game screen." textAlignment="CENTER" wrappingWidth="200.0">
+         <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="What you're seeing now is the load game screen." textAlignment="CENTER" wrappingWidth="200.0">
             <font>
-               <Font name="Upheaval TT -BRK-" size="15.0" />
+               <Font name="Querina Handwritten" size="15.0" />
             </font>
          </Text>
       </children>
@@ -97,9 +97,9 @@
    <StackPane fx:id="step1" layoutX="143.0" layoutY="126.0" prefHeight="155.0" prefWidth="307.0" mouseTransparent="true">
       <children>
          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c38f6e" height="153.0" stroke="BLACK" strokeType="INSIDE" width="300.0" />
-         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Welcome to Chaotopia! In this tutorial, you'll be guided through the basic mechanics of the game. Click anywhere on screen to continue." textAlignment="CENTER" wrappingWidth="200.0">
+         <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Welcome to Chaotopia! In this tutorial, you'll be guided through the basic mechanics of the game. Click anywhere on screen to continue." textAlignment="CENTER" wrappingWidth="200.0">
             <font>
-               <Font name="Upheaval TT -BRK-" size="15.0" />
+               <Font name="Querina Handwritten" size="15.0" />
             </font>
          </Text>
       </children>

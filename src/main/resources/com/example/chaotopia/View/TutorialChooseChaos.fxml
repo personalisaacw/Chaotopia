@@ -29,9 +29,9 @@
    <StackPane fx:id="step3" layoutX="180.0" layoutY="260.0" mouseTransparent="true" opacity="0.0" prefHeight="63.0" prefWidth="312.0">
       <children>
          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c38f6e" height="59.0" stroke="BLACK" strokeType="INSIDE" width="304.0" />
-         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="For now, let's start with the red chao." textAlignment="CENTER" wrappingWidth="300.0">
+         <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" text="For now, let's start with the red chao." textAlignment="CENTER" wrappingWidth="300.0">
             <font>
-               <Font name="Upheaval TT -BRK-" size="18.0" />
+               <Font name="Querina Handwritten" size="18.0" />
             </font>
          </Text>
       </children>
@@ -39,9 +39,9 @@
    <StackPane fx:id="step2" layoutX="101.0" layoutY="125.0" mouseTransparent="true" opacity="0.0" prefHeight="150.0" prefWidth="403.0">
       <children>
          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c38f6e" height="120.0" stroke="BLACK" strokeType="INSIDE" width="304.0" />
-         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="They're all built different! You can spend some time trying out each one in your spare time and spot the differences" textAlignment="CENTER" wrappingWidth="300.0">
+         <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" text="They're all built different! You can spend some time trying out each one in your spare time and spot the differences" textAlignment="CENTER" wrappingWidth="300.0">
             <font>
-               <Font name="Upheaval TT -BRK-" size="18.0" />
+               <Font name="Querina Handwritten" size="18.0" />
             </font>
          </Text>
       </children>
@@ -49,9 +49,9 @@
    <StackPane fx:id="step1" layoutX="155.0" layoutY="125.0" mouseTransparent="true" prefHeight="150.0" prefWidth="291.0">
       <children>
          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c38f6e" height="120.0" stroke="BLACK" strokeType="INSIDE" width="240.0" />
-         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="After you click an empty location to start a new game, you'll get to choose one of three chaos on this page" textAlignment="CENTER" wrappingWidth="200.0">
+         <Text fill="#272744" strokeType="OUTSIDE" strokeWidth="0.0" text="After you click an empty location to start a new game, you'll get to choose one of three chaos on this page" textAlignment="CENTER" wrappingWidth="200.0">
             <font>
-               <Font name="Upheaval TT -BRK-" size="18.0" />
+               <Font name="Querina Handwritten" size="18.0" />
             </font>
          </Text>
       </children>
