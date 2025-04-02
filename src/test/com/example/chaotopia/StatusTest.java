@@ -7,11 +7,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
+/**
+ * Test class for the Status class to verify proper initialization and behavior.
+ * Tests all methods including constructors, stat adjustments, and stat retrieval.
+ */
 public class StatusTest {
 
     private Status defaultStatus;
     private Status customStatus;
 
+    /**
+     * Sets up the test environment before each test case.
+     */
     @BeforeEach
     public void setUp() {
         // Initialize with default constructor
@@ -21,6 +28,9 @@ public class StatusTest {
         customStatus = new Status(75, 80, 85, 90);
     }
 
+    /**
+     * Tests the default constructor of the Status class.
+     */
     @Test
     public void testDefaultConstructor() {
         assertEquals(100, defaultStatus.getHappiness());
@@ -29,6 +39,9 @@ public class StatusTest {
         assertEquals(100, defaultStatus.getSleep());
     }
 
+    /**
+     * Tests the custom constructor of the Status class.
+     */
     @Test
     public void testCustomConstructor() {
         assertEquals(75, customStatus.getHappiness());
@@ -37,6 +50,9 @@ public class StatusTest {
         assertEquals(90, customStatus.getSleep());
     }
 
+    /**
+     * Tests stat validation for lower bounds.
+     */
     @Test
     public void testValidateStatLowerBound() {
         Status lowStatus = new Status(-10, -20, -30, -40);
@@ -47,6 +63,9 @@ public class StatusTest {
         assertEquals(0, lowStatus.getSleep());
     }
 
+    /**
+     * Tests stat validation for upper bounds.
+     */
     @Test
     public void testValidateStatUpperBound() {
         Status highStatus = new Status(110, 120, 130, 140);
@@ -57,6 +76,9 @@ public class StatusTest {
         assertEquals(100, highStatus.getSleep());
     }
 
+    /**
+     * Tests adjusting the happiness stat.
+     */
     @Test
     public void testAdjustHappiness() {
         customStatus.adjustHappiness(15);
@@ -73,6 +95,9 @@ public class StatusTest {
         assertEquals(100, customStatus.getHappiness());
     }
 
+    /**
+     * Tests adjusting the health stat.
+     */
     @Test
     public void testAdjustHealth() {
         customStatus.adjustHealth(10);
@@ -89,6 +114,9 @@ public class StatusTest {
         assertEquals(100, customStatus.getHealth());
     }
 
+    /**
+     * Tests adjusting the fullness stat.
+     */
     @Test
     public void testAdjustFullness() {
         customStatus.adjustFullness(10);
@@ -105,6 +133,9 @@ public class StatusTest {
         assertEquals(100, customStatus.getFullness());
     }
 
+    /**
+     * Tests adjusting the sleep stat.
+     */
     @Test
     public void testAdjustSleep() {
         customStatus.adjustSleep(5);
@@ -121,6 +152,9 @@ public class StatusTest {
         assertEquals(100, customStatus.getSleep());
     }
 
+    /**
+     * Tests setting all stats at once.
+     */
     @Test
     public void testSetStats() {
         defaultStatus.setStats(25, 35, 45, 55);
@@ -139,6 +173,9 @@ public class StatusTest {
         assertEquals(100, defaultStatus.getSleep());
     }
 
+    /**
+     * Tests updating stats with relative adjustments.
+     */
     @Test
     public void testUpdateStats() {
         customStatus.updateStats(10, -15, 5, -20);
@@ -164,6 +201,9 @@ public class StatusTest {
         assertEquals(100, customStatus.getSleep());
     }
 
+    /**
+     * Tests the isDead method.
+     */
     @Test
     public void testIsDead() {
         assertFalse(customStatus.isDead());
@@ -177,6 +217,9 @@ public class StatusTest {
         assertFalse(customStatus.isDead());
     }
 
+    /**
+     * Tests retrieving the current stats as an ArrayList.
+     */
     @Test
     public void testGetCurrStats() {
         ArrayList<Integer> stats = customStatus.getCurrStats();
@@ -192,7 +235,4 @@ public class StatusTest {
         stats = customStatus.getCurrStats();
         assertEquals(Integer.valueOf(90), stats.get(0)); // Updated happiness
     }
-
-    // We don't test displayStats() as it's a void method that prints to console
-    // In a real project, you might refactor it to return a String or use a dependency injection for the output
 }

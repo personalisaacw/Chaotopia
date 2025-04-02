@@ -11,6 +11,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class ItemTest {
 
+    /**
+     * Tests the creation and properties of gift items.
+     */
     @Test
     public void testGiftItems() {
         // Test Trumpet item
@@ -30,7 +33,7 @@ public class ItemTest {
         assertEquals(20, duck.getEffectValue());
 
         // Test TV item
-        Item tv = new Item("Tv");
+        Item tv = new Item("T.V.");
         assertEquals("T.V.", tv.getName());
         assertEquals(ItemType.GIFT, tv.getItemType());
         assertEquals("This gift item boosts your pet's happiness by 30 points.", tv.getDescription());
@@ -38,6 +41,9 @@ public class ItemTest {
         assertEquals(30, tv.getEffectValue());
     }
 
+    /**
+     * Tests the creation and properties of food items.
+     */
     @Test
     public void testFoodItems() {
         // Test Green Fruit
@@ -52,19 +58,22 @@ public class ItemTest {
         Item blueFruit = new Item("Blue Fruit");
         assertEquals("Blue Fruit", blueFruit.getName());
         assertEquals(ItemType.FOOD, blueFruit.getItemType());
-        assertEquals("This food item fills your pet's stomach by 30 points. It may also have special effects when fed to a blue Chao.", blueFruit.getDescription());
+        assertEquals("This food item fills your pet's stomach by 40 points. It may also have special effects when fed to a blue Chao.", blueFruit.getDescription());
         assertEquals("A burst of refreshing flavor straight from the blue skies! Your pet will love it!", blueFruit.getFlavorText());
-        assertEquals(30, blueFruit.getEffectValue());
+        assertEquals(40, blueFruit.getEffectValue());
 
         // Test Red Fruit
         Item redFruit = new Item("Red Fruit");
         assertEquals("Red Fruit", redFruit.getName());
         assertEquals(ItemType.FOOD, redFruit.getItemType());
-        assertEquals("This food item fills your pet's stomach by 30 points. It may also have special effects when fed to a red Chao.", redFruit.getDescription());
+        assertEquals("This food item fills your pet's stomach by 50 points. It may also have special effects when fed to a red Chao.", redFruit.getDescription());
         assertEquals("Ripe and juicy with a hint of spice! Your pet can't resist this tasty treat!", redFruit.getFlavorText());
-        assertEquals(30, redFruit.getEffectValue());
+        assertEquals(50, redFruit.getEffectValue());
     }
 
+    /**
+     * Tests the creation and properties of special items.
+     */
     @Test
     public void testSpecialItems() {
         // Test Dark Fruit
@@ -84,6 +93,9 @@ public class ItemTest {
         assertEquals(10, heroFruit.getEffectValue());
     }
 
+    /**
+     * Tests the behavior when an invalid item name is provided.
+     */
     @Test
     public void testInvalidItem() {
         // Test an invalid item name - now should throw IllegalArgumentException
@@ -93,6 +105,9 @@ public class ItemTest {
         assertTrue(exception.getMessage().contains("Invalid item name"));
     }
 
+    /**
+     * Tests the case sensitivity of item names (should throw IllegalArgumentException).
+     */
     @Test
     public void testCaseSensitivity() {
         // Test case sensitivity - now should throw IllegalArgumentException
@@ -102,6 +117,9 @@ public class ItemTest {
         assertTrue(exception.getMessage().contains("Invalid item name"));
     }
 
+    /**
+     * Tests the behavior when a null item name is provided.
+     */
     @Test
     public void testNullItemName() {
         // Test null item name - now should throw IllegalArgumentException
@@ -111,6 +129,9 @@ public class ItemTest {
         assertTrue(exception.getMessage().contains("Item name cannot be null"));
     }
 
+    /**
+     * Tests the ItemType enum to ensure all required types are present.
+     */
     @Test
     public void testItemTypeEnum() {
         // Verify that all item types used in the Item class exist in the ItemType enum

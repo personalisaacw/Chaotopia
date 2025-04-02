@@ -1,11 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<BorderPane prefHeight="800.0" prefWidth="1200.0" stylesheets="@../CSS/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chaotopia.Controller.ParentalControlsController">
+      <top>
+            <HBox alignment="TOP_LEFT" spacing="10.0">
+                  <padding>
+                        <Insets left="10" top="10" />
+                  </padding>
+                  <Button mnemonicParsing="false" onAction="#goToMainMenu" prefHeight="40.0" prefWidth="40.0" styleClass="btn-square" stylesheets="@../CSS/styles.css">
+                        <graphic>
+                              <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                          <Image url="@../Assets/Icon/BackIcon.png" />
+                                    </image>
+                              </ImageView>
+                        </graphic></Button>
+            </HBox>
+      </top>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chaotopia.Controller.ParentalControlsController">
-      <Label layoutX="278.0" layoutY="120.0" text="Parental Controls" />
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#goBack" text="Go Back" />
-</AnchorPane>
+      <center>
+            <VBox alignment="CENTER" spacing="12.0" BorderPane.alignment="CENTER">
+                  <Label styleClass="large-panel" stylesheets="@../Styles/ParentalControls.css" text="Enter Playable Time:" textAlignment="CENTER" textFill="#272744">
+                        <font>
+                              <Font name="Upheaval TT -BRK-" size="30.0" />
+                        </font>
+                  </Label>
+         <TextField fx:id="startTimeField" maxWidth="-Infinity" promptText="Start Time" stylesheets="@../CSS/styles.css" styleClass="text-field" style="-fx-font-family: 'Upheaval TT -BRK-'; -fx-font-size: 12px;"/>
+         <TextField fx:id="endTimeField" maxWidth="-Infinity" promptText="End Time" stylesheets="@../CSS/styles.css" styleClass="text-field" style="-fx-font-family: 'Upheaval TT -BRK-'; -fx-font-size: 12px;"/>
+         <CheckBox fx:id="playRangeCheckBox" mnemonicParsing="false" text="Enable?" onAction="#togglePlayRange" style="-fx-background-color: rgb(195,143,110); -fx-padding: 5px; -fx-background-radius: 5px; -fx-border-color: #272744; -fx-border-radius: 5; -fx-font-family: 'Upheaval TT -BRK-'; -fx-font-size: 12px;"/>
+                  <Button mnemonicParsing="false" onAction="#submitPlaytimeRange" styleClass="btn" stylesheets="@../CSS/styles.css" text="Submit Times" textAlignment="CENTER" textFill="#272744">
+                        <font>
+                              <Font name="Upheaval TT -BRK-" size="24.0" />
+                        </font></Button>
+                  <Label fx:id="playtimeStats" styleClass="large-panel" stylesheets="@../Styles/ParentalControls.css" text="Loading..." textAlignment="CENTER" textFill="#272744">
+                        <font>
+                              <Font name="Upheaval TT -BRK-" size="30.0" />
+                        </font>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#resetPlaytimeStats" styleClass="btn" stylesheets="@../CSS/styles.css" text="Reset Playtime" textAlignment="CENTER" textFill="#272744">
+                        <font>
+                              <Font name="Upheaval TT -BRK-" size="24.0" />
+                        </font></Button>
+                  <Button mnemonicParsing="false" onAction="#reviveSlot1" styleClass="btn" stylesheets="@../CSS/styles.css" text="Revive Slot 1" textAlignment="CENTER" textFill="#272744">
+                        <font>
+                              <Font name="Upheaval TT -BRK-" size="24.0" />
+                        </font></Button>
+                  <Button mnemonicParsing="false" onAction="#reviveSlot2" styleClass="btn" stylesheets="@../CSS/styles.css" text="Revive Slot 2" textAlignment="CENTER" textFill="#272744">
+                        <font>
+                              <Font name="Upheaval TT -BRK-" size="24.0" />
+                        </font></Button>
+                  <Button mnemonicParsing="false" onAction="#reviveSlot3" styleClass="btn" stylesheets="@../CSS/styles.css" text="Revive Slot 3" textAlignment="CENTER" textFill="#272744">
+                        <font>
+                              <Font name="Upheaval TT -BRK-" size="24.0" />
+                        </font></Button>
+            </VBox>
+      </center>
+
+      <styleClass>
+            <String fx:value="default-background" />
+            <String fx:value="container" />
+      </styleClass>
+</BorderPane>

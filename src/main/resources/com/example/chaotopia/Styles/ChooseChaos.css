@@ -1,0 +1,115 @@
+.root {
+    -fx-background-image: url("../Assets/background.png");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.title-label {
+    -fx-background-image: url("../Assets/ChooseChaosScreen/title.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-text-fill: #272744; /* Optional: text color */
+    -fx-font-weight: bold; /* Optional: bold font */
+    -fx-font-family: "Upheaval";
+    -fx-alignment: center;
+
+}
+
+.back-button {
+    -fx-background-image: url("../Assets/back-button.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;  /* removes default gray */
+    -fx-background-radius: 0;
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.back-button:hover {
+    -fx-scale-x: 1.1; /* Increases width */
+    -fx-scale-y: 1.1; /* Increases height */
+}
+
+.red-chao-button {
+    -fx-background-image: url("../Assets/ChooseChaosScreen/red-chao-button.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;  /* removes default gray */
+    -fx-background-radius: 0;
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.red-chao-button:hover {
+    -fx-scale-x: 1.05; /* Increases width */
+    -fx-scale-y: 1.05; /* Increases height */
+}
+
+.red-chao-description-label {
+    -fx-background-image: url("../Assets/ChooseChaosScreen/red-description.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-text-fill: #272744; /* Optional: text color */
+    -fx-font-weight: bold; /* Optional: bold font */
+    -fx-font-family: "Upheaval";
+    -fx-alignment: center;
+}
+
+.green-chao-button {
+    -fx-background-image: url("../Assets/ChooseChaosScreen/green-chao-button.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;  /* removes default gray */
+    -fx-background-radius: 0;
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.green-chao-button:hover {
+    -fx-scale-x: 1.05; /* Increases width */
+    -fx-scale-y: 1.05; /* Increases height */
+}
+
+.green-chao-description-label {
+    -fx-background-image: url("../Assets/ChooseChaosScreen/green-description.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-text-fill: #272744; /* Optional: text color */
+    -fx-font-weight: bold; /* Optional: bold font */
+    -fx-font-family: "Upheaval";
+    -fx-alignment: center;
+}
+
+.blue-chao-button {
+    -fx-background-image: url("../Assets/ChooseChaosScreen/blue-chao-button.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;  /* removes default gray */
+    -fx-background-radius: 0;
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.blue-chao-button:hover {
+    -fx-scale-x: 1.05; /* Increases width */
+    -fx-scale-y: 1.05; /* Increases height */
+}
+
+.blue-chao-description-label {
+    -fx-background-image: url("../Assets/ChooseChaosScreen/blue-description.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-text-fill: #272744; /* Optional: text color */
+    -fx-font-weight: bold; /* Optional: bold font */
+    -fx-font-family: "Upheaval";
+    -fx-alignment: center;
+}

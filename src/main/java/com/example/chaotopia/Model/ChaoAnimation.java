@@ -14,6 +14,8 @@ import javafx.util.Duration;
  *
  * <p>The animation cycles through frames at a configurable speed, displaying each frame
  * before advancing to the next one.</p>
+ *
+ * @author Rosaline Scully
  */
 public class ChaoAnimation {
 
@@ -51,28 +53,6 @@ public class ChaoAnimation {
         this.chaoType = chaoType;
         this.animationState = animationState;
         this.totalFrames = animationState.getFrameCount();
-
-        // Initialize the timeline with the appropriate frame update logic
-        initializeTimeline();
-
-        //Apply scaling for Hero and Dark Chao
-        applyChaoTypeScaling();
-    }
-
-    /**
-     * Constructs a new ChaoAnimation instance with a custom frame count.
-     * Use this constructor when the animation has a non-standard number of frames.
-     *
-     * @param characterView The ImageView component that will display the animated character
-     * @param chaoType The type of Chao being animated
-     * @param animationState The type of animation to perform
-     * @param totalFrames The total number of frames in the animation sequence
-     */
-    public ChaoAnimation(ImageView characterView, ChaoType chaoType, AnimationState animationState, int totalFrames) {
-        this.characterView = characterView;
-        this.chaoType = chaoType;
-        this.animationState = animationState;
-        this.totalFrames = totalFrames;
 
         // Initialize the timeline with the appropriate frame update logic
         initializeTimeline();
@@ -155,6 +135,9 @@ public class ChaoAnimation {
         this.totalFrames = animationState.getFrameCount();
         this.currentFrame = 1;
 
+        // Apply scaling based on new animation state
+        applyChaoTypeScaling();
+
         // Restart the animation
         timeline.play();
     }
@@ -169,25 +152,7 @@ public class ChaoAnimation {
         changeAnimation(AnimationState.fromState(state));
     }
 
-    /**
-     * Changes the current animation with a custom frame count.
-     * Use this method when the animation has a non-standard number of frames.
-     *
-     * @param animationState The new animation state
-     * @param totalFrames The total number of frames in the new animation
-     */
-    public void changeAnimation(AnimationState animationState, int totalFrames) {
-        // Stop the current animation
-        timeline.stop();
 
-        // Update the animation parameters
-        this.animationState = animationState;
-        this.totalFrames = totalFrames;
-        this.currentFrame = 1;
-
-        // Restart the animation
-        timeline.play();
-    }
 
     /**
      * Changes the Chao type being animated.
@@ -248,26 +213,39 @@ public class ChaoAnimation {
     }
 
     /**
-     * Applies scaling to the ImageView based on the Chao type.
+     * Applies scaling to the ImageView based on the Chao type and animation state.
      * Different Chao types can have different scaling factors.
+     * If the Chao is blue, red, or green and in the DEAD animation state, apply 150% scaling.
      */
     private void applyChaoTypeScaling() {
-        // Apply scaling based on Chao type
-        switch (chaoType) {
-            case DARK:
-            case HERO:
-                // Scale up by 75%
-                characterView.setScaleX(1.60);
-                characterView.setScaleY(1.60);
-                break;
-            case RED:
-            case GREEN:
-            case BLUE:
-            default:
-                // Normal scale
-                characterView.setScaleX(1.0);
-                characterView.setScaleY(1.0);
-                break;
+        // Check if this is a dead basic Chao (blue, red, or green)
+        boolean isDeadBasicChao = (chaoType == ChaoType.BLUE ||
+                chaoType == ChaoType.RED ||
+                chaoType == ChaoType.GREEN) &&
+                animationState == AnimationState.DEAD;
+
+        // Apply scaling based on Chao type and animation state
+        if (isDeadBasicChao) {
+            // 150% scaling for dead basic Chao
+            characterView.setScaleX(1.5);
+            characterView.setScaleY(1.5);
+        } else {
+            // Apply normal type-based scaling
+            switch (chaoType) {
+                case DARK:
+                case HERO:
+                    characterView.setScaleX(1.25);
+                    characterView.setScaleY(1.25);
+                    break;
+                case RED:
+                case GREEN:
+                case BLUE:
+                default:
+                    // Normal scale
+                    characterView.setScaleX(1.0);
+                    characterView.setScaleY(1.0);
+                    break;
+            }
         }
     }
 

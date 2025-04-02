@@ -1,0 +1,19 @@
+.long-title {
+    -fx-background-image: url("/com/example/chaotopia/Assets/Buttons/Button.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+    -fx-background-position: center center;
+    -fx-padding: 24px 32px;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+}
+
+.large-panel {
+    -fx-background-image: url("/com/example/chaotopia/Assets/Board/LargeBoard.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+    -fx-background-position: center center;
+    -fx-padding: 24px 32px;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+}

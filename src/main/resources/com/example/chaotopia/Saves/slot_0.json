@@ -1,0 +1,30 @@
+{
+    "ActiveSlot": true,
+    "SlotId": 0,
+    "numSessions": 4,
+    "score": 176,
+    "playtime": 55,
+    "inventory": {
+        "Dark Fruit": 14,
+        "Hero Fruit": 10,
+        "T.V.": 4,
+        "Green Fruit": 15,
+        "Red Fruit": 10,
+        "Blue Fruit": 11,
+        "Duck": 8,
+        "Trumpet": 9
+    },
+    "averagePlaytime": 0,
+    "chao": {
+        "name": "Chao",
+        "state": "NORMAL",
+        "type": "DARK",
+        "alignment": -6,
+        "status": {
+            "sleep": 24,
+            "happiness": 40,
+            "fullness": 22,
+            "health": 61
+        }
+    }
+}
