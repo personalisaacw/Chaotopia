@@ -11,6 +11,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class ItemTest {
 
+    /**
+     * Tests the creation and properties of gift items.
+     */
     @Test
     public void testGiftItems() {
         // Test Trumpet item
@@ -38,6 +41,9 @@ public class ItemTest {
         assertEquals(30, tv.getEffectValue());
     }
 
+    /**
+     * Tests the creation and properties of food items.
+     */
     @Test
     public void testFoodItems() {
         // Test Green Fruit
@@ -65,6 +71,9 @@ public class ItemTest {
         assertEquals(50, redFruit.getEffectValue());
     }
 
+    /**
+     * Tests the creation and properties of special items.
+     */
     @Test
     public void testSpecialItems() {
         // Test Dark Fruit
@@ -84,6 +93,9 @@ public class ItemTest {
         assertEquals(10, heroFruit.getEffectValue());
     }
 
+    /**
+     * Tests the behavior when an invalid item name is provided.
+     */
     @Test
     public void testInvalidItem() {
         // Test an invalid item name - now should throw IllegalArgumentException
@@ -93,6 +105,9 @@ public class ItemTest {
         assertTrue(exception.getMessage().contains("Invalid item name"));
     }
 
+    /**
+     * Tests the case sensitivity of item names (should throw IllegalArgumentException).
+     */
     @Test
     public void testCaseSensitivity() {
         // Test case sensitivity - now should throw IllegalArgumentException
@@ -102,6 +117,9 @@ public class ItemTest {
         assertTrue(exception.getMessage().contains("Invalid item name"));
     }
 
+    /**
+     * Tests the behavior when a null item name is provided.
+     */
     @Test
     public void testNullItemName() {
         // Test null item name - now should throw IllegalArgumentException
@@ -111,6 +129,9 @@ public class ItemTest {
         assertTrue(exception.getMessage().contains("Item name cannot be null"));
     }
 
+    /**
+     * Tests the ItemType enum to ensure all required types are present.
+     */
     @Test
     public void testItemTypeEnum() {
         // Verify that all item types used in the Item class exist in the ItemType enum

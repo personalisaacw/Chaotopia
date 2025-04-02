@@ -17,6 +17,9 @@ public class ChaoTest {
     private Status status;
     private Chao chao;
 
+    /**
+     * Sets up the test environment before each test case.
+     */
     @BeforeEach
     void setUp() {
         // Assuming Status can be instantiated directly
@@ -25,6 +28,9 @@ public class ChaoTest {
         chao = new Chao(0, "TestChao", ChaoType.BLUE, State.NORMAL, status);
     }
 
+    /**
+     * Tests the constructor and getter methods of the Chao class.
+     */
     @Test
     void testConstructorAndGetters() {
         assertEquals(0, chao.getAlignment());
@@ -34,6 +40,9 @@ public class ChaoTest {
         assertEquals(status, chao.getStatus());
     }
 
+    /**
+     * Tests the setter methods of the Chao class.
+     */
     @Test
     void testSetters() {
         chao.setType(ChaoType.RED);
@@ -43,6 +52,9 @@ public class ChaoTest {
         assertEquals(State.SLEEPING, chao.getState());
     }
 
+    /**
+     * Tests the adjustAlignment method of the Chao class.
+     */
     @Test
     void testAdjustAlignment() {
         chao.adjustAlignment(5);
@@ -52,6 +64,9 @@ public class ChaoTest {
         assertEquals(-3, chao.getAlignment());
     }
 
+    /**
+     * Tests the evolve method of the Chao class for Hero evolution.
+     */
     @Test
     void testEvolveToHero() {
         // Test at threshold
@@ -65,6 +80,9 @@ public class ChaoTest {
         assertEquals(ChaoType.HERO, heroChao2.getType());
     }
 
+    /**
+     * Tests the evolve method of the Chao class for Dark evolution.
+     */
     @Test
     void testEvolveToDark() {
         // Test at threshold
@@ -78,6 +96,9 @@ public class ChaoTest {
         assertEquals(ChaoType.DARK, darkChao2.getType());
     }
 
+    /**
+     * Tests the evolve method of the Chao class for no evolution.
+     */
     @Test
     void testNoEvolution() {
         // Test with alignment between thresholds
@@ -95,6 +116,9 @@ public class ChaoTest {
         assertEquals(ChaoType.RED, negativeChao.getType());
     }
 
+    /**
+     * Tests the evolve method of the Chao class with changing alignment.
+     */
     @Test
     void testEvolutionWithChangingAlignment() {
         // Evolve to HERO
