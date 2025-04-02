@@ -14,11 +14,14 @@ import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Controller for the Parental Controls screen, handling parental settings and game statistics.
+ * This class allows parents to set play time limitations, view playtime statistics, and revive pets.
+ */
 public class ParentalControlsController extends BaseController{
 
     @FXML
     private CheckBox playRangeCheckBox;
-    //todo: go back button should go back to main menu
 
     @FXML
     private Label playtimeStats;
@@ -29,8 +32,12 @@ public class ParentalControlsController extends BaseController{
     @FXML
     private TextField endTimeField;
 
+    /**Initialize Game files*/
     private GameFile[] gameFiles = new GameFile[3];
 
+    /**
+     * Initializes the controller, loading parental limitations and setting up the UI.
+     */
     public void initialize() {
         //load limitations file
         ParentalLimitations.loadParentalLimitations();
@@ -47,11 +54,12 @@ public class ParentalControlsController extends BaseController{
             }
         }
 
-        //todo: does this work if theres no files?
         updatePlaytimeStatsLabel();
     }
 
-    //saves the playable time range
+    /**
+     * Saves the playable time range entered by the user.
+     */
     public void submitPlaytimeRange() {
         String startTime = startTimeField.getText();
         String endTime = endTimeField.getText();
@@ -105,11 +113,17 @@ public class ParentalControlsController extends BaseController{
         ParentalLimitations.storeParentalLimitations();
     }
 
+    /**
+     * Toggles the play time range feature on or off.
+     */
     public void togglePlayRange() {
         ParentalLimitations.toggleFeature();
         ParentalLimitations.storeParentalLimitations();
     }
 
+    /**
+     * Resets the playtime statistics for all game slots.
+     */
     public void resetPlaytimeStats() {
         String title = "Reset Statistics";
         String content = "Are you sure you want to reset the statistics?";
@@ -127,18 +141,32 @@ public class ParentalControlsController extends BaseController{
         dialog.showAndWait();
     }
 
+    /**
+     * Revives the pet in slot 1 if it is dead.
+     */
     public void reviveSlot1() {
         handleRevive(gameFiles[0]);
     }
 
+    /**
+     * Revives the pet in slot 2 if it is dead.
+     */
     public void reviveSlot2() {
         handleRevive(gameFiles[1]);
     }
 
+    /**
+     * Revives the pet in slot 3 if it is dead.
+     */
     public void reviveSlot3() {
         handleRevive(gameFiles[2]);
     }
 
+    /**
+     * Handles the revival process for a given game file.
+     *
+     * @param gameFile The game file containing the pet to revive.
+     */
     private void handleRevive(GameFile gameFile) {
         if (gameFile == null) {
             return;
@@ -151,6 +179,11 @@ public class ParentalControlsController extends BaseController{
         }
     }
 
+    /**
+     * Shows a confirmation dialog before reviving a pet.
+     *
+     * @param gameFile The game file containing the pet to revive.
+     */
     private void showReviveConfirmationDialog(GameFile gameFile) {
         String title = "Revive Pet";
         String content = "Are you sure you want to revive the pet?";
@@ -169,6 +202,9 @@ public class ParentalControlsController extends BaseController{
         dialog.showAndWait();
     }
 
+    /**
+     * Shows a dialog indicating that the pet cannot be revived because it is alive.
+     */
     private void showCannotReviveDialog() {
         String title = "Cannot Revive Pet";
         String content = "You cannot revive the pet. The pet is alive.";
@@ -179,12 +215,21 @@ public class ParentalControlsController extends BaseController{
         dialog.showAndWait();
     }
 
+    /**
+     * Shows an error dialog with a given title and message.
+     *
+     * @param title   The title of the error dialog.
+     * @param message The error message to display.
+     */
     private void showErrorDialog(String title, String message) {
         Popup errorDialog = new Popup(title, message);
         errorDialog.addButton("Okay", () -> {}, "btn-submit");
         errorDialog.showAndWait();
     }
 
+    /**
+     * Updates the playtime statistics label with the total and average playtime.
+     */
     private void updatePlaytimeStatsLabel() {
         //initialize parental statistics
         ParentalStatistics.loadParentalStatistics(gameFiles);

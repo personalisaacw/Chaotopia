@@ -62,28 +62,6 @@ public class ChaoAnimation {
     }
 
     /**
-     * Constructs a new ChaoAnimation instance with a custom frame count.
-     * Use this constructor when the animation has a non-standard number of frames.
-     *
-     * @param characterView The ImageView component that will display the animated character
-     * @param chaoType The type of Chao being animated
-     * @param animationState The type of animation to perform
-     * @param totalFrames The total number of frames in the animation sequence
-     */
-    public ChaoAnimation(ImageView characterView, ChaoType chaoType, AnimationState animationState, int totalFrames) {
-        this.characterView = characterView;
-        this.chaoType = chaoType;
-        this.animationState = animationState;
-        this.totalFrames = totalFrames;
-
-        // Initialize the timeline with the appropriate frame update logic
-        initializeTimeline();
-
-        //Apply scaling for Hero and Dark Chao
-        applyChaoTypeScaling();
-    }
-
-    /**
      * Initializes the animation timeline.
      */
     private void initializeTimeline() {
@@ -155,29 +133,6 @@ public class ChaoAnimation {
         // Update the animation parameters
         this.animationState = animationState;
         this.totalFrames = animationState.getFrameCount();
-        this.currentFrame = 1;
-
-        // Apply scaling based on new animation state
-        applyChaoTypeScaling();
-
-        // Restart the animation
-        timeline.play();
-    }
-
-    /**
-     * Changes the current animation with a custom frame count.
-     * Use this method when the animation has a non-standard number of frames.
-     *
-     * @param animationState The new animation state
-     * @param totalFrames The total number of frames in the new animation
-     */
-    public void changeAnimation(AnimationState animationState, int totalFrames) {
-        // Stop the current animation
-        timeline.stop();
-
-        // Update the animation parameters
-        this.animationState = animationState;
-        this.totalFrames = totalFrames;
         this.currentFrame = 1;
 
         // Apply scaling based on new animation state

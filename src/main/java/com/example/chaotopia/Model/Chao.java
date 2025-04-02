@@ -6,10 +6,15 @@ package com.example.chaotopia.Model;
  * @author Rosaline Scully
  */
 public class Chao {
+    /**Alignment holds the value to test if it can turn into a Hero Chao or Dark Chao */
     private int alignment;
+    /**Name of the Chao*/
     private String name;
+    /**Type of the Chao*/
     private ChaoType type;
+    /**State of the Chao*/
     private State state;
+    /**Status of the Chao*/
     private Status status;
 
     /**

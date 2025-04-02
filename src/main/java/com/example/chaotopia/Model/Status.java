@@ -9,16 +9,25 @@ import java.util.ArrayList;
  * @author Rosaline Scully
  */
 public class Status {
+    /** The sleep level of the Chao. */
     private int sleep;
+
+    /** The health level of the Chao. */
     private int health;
+
+    /** The happiness level of the Chao.*/
     private int happiness;
+
+    /**The fullness level of the Chao.*/
     private int fullness;
+
+    /**The maximum value for any stat.*/
     private final int MAX_STAT = 100;
+
+    /**The minimum value for any stat.*/
     private final int MIN_STAT = 0;
 
-    /**
-     * Default constructor that initializes all stats to maximum value (100).
-     */
+    /**Default constructor that initializes all stats to maximum value (100).*/
     public Status() {
         this.sleep = 100;
         this.health = 100;
@@ -186,15 +195,4 @@ public class Status {
         return stats;
     }
 
-    /**
-     * Displays all stats to the console, including whether the Chao is alive or dead.
-     * TO DO: Make this an actual UI thing
-     */
-    public void displayStats() {
-        System.out.println("Happiness: " + happiness);
-        System.out.println("Health: " + health);
-        System.out.println("Fullness: " + fullness);
-        System.out.println("Sleep: " + sleep);
-        System.out.println("Status: " + (isDead() ? "Dead" : "Alive"));
-    }
 }

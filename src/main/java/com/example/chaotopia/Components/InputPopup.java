@@ -15,13 +15,29 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * A custom popup dialog that includes a text input field and configurable buttons.
+ * This class allows for the creation of an alert dialog with a text field for user input,
+ * along with the ability to add custom buttons with associated actions and styles.
+ */
 public class InputPopup {
+    /** The underlying JavaFX Alert instance used to display the dialog. */
     private final Alert alert;
+    /** A map storing the Runnable actions associated with each custom ButtonType added to the dialog. */
     private final Map<ButtonType, Runnable> buttonActions = new HashMap<>();
+    /** A map storing the CSS style classes associated with each custom ButtonType added to the dialog. */
     private final Map<ButtonType, String[]> buttonStyles = new HashMap<>();
-    private TextField textField; // The text field for user input
-    private String userInput; // Variable to store user input
+    /** The TextField component where the user enters their input. */
+    private TextField textField;
+    /** A string variable to store the text entered by the user in the TextField when the dialog is closed. */
+    private String userInput;
 
+    /**
+     * Constructs a new InputPopup with the specified title and content.
+     *
+     * @param title   The title of the popup dialog.
+     * @param content The content message displayed in the popup.
+     */
     public InputPopup(String title, String content) {
         alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
@@ -55,6 +71,13 @@ public class InputPopup {
         dialogPane.setMinHeight(Region.USE_PREF_SIZE);
     }
 
+    /**
+     * Adds a button to the popup dialog with the specified text, action, and style classes.
+     *
+     * @param text        The text displayed on the button.
+     * @param action      The Runnable action to be executed when the button is pressed.
+     * @param styleClasses An array of style classes to apply to the button.
+     */
     public void addButton(String text, Runnable action, String... styleClasses) {
         ButtonType buttonType = new ButtonType(text);
         alert.getButtonTypes().add(buttonType);
@@ -62,10 +85,20 @@ public class InputPopup {
         buttonStyles.put(buttonType, styleClasses);
     }
 
+    /**
+     * Retrieves the user's input from the TextField.
+     *
+     * @return The text entered by the user.
+     */
     public String getUserInput() {
         return userInput;
     }
 
+    /**
+     * Displays the popup dialog and waits for user interaction.
+     * Applies button styles and executes the associated action when a button is pressed.
+     * Stores the user input from the textfield into the userInput string.
+     */
     public void showAndWait() {
         // Apply styles right before showing
         Platform.runLater(this::applyButtonStyles);
@@ -81,6 +114,9 @@ public class InputPopup {
         });
     }
 
+    /**
+     * Applies the specified style classes to the buttons in the popup dialog.
+     */
     private void applyButtonStyles() {
         for (Map.Entry<ButtonType, String[]> entry : buttonStyles.entrySet()) {
             Node buttonNode = alert.getDialogPane().lookupButton(entry.getKey());
