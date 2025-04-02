@@ -13,12 +13,18 @@ public class InventoryTest {
 
     private Inventory inventory;
 
+    /**
+     * Sets up a new inventory before each test.
+     */
     @BeforeEach
     public void setUp() {
         // Create a fresh inventory before each test
         inventory = new Inventory();
     }
 
+    /**
+     * Tests that a new inventory is empty.
+     */
     @Test
     public void testNewInventoryIsEmpty() {
         // A newly created inventory should not have any items
@@ -26,6 +32,9 @@ public class InventoryTest {
         assertEquals(0, inventory.getItemCount("Trumpet"));
     }
 
+    /**
+     * Tests adding a new item to the inventory.
+     */
     @Test
     public void testAddNewItem() {
         // Add a new item to the inventory
@@ -36,6 +45,9 @@ public class InventoryTest {
         assertEquals(1, inventory.getItemCount("Trumpet"));
     }
 
+    /**
+     * Tests adding multiple quantities of an item.
+     */
     @Test
     public void testAddMultipleQuantity() {
         // Add multiple quantities of an item
@@ -45,6 +57,9 @@ public class InventoryTest {
         assertEquals(5, inventory.getItemCount("Duck"));
     }
 
+    /**
+     * Tests adding an existing item to the inventory.
+     */
     @Test
     public void testAddExistingItem() {
         // Add an item twice
@@ -55,6 +70,9 @@ public class InventoryTest {
         assertEquals(3, inventory.getItemCount("Tv"));
     }
 
+    /**
+     * Tests removing an item from the inventory.
+     */
     @Test
     public void testRemoveItem() {
         // Add and then remove an item
@@ -66,6 +84,9 @@ public class InventoryTest {
         assertFalse(inventory.hasItem("Green Fruit"));
     }
 
+    /**
+     * Tests removing a non-existent item from the inventory.
+     */
     @Test
     public void testRemoveNonExistentItem() {
         // Try to remove an item that doesn't exist
@@ -75,6 +96,9 @@ public class InventoryTest {
         assertFalse(result);
     }
 
+    /**
+     * Tests that removing an item decrements its quantity.
+     */
     @Test
     public void testRemoveDecrementsQuantity() {
         // Add multiple of an item and remove one
@@ -87,6 +111,9 @@ public class InventoryTest {
         assertEquals(2, inventory.getItemCount("Red Fruit"));
     }
 
+    /**
+     * Tests removing the last instance of an item.
+     */
     @Test
     public void testRemoveLastItem() {
         // Add one of an item and remove it
@@ -98,6 +125,9 @@ public class InventoryTest {
         assertEquals(0, inventory.getItemCount("Dark Fruit"));
     }
 
+    /**
+     * Tests checking if an item exists in the inventory.
+     */
     @Test
     public void testHasItem() {
         // Test hasItem with items that exist and don't exist
@@ -107,6 +137,9 @@ public class InventoryTest {
         assertFalse(inventory.hasItem("Unknown Item"));
     }
 
+    /**
+     * Tests getting the count of an item in the inventory.
+     */
     @Test
     public void testGetItemCount() {
         // Test getting count of items with different quantities
@@ -118,6 +151,9 @@ public class InventoryTest {
         assertEquals(0, inventory.getItemCount("Nonexistent Item"));
     }
 
+    /**
+     * Tests clearing the inventory.
+     */
     @Test
     public void testClearInventory() {
         // Add multiple items then clear the inventory
@@ -134,6 +170,9 @@ public class InventoryTest {
         assertEquals(0, inventory.getItemCount("Trumpet"));
     }
 
+    /**
+     * Tests adding an item with zero quantity.
+     */
     @Test
     public void testAddZeroQuantity() {
         // Adding zero quantity should still add the item to inventory
@@ -143,6 +182,9 @@ public class InventoryTest {
         assertEquals(0, inventory.getItemCount("Trumpet"));
     }
 
+    /**
+     * Tests adding a negative quantity to an item.
+     */
     @Test
     public void testAddNegativeQuantity() {
         // Adding a negative quantity should decrease the count
@@ -153,6 +195,9 @@ public class InventoryTest {
         assertEquals(3, inventory.getItemCount("Duck"));
     }
 
+    /**
+     * Tests adding a negative quantity to a new item.
+     */
     @Test
     public void testAddNegativeToNewItem() {
         // Adding a negative quantity to a new item
@@ -162,6 +207,9 @@ public class InventoryTest {
         assertEquals(-3, inventory.getItemCount("Trumpet"));
     }
 
+    /**
+     * Tests case insensitivity for item names.
+     */
     @Test
     public void testCaseInsensitivity() {
         // The Inventory class uses String keys which are case-sensitive
@@ -171,5 +219,4 @@ public class InventoryTest {
         assertFalse(inventory.hasItem("trumpet"));
         assertEquals(0, inventory.getItemCount("trumpet"));
     }
-
 }
