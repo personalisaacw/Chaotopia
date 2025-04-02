@@ -6,11 +6,16 @@ package com.example.chaotopia.Model;
  * @author Rosaline Scully
  */
 public enum ChaoType {
-    HERO, //Stays happy longer, higher satisfactions from gifts
-    DARK, //Happiness depletes faster
-    BLUE, //Gets sleepy faster
-    RED, //Gets hungry faster
-    GREEN; //Gets sick more often (health depletes faster)
+    /**Stays happy longer*/
+    HERO,
+    /**Happiness depletes faster*/
+    DARK,
+    /**Gets sleepy faster*/
+    BLUE,
+    /**Gets hungry faster*/
+    RED,
+    /**Gets sick more often (health depletes faster)*/
+    GREEN;
 
     /**
      * Returns the string representation used in resource file names.

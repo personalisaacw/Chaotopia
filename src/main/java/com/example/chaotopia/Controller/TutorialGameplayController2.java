@@ -32,9 +32,9 @@ import java.net.URL;
 import java.util.*;
 
 /**
- * Controller for the main gameplay screen (Gameplay.fxml).
+ * Controller for the main gameplay screen during Tutorial.
  * Manages game logic, UI updates, animations, and Chao state.
- * Merges responsibilities previously handled by GameplayAnimationController.
+ * For full details on methods, please see GameplayController.
  */
 public class TutorialGameplayController2 extends BaseController implements Initializable {
 
@@ -168,10 +168,9 @@ public class TutorialGameplayController2 extends BaseController implements Initi
         initializeInventoryUIMap();
         populateOrderedInventoryButtons();
 
-        if (isNewGameCondition()) { // Replace with your actual new game check
+        if (isNewGameCondition()) {
             addDefaultInventory(); // Populate the inventory data model
         } else {
-            // TODO: Load inventory data from save file
         }
 
         updateScoreUI(score.getScore());
@@ -200,13 +199,11 @@ public class TutorialGameplayController2 extends BaseController implements Initi
     }
 
     private boolean isNewGameCondition() {
-        // Example: Check if a loaded save file exists, or check if 'chao' is newly created vs loaded
-        // For now, let's check if inventory is empty as a proxy
-        return inventory.isEmpty(); // Assuming you add an isEmpty() method to Inventory
+        return inventory.isEmpty();
     }
 
     private void populateOrderedInventoryButtons() {
-        // Add buttons in the exact order you want 1-8 to map to
+
         inventoryButtonsOrdered.clear(); // Ensure list is empty before adding
         inventoryButtonsOrdered.add(redFruitButton);   // 1
         inventoryButtonsOrdered.add(blueFruitButton);  // 2
@@ -216,7 +213,7 @@ public class TutorialGameplayController2 extends BaseController implements Initi
         inventoryButtonsOrdered.add(trumpetButton);    // 6
         inventoryButtonsOrdered.add(duckButton);       // 7
         inventoryButtonsOrdered.add(tvButton);         // 8
-        // Make sure you have exactly 8 buttons here if you map 1-8
+
     }
 
     private void setupKeybindings(Scene scene) {
@@ -266,7 +263,7 @@ public class TutorialGameplayController2 extends BaseController implements Initi
         if (!isInteractionAllowed("KEYPRESS")) { // Use a generic type or check within methods
             System.out.println("Interaction denied by keypress due to Chao state.");
             // Optionally display a message using handleInteractionDenied
-            // handleInteractionDenied("perform action"); // You might need to adapt this method
+
             return;
         }
 
@@ -396,13 +393,9 @@ public class TutorialGameplayController2 extends BaseController implements Initi
     }
 
     private void startTimelines() {
-//        if (statDecayTimeline != null) statDecayTimeline.play();
         if (stateMonitorTimeline != null) stateMonitorTimeline.play();
     }
 
-    /**
-     * Updates the static image in the profile box to show the Chao sitting.
-     */
     private void updateProfileChaoImage() {
         if (profileChaoImageView == null || chao == null) {
             return; // Cannot update if view or chao is missing
@@ -795,12 +788,8 @@ public class TutorialGameplayController2 extends BaseController implements Initi
     public void step(){
         tutorialStep++;
         handlingTutorialSteps(tutorialStep);
-//        System.out.println(tutorialStep);
     }
 
-    /**
-     * Updates all status progress bars based on current Chao stats.
-     */
     public void updateStatusBars() {
         if (chao == null || healthBar == null /* || etc... check all bars AND labels */
                 || healthLabel == null || fullnessLabel == null || happinessLabel == null || sleepLabel == null ) {
@@ -868,10 +857,6 @@ public class TutorialGameplayController2 extends BaseController implements Initi
         showGameOverScreen(); // This disables interactions
     }
 
-
-    /**
-     * Displays a message temporarily on the screen.
-     */
     public void displayMessage(String message, double durationSeconds) {
         if (messageLabel == null) {
             System.out.println("UI Message (Label not found): " + message);
@@ -894,9 +879,6 @@ public class TutorialGameplayController2 extends BaseController implements Initi
 
     // --- Animation and State Management ---
 
-    /**
-     * Shows a temporary happy animation then reverts to the previous state.
-     */
     public boolean showHappyAnimation() {
         // Store the previous state before showing happy animation
         State preHappyState = chao.getState();
@@ -919,14 +901,6 @@ public class TutorialGameplayController2 extends BaseController implements Initi
         }
         return shown;
     }
-
-
-    /**
-     * Shows a temporary animation for a specific state, then reverts.
-     * @param tempAnimState The AnimationState to show temporarily.
-     * @param duration Seconds to show the temporary state.
-     * @return true if animation was shown, false otherwise.
-     */
 
     public boolean showTemporaryStateAnimation(AnimationState tempAnimState, double duration) {
         State tempState = StateUtility.fromAnimationState(tempAnimState);
@@ -969,13 +943,6 @@ public class TutorialGameplayController2 extends BaseController implements Initi
         return true;
     }
 
-
-
-    /**
-     * Updates the Chao's animation based on its logical state.
-     * @param newState The logical state (e.g., State.SLEEPING)
-     * @param forceRestart If true, stops and restarts the animation timeline.
-     */
     private void syncChaoAnimationToState(State newState, boolean forceRestart) {
         if (chaoAnimation != null && chao != null) {
             AnimationState targetAnimState = AnimationState.fromState(newState);
@@ -993,9 +960,6 @@ public class TutorialGameplayController2 extends BaseController implements Initi
         }
     }
 
-    /**
-     * Starts the timeline to gradually increase sleep stat.
-     */
     public void startSleepIncrease() {
         if (sleepIncreaseTimeline != null) sleepIncreaseTimeline.stop();
         System.out.println(chao.getName() + " is increasing sleep..."); // Debug log
@@ -1032,9 +996,6 @@ public class TutorialGameplayController2 extends BaseController implements Initi
         sleepIncreaseTimeline.play();
     }
 
-    /**
-     * Periodically checks the Chao's stats and updates its logical and visual state.
-     */
     private void monitorChaoState() {
         if (chao == null || chao.getState() == State.DEAD || chao.getState() == State.EVOLVING) return;
 
@@ -1086,10 +1047,6 @@ public class TutorialGameplayController2 extends BaseController implements Initi
         }
     }
 
-
-    /**
-     * Applies natural stat decay over time.
-     */
     private void decreaseStats() {
         if (chao == null || chao.getState() == State.DEAD) {
             return; // No decay when dead or sleeping
@@ -1237,9 +1194,6 @@ public class TutorialGameplayController2 extends BaseController implements Initi
         shutdown();
     }
 
-    /**
-     * Stops all running timelines and animations. Call before closing the stage or navigating away.
-     */
     public void shutdown() {
         stopTimelines();
         if (chaoAnimation != null) {
@@ -1259,10 +1213,6 @@ public class TutorialGameplayController2 extends BaseController implements Initi
 
     // --- Interaction Checks and Helpers ---
 
-    /**
-     * Enables or disables interaction buttons.
-     * @param enable True to enable, false to disable.
-     */
     public void enableAllInteractions(boolean enable) {
         // List all interaction buttons/containers that need disabling
         List<Node> controlsToToggle = Arrays.asList(

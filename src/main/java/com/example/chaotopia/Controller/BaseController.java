@@ -25,7 +25,9 @@ import javax.swing.*;
  * history, allowing users to easily go back to previous scenes.
  */
 public class BaseController {
-    private static Stack<Scene> sceneStack = new Stack<>(); // Static stack to track scenes
+    /**Static stack to track scenes*/
+    private static Stack<Scene> sceneStack = new Stack<>();
+    /**String path to main menu*/
     private static final String MAIN_MENU_FXML_PATH = "/com/example/chaotopia/View/MainMenu.fxml";
 
     /**
@@ -56,6 +58,11 @@ public class BaseController {
         System.out.println("Main Menu loaded.");
     }
 
+    /** Pops whichever scene is at the top of the stack */
+    public void popStack(){
+        sceneStack.pop();
+    }
+
     /**
      * Handles the action for the back button. This method pops the previous scene from the
      * navigation stack and sets it as the current scene, effectively navigating the user back
@@ -63,10 +70,6 @@ public class BaseController {
      *
      * @param e The `ActionEvent` triggered by clicking the back button.
      */
-    public void popStack(){
-        sceneStack.pop();
-    }
-
     public void goBack(ActionEvent e) {
         if (!sceneStack.isEmpty()) {
             Scene previousScene = sceneStack.pop();

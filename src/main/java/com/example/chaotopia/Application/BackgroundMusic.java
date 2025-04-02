@@ -5,9 +5,15 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import java.net.URL;
 
+/**Background music that plays during all screens except Gameplay.
+ * @author Rosaline Scully
+ * */
+
 public class BackgroundMusic {
 
+    /** Initialize a media play to hold the music */
     private static MediaPlayer menuMusicPlayer;
+    /**A string path to where the background music is*/
     private static final String MENU_MUSIC_PATH = "/com/example/chaotopia/Assets/Sounds/background.mp3"; // <-- ADJUST PATH AND FILENAME
 
     /**

@@ -8,6 +8,10 @@ import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 
+/**
+ * Controller for the Tutorial New Game screen, guiding the player through the initial setup.
+ * This class manages the tutorial flow for starting a new game, displaying instructional steps and enabling interactions.
+ */
 public class TutorialNewGameController extends BaseController{
 
     @FXML
@@ -31,11 +35,19 @@ public class TutorialNewGameController extends BaseController{
     @FXML
     private int tutorialStep = 0;
 
+    /**
+     * Initializes the controller, disabling the new game button at the start.
+     */
     @FXML
     public void initialize() {
         newGame.setDisable(true);
     }
 
+    /**
+     * Manages the tutorial steps, updating the UI based on the current step.
+     *
+     * @param tutorialStep The current step of the tutorial.
+     */
     @FXML
     private void handlingTutorialSteps(int tutorialStep) {
         switch(tutorialStep){
@@ -65,6 +77,9 @@ public class TutorialNewGameController extends BaseController{
         }
     }
 
+    /**
+     * Advances the tutorial to the next step and updates the UI.
+     */
     @FXML
     public void step(){
 
@@ -73,10 +88,13 @@ public class TutorialNewGameController extends BaseController{
 
     }
 
+    /**
+     * Navigates to the choose Chao tutorial page.
+     *
+     * @param e The ActionEvent triggering the navigation.
+     * @throws IOException If an I/O error occurs during scene switching.
+     */
     public void chooseChaoTutorialPage(ActionEvent e) throws IOException {
         switchScene(e, "/com/example/chaotopia/View/TutorialChooseChaos.fxml");
     }
-
-
-
 }

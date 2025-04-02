@@ -22,12 +22,19 @@ public class GameFile {
     /** Maximum number of save slots available */
     private static final int MAX_SLOTS = 2;
 
+    /**The ID of the save slot.*/
     private int slotId;
+    /**The Chao object associated with this save file.*/
     private Chao chao;
+    /**The Inventory object associated with this save file.*/
     private Inventory inventory;
+    /**The Score object associated with this save file.*/
     private Score score;
+    /**Total playtime in milliseconds.*/
     private long playtime;
+    /**Number of play sessions.*/
     private int numSessions;
+    /**Average playtime per session in milliseconds.*/
     private long averagePlaytime;
 
     // Static methods ----------------------------------------------------------
@@ -161,30 +168,65 @@ public class GameFile {
 
     // Getters and setters -----------------------------------------------------
 
+    /**
+     * Gets the total playtime in milliseconds.
+     *
+     * @return The total playtime.
+     */
     public long getPlaytime() {
         return playtime;
     }
 
+    /**
+     * Sets the total playtime in milliseconds.
+     *
+     * @param newPlaytime The new total playtime.
+     */
     public void setPlaytime(long newPlaytime) {
         playtime = newPlaytime;
     }
 
+    /**
+     * Gets the number of play sessions.
+     *
+     * @return The number of play sessions.
+     */
     public int getNumSessions() {
         return numSessions;
     }
 
+    /**
+     * Sets the number of play sessions.
+     *
+     * @param newNumSessions The new number of play sessions.
+     */
     public void setNumSessions(int newNumSessions) {
         numSessions = newNumSessions;
     }
 
+    /**
+     * Gets the Chao object.
+     *
+     * @return The Chao object.
+     */
     public Chao getChao() {
         return this.chao;
     }
 
+    /**
+     * Gets the Inventory object.
+     *
+     * @return The Inventory object.
+     */
     public Inventory getInventory() {
         return this.inventory;
     }
 
+    /**
+     * Gets the Score object.
+     *
+     * @return The Score object.
+     */
     public Score getScore() {
         return this.score;
     }

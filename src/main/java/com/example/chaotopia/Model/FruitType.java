@@ -6,10 +6,15 @@ package com.example.chaotopia.Model;
  * @author Rosaline Scully
  */
 public enum FruitType {
+    /** Hero fruit increases Hero alignment and hunger by 10 */
     HERO,
+    /** Dark fruit increase Dark alignment and hunger by 10*/
     DARK,
+    /** Red fruit increase hunger by 50 */
     RED,
+    /**Green fruit increases hunger by 30 */
     GREEN,
+    /**Blue fruit increases hunger by 40 */
     BLUE;
 
     /**

@@ -143,7 +143,9 @@ public final class ParentalLimitations {
         }
     }
 
-    //creates the parental limitations json if it doesn't exist
+    /**
+     * Ensures that the parental limitations file exists, creating it if it doesn't.
+     */
     public static void ensureLimitationsFileExists() {
         Path filePath = Paths.get(LIMITATIONS_FILE);
 

@@ -11,12 +11,17 @@ import javafx.util.Duration;
 
 public class FruitAnimation {
 
-
+    /** An ImageView container to hold the fruit animation */
     private ImageView fruitView;
+    /** The current frame we are on */
     private int currentFrame = 1;
+    /** Total number of frames for fruit animation */
     private final int totalFrames = 6;
+    /** The current fruit type */
     private FruitType fruitType;
+    /** A timeline for the animation */
     private Timeline timeline;
+    /** Speed of the fruit animation per frame */
     private double frameSpeed = 0.5;
 
     /**
@@ -117,10 +122,6 @@ public class FruitAnimation {
         if (timeline != null) {
             timeline.stop();
         }
-        // Optionally hide the view immediately when stopped externally
-        // if (fruitView != null) {
-        //     Platform.runLater(() -> fruitView.setVisible(false));
-        // }
     }
 
 
@@ -139,13 +140,5 @@ public class FruitAnimation {
 
         fruitView.setVisible(true);
         timeline.playFromStart();
-    }
-
-    /**
-     * Gets the total duration of one animation cycle.
-     * @return Duration object
-     */
-    public Duration getAnimationDuration() {
-        return Duration.seconds(totalFrames * frameSpeed);
     }
 }

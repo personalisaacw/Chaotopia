@@ -2,6 +2,7 @@ package com.example.chaotopia.Model;
 
 /**
  * Utility class for converting between State and AnimationState enums.
+ * @author Rosaline Scully
  */
 public class StateUtility {
 
@@ -26,14 +27,5 @@ public class StateUtility {
             case EVOLVING: return State.EVOLVING; // Map AnimationState.EVOLVING back
             default: return State.NORMAL; // Default fallback
         }
-    }
-
-    /**
-     * Helper method to check if a ChaoType is one of the basic, non-evolved types.
-     * @param type The ChaoType to check.
-     * @return true if the type is BLUE, RED, or GREEN, false otherwise.
-     */
-    public static boolean isBasicChaoType(ChaoType type) {
-        return type == ChaoType.BLUE || type == ChaoType.RED || type == ChaoType.GREEN;
     }
 }

@@ -43,7 +43,7 @@ import java.util.*;
 /**
  * Controller for the main gameplay screen (Gameplay.fxml).
  * Manages game logic, UI updates, animations, and Chao state.
- * Merges responsibilities previously handled by GameplayAnimationController.
+ * @author Rosaline Scully
  */
 public class GameplayController extends BaseController implements Initializable {
 
@@ -112,7 +112,6 @@ public class GameplayController extends BaseController implements Initializable 
     private record InventoryItemUI(Button button, Label countLabel) {} // Helper record
     private Map<String, InventoryItemUI> inventoryUIMap;
     private List<Button> inventoryButtonsOrdered;
-    private ChaoType currentSessionBaseType = null;
     private GameFile game = null;
 
     // --- Timelines ---
@@ -140,7 +139,6 @@ public class GameplayController extends BaseController implements Initializable 
 
     // --- State Management ---
     private boolean isSleeping = false;
-    private State previousState = State.NORMAL;
     private Node gameOverOverlay = null; // Reference to the game over screen
     private final Random random = new Random(); // Final because initialized once
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
@@ -155,6 +153,10 @@ public class GameplayController extends BaseController implements Initializable 
     // --- Initialization ---
     private final IntegerProperty slotIndex = new SimpleIntegerProperty(-1);
 
+    /**
+     * Default constructor. Initializes the slotIndex property and adds a listener
+     * to trigger game initialization when the slot index changes.
+     */
     public GameplayController() {
         slotIndex.addListener((obs, oldVal, newVal) -> {
             if (newVal.intValue() != -1) {
@@ -163,10 +165,25 @@ public class GameplayController extends BaseController implements Initializable 
         });
     }
 
+    /**
+     * Sets the game slot index to load.
+     * This triggers the listener attached to the slotIndex property,
+     * which then calls {@link #initializeGame(int)} to load the game data.
+     *
+     * @param slotIndex The index of the game save slot to load (0, 1, or 2).
+     */
     public void setSlotIndex(int slotIndex) {
         this.slotIndex.set(slotIndex);
     }
 
+    /**
+     * Initializes the game logic and UI elements based on the selected game slot.
+     * Loads game data (Chao, Inventory, Score) from the specified slot using GameFile.
+     * Sets up sounds, animations, UI maps, item lists, and starts background music.
+     * Updates the UI with loaded data (stats, name, inventory) and starts all necessary game loop timelines.
+     *
+     * @param slotIndex The index of the game save slot to initialize from.
+     */
     private void initializeGame(int slotIndex) {
         BackgroundMusic.stopMenuMusic();
         try {
@@ -229,6 +246,14 @@ public class GameplayController extends BaseController implements Initializable 
     }
 
 
+    /**
+     * Called by the FXML loader after the FXML file has been loaded and injected.
+     * Sets up keybindings by attaching a listener to the scene property of the main container.
+     * Uses Platform.runLater to ensure the scene is available.
+     *
+     * @param location  The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources){
 
@@ -237,7 +262,6 @@ public class GameplayController extends BaseController implements Initializable 
             if (scene != null) {
                 setupKeybindings(scene);
             } else if (mainContainer != null) {
-                // Fallback: Listen for the scene property change
                 mainContainer.sceneProperty().addListener((obs, oldScene, newScene) -> {
                     if (newScene != null) {
                         setupKeybindings(newScene);
@@ -250,23 +274,10 @@ public class GameplayController extends BaseController implements Initializable 
     }
 
     /**
-     * Checks if the game is being started fresh (e.g., no save loaded).
-     * Currently uses whether the inventory is empty as a simple check.
-     *
-     * @return true if it's considered a new game condition, false otherwise.
-     */
-    private boolean isNewGameCondition() {
-        // Example: Check if a loaded save file exists, or check if 'chao' is newly created vs loaded
-        // For now, let's check if inventory is empty as a proxy
-        return inventory.isEmpty(); // Assuming Inventory has an isEmpty() method
-    }
-
-    /**
      * Populates the ordered list of inventory buttons for keyboard shortcut mapping (1-8).
      * The order in this list determines which button corresponds to which number key.
      */
     private void populateOrderedInventoryButtons() {
-        // Add buttons in the exact order you want 1-8 to map to
         inventoryButtonsOrdered.clear(); // Ensure list is empty before adding
         inventoryButtonsOrdered.add(redFruitButton);   // 1
         inventoryButtonsOrdered.add(blueFruitButton);  // 2
@@ -276,7 +287,6 @@ public class GameplayController extends BaseController implements Initializable 
         inventoryButtonsOrdered.add(trumpetButton);    // 6
         inventoryButtonsOrdered.add(duckButton);       // 7
         inventoryButtonsOrdered.add(tvButton);         // 8
-        // Make sure you have exactly 8 buttons here if you map 1-8
     }
 
     /**
@@ -355,8 +365,7 @@ public class GameplayController extends BaseController implements Initializable 
                 player.play();
             });
         } else {
-            // Changed to a less verbose warning
-            // System.err.println("Attempted to play a null sound effect.");
+            System.err.println("Attempted to play a null sound effect.");
         }
     }
 
@@ -492,16 +501,6 @@ public class GameplayController extends BaseController implements Initializable 
         });
     }
 
-//    /**
-//     * Selects a random basic Chao type (Blue, Red, or Green).
-//     *
-//     * @return A randomly chosen basic ChaoType.
-//     */
-//    private ChaoType getRandomBasicChaoType() {
-//        ChaoType[] basicTypes = {ChaoType.BLUE, ChaoType.RED, ChaoType.GREEN};
-//        return basicTypes[random.nextInt(basicTypes.length)];
-//    }
-
     /**
      * Loads Chao data (placeholder) or creates a new default Chao.
      * If restarting via "Play Again", reuses the base Chao type selected at the start of the session.
@@ -511,7 +510,6 @@ public class GameplayController extends BaseController implements Initializable 
         // Create the Chao instance
         this.chao = chao;
         this.isSleeping = false; // Reset state flag
-        this.currentSessionBaseType = chao.getType();
 
         // --- Initialize or Update Animation ---
         if (chaoImageView != null) {
@@ -525,21 +523,6 @@ public class GameplayController extends BaseController implements Initializable 
         } else {
             System.err.println("CRITICAL: chaoImageView is null during Chao creation.");
         }
-    }
-
-    /**
-     * Adds a default set of items to the inventory. Typically used for new games.
-     */
-    private void addDefaultInventory() {
-        System.out.println("Adding default inventory items...");
-        inventory.addItem("Red Fruit", 3);
-        inventory.addItem("Blue Fruit", 3);
-        inventory.addItem("Green Fruit", 3);
-        inventory.addItem("Hero Fruit", 3);
-        inventory.addItem("Dark Fruit", 3);
-        inventory.addItem("Trumpet", 1);
-        inventory.addItem("Duck", 1);
-        inventory.addItem("T.V.", 1);
     }
 
     /**
@@ -1234,7 +1217,6 @@ public class GameplayController extends BaseController implements Initializable 
             System.out.println("UI Message (Label not found): " + message);
             return;
         }
-        // System.out.println("Displaying Message: " + message); // Optional: Reduce console spam
 
         Platform.runLater(() -> {
             messageLabel.setText(message);
@@ -1595,20 +1577,6 @@ public class GameplayController extends BaseController implements Initializable 
     }
 
     /**
-     * Removes the Game Over overlay screen from the UI. Runs on FX thread.
-     */
-    private void removeGameOverScreen() {
-        if (gameOverOverlay != null && centerStackPane != null) {
-            Platform.runLater(() -> { // Ensure removal on FX thread
-                if (centerStackPane.getChildren().contains(gameOverOverlay)) {
-                    centerStackPane.getChildren().remove(gameOverOverlay);
-                }
-                gameOverOverlay = null; // Clear reference
-            });
-        }
-    }
-
-    /**
      * Leads to the Load Game / New Game Screen
      */
     private void startNewGame(ActionEvent e) {
@@ -1707,8 +1675,6 @@ public class GameplayController extends BaseController implements Initializable 
         };
         for (MediaPlayer player : players) {
             if (player != null) {
-                // Use Platform.runLater if encountering issues stopping sounds quickly
-                // Platform.runLater(() -> player.stop());
                 player.stop();
             }
         }
@@ -1755,8 +1721,8 @@ public class GameplayController extends BaseController implements Initializable 
                 if (node != null) node.setDisable(!enable);
             });
             // Ensure system buttons have desired state
-            if (saveButton != null) saveButton.setDisable(false); // Example: Always enabled
-            if (backButton != null) backButton.setDisable(false); // Example: Always enabled
+            if (saveButton != null) saveButton.setDisable(false);
+            if (backButton != null) backButton.setDisable(false);
         });
     }
 
@@ -1802,6 +1768,5 @@ public class GameplayController extends BaseController implements Initializable 
             default -> "Interaction not allowed right now.";
         };
         displayMessage(reason, 1.5);
-        // Optional: Play a "denied" sound effect
     }
 }
