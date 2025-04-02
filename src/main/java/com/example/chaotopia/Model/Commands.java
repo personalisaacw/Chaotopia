@@ -197,8 +197,6 @@ public final class Commands {
             sleepDecrease = (int)(sleepDecrease * 1.5);
         } else if (type == ChaoType.RED) {
             fullnessDecrease = (int)(fullnessDecrease * 1.5);
-        } else if (type == ChaoType.GREEN) {
-            healthDecrease = 1;
         } else if (type == ChaoType.HERO){
             happinessDecrease = (int)(happinessDecrease * 0.5);
         }
@@ -207,6 +205,9 @@ public final class Commands {
         if (status.getFullness() == 0) {
             happinessDecrease *= 2;
             healthDecrease += 5;
+            if (chao.getType() == ChaoType.GREEN) {
+                healthDecrease +=2;
+            }
         }
 
         // Update the stats
