@@ -3,6 +3,7 @@ package com.example.chaotopia.Model;
 /**
  * Defines the different animation states a Chao can have.
  * Each state corresponds to a specific behavior animation.
+ * @author Rosaline Scully, Modified
  */
 public enum AnimationState {
     NORMAL(4),
@@ -11,47 +12,50 @@ public enum AnimationState {
     HAPPY(2),
     ANGRY(2),
     HUNGRY(4),
-    DEAD(2);
+    DEAD(2),
+    EVOLVING(2);
 
     private final int frameCount;
 
-    /**
-     * Constructor for AnimationState
-     *
-     * @param frameCount The default number of frames for this animation
-     */
     AnimationState(int frameCount) {
         this.frameCount = frameCount;
     }
 
-    /**
-     * Returns the string representation used in resource file names.
-     * Returns the enum name as-is (e.g., "NORMAL").
-     */
     public String getResourceName() {
+        // Special case for EVOLVING animation if it uses SIT sprites
+        if (this == EVOLVING) {
+            return AnimationState.SIT.name(); // Use SIT sprites for EVOLVING animation
+        }
         return name();
     }
 
-    /**
-     * Returns the default number of frames for this animation.
-     */
     public int getFrameCount() {
+        // Special case for EVOLVING animation if it uses SIT sprites
+        if (this == EVOLVING) {
+            return AnimationState.SIT.getFrameCount(); // Use SIT framecount
+        }
         return frameCount;
     }
 
     /**
      * Convert from a State enum to the corresponding AnimationState
      *
-     * @param state The Chao state
+     * @param state The Chao logical state
      * @return The corresponding animation state
      */
     public static AnimationState fromState(State state) {
-        try {
-            // Since State and AnimationState have matching names,
-            // we can directly convert between them
-            return valueOf(state.name());
-        } catch (IllegalArgumentException e) {
-            return NORMAL; // Default to NORMAL if no match is found
+        if (state == null) return NORMAL; // Handle null case
+
+        switch (state) {
+            case NORMAL: return NORMAL;
+            case SIT: return SIT;
+            case SLEEPING: return SLEEPING;
+            case HAPPY: return HAPPY;
+            case ANGRY: return ANGRY;
+            case HUNGRY: return HUNGRY;
+            case DEAD: return DEAD;
+            case EVOLVING: return EVOLVING; // Map State.EVOLVING to AnimationState.EVOLVING
+            default: return NORMAL;
         }
     }
 }

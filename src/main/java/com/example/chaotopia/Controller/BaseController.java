@@ -6,8 +6,17 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.awt.event.InputEvent;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Stack;
+import java.util.function.Consumer;
+
+import javafx.scene.control.Alert;
+
+import javax.swing.*;
+
 
 /**
  * The `BaseController` class serves as a base class for all controllers in the application.
@@ -17,6 +26,35 @@ import java.util.Stack;
  */
 public class BaseController {
     private static Stack<Scene> sceneStack = new Stack<>(); // Static stack to track scenes
+    private static final String MAIN_MENU_FXML_PATH = "/com/example/chaotopia/View/MainMenu.fxml";
+
+    /**
+     * Navigates directly to the main menu scene, clearing the navigation history.
+     * Requires the calling controller to perform any necessary cleanup first.
+     *
+     * @param e The ActionEvent from the button press (used to get the Stage).
+     * @throws IOException If the Main Menu FXML file cannot be loaded.
+     */
+    public void goToMainMenu(ActionEvent e) throws IOException {
+        sceneStack.clear(); // Clear the entire navigation history
+        // Get the current stage
+        Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+        // Load the Main Menu FXML
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(MAIN_MENU_FXML_PATH));
+        if (loader.getLocation() == null) {
+            throw new IOException("Cannot find Main Menu FXML at: " + MAIN_MENU_FXML_PATH);
+        }
+        Parent root = loader.load();
+
+        // Create a new scene for the main menu
+        Scene mainMenuScene = new Scene(root);
+        addCSS(mainMenuScene); // Apply CSS
+
+        // Set the stage to the main menu scene
+        stage.setScene(mainMenuScene);
+        stage.show();
+        System.out.println("Main Menu loaded.");
+    }
 
     /**
      * Handles the action for the back button. This method pops the previous scene from the
@@ -25,6 +63,10 @@ public class BaseController {
      *
      * @param e The `ActionEvent` triggered by clicking the back button.
      */
+    public void popStack(){
+        sceneStack.pop();
+    }
+
     public void goBack(ActionEvent e) {
         if (!sceneStack.isEmpty()) {
             Scene previousScene = sceneStack.pop();
@@ -43,15 +85,47 @@ public class BaseController {
      * @throws IOException If the FXML file cannot be loaded.
      */
     protected void switchScene(ActionEvent e, String fxmlPath) throws IOException {
+        switchScene(e, fxmlPath, null);
+    }
+
+    protected void switchScene(ActionEvent e, String fxmlPath, Consumer<Object> controllerConfigurator) throws IOException {
         // Push the current scene to the stack
         sceneStack.push(((Node)e.getSource()).getScene());
 
         // Load the new scene
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
         Parent root = loader.load();
+
+        // Configure the controller if provided
+        if (controllerConfigurator != null) {
+            Object controller = loader.getController();
+            controllerConfigurator.accept(controller);
+        }
+
         Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    /**
+     * Adds CSS to the file
+     * @param scene The scene to add CSS
+     */
+    public static void addCSS(Scene scene) {
+        String css = Objects.requireNonNull(BaseController.class.getResource("/com/example/chaotopia/CSS/styles.css")).toExternalForm();
+        scene.getStylesheets().add(css);
+    }
+
+    /**
+     * Displays an error message to the user
+     * @param message The error message to display
+     */
+    protected void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

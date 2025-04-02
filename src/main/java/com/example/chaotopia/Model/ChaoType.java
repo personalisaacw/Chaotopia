@@ -3,6 +3,7 @@ package com.example.chaotopia.Model;
 /**
  * Defines the different types a Chao can have.
  * The type may change through evolution based on alignment.
+ * @author Rosaline Scully
  */
 public enum ChaoType {
     HERO, //Stays happy longer, higher satisfactions from gifts

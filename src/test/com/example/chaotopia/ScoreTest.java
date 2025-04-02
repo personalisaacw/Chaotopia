@@ -29,4 +29,15 @@ class ScoreTest {
         score.setScore(score.getScore() + 10);
         assertEquals(expScore, score.getScore());
     }
+
+    /**
+     * Test for updateScore method of the Score class.
+     */
+    @Test
+    public void testUpdateScore() {
+        int expScore = 11;
+        Score score = new Score(10);
+        score.updateScore(1);
+        assertEquals(expScore, score.getScore());
+    }
 }

@@ -193,6 +193,4 @@ public class StatusTest {
         assertEquals(Integer.valueOf(90), stats.get(0)); // Updated happiness
     }
 
-    // We don't test displayStats() as it's a void method that prints to console
-    // In a real project, you might refactor it to return a String or use a dependency injection for the output
 }

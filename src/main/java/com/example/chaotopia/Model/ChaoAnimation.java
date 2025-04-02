@@ -14,6 +14,8 @@ import javafx.util.Duration;
  *
  * <p>The animation cycles through frames at a configurable speed, displaying each frame
  * before advancing to the next one.</p>
+ *
+ * @author Rosaline Scully
  */
 public class ChaoAnimation {
 
@@ -155,18 +157,11 @@ public class ChaoAnimation {
         this.totalFrames = animationState.getFrameCount();
         this.currentFrame = 1;
 
+        // Apply scaling based on new animation state
+        applyChaoTypeScaling();
+
         // Restart the animation
         timeline.play();
-    }
-
-    /**
-     * Changes the animation based on the Chao's logical state.
-     * This provides a convenient way to sync the animation with the Chao's game state.
-     *
-     * @param state The Chao's logical state
-     */
-    public void changeState(State state) {
-        changeAnimation(AnimationState.fromState(state));
     }
 
     /**
@@ -185,9 +180,24 @@ public class ChaoAnimation {
         this.totalFrames = totalFrames;
         this.currentFrame = 1;
 
+        // Apply scaling based on new animation state
+        applyChaoTypeScaling();
+
         // Restart the animation
         timeline.play();
     }
+
+    /**
+     * Changes the animation based on the Chao's logical state.
+     * This provides a convenient way to sync the animation with the Chao's game state.
+     *
+     * @param state The Chao's logical state
+     */
+    public void changeState(State state) {
+        changeAnimation(AnimationState.fromState(state));
+    }
+
+
 
     /**
      * Changes the Chao type being animated.
@@ -248,26 +258,39 @@ public class ChaoAnimation {
     }
 
     /**
-     * Applies scaling to the ImageView based on the Chao type.
+     * Applies scaling to the ImageView based on the Chao type and animation state.
      * Different Chao types can have different scaling factors.
+     * If the Chao is blue, red, or green and in the DEAD animation state, apply 150% scaling.
      */
     private void applyChaoTypeScaling() {
-        // Apply scaling based on Chao type
-        switch (chaoType) {
-            case DARK:
-            case HERO:
-                // Scale up by 75%
-                characterView.setScaleX(1.60);
-                characterView.setScaleY(1.60);
-                break;
-            case RED:
-            case GREEN:
-            case BLUE:
-            default:
-                // Normal scale
-                characterView.setScaleX(1.0);
-                characterView.setScaleY(1.0);
-                break;
+        // Check if this is a dead basic Chao (blue, red, or green)
+        boolean isDeadBasicChao = (chaoType == ChaoType.BLUE ||
+                chaoType == ChaoType.RED ||
+                chaoType == ChaoType.GREEN) &&
+                animationState == AnimationState.DEAD;
+
+        // Apply scaling based on Chao type and animation state
+        if (isDeadBasicChao) {
+            // 150% scaling for dead basic Chao
+            characterView.setScaleX(1.5);
+            characterView.setScaleY(1.5);
+        } else {
+            // Apply normal type-based scaling
+            switch (chaoType) {
+                case DARK:
+                case HERO:
+                    characterView.setScaleX(1.25);
+                    characterView.setScaleY(1.25);
+                    break;
+                case RED:
+                case GREEN:
+                case BLUE:
+                default:
+                    // Normal scale
+                    characterView.setScaleX(1.0);
+                    characterView.setScaleY(1.0);
+                    break;
+            }
         }
     }
 

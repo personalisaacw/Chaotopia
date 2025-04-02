@@ -1,5 +1,8 @@
 package com.example.chaotopia.Model;
 
+import com.example.chaotopia.Controller.GameplayController;
+import javafx.scene.Scene;
+
 /**
  * Static entity or utility class for player-issued commands.
  * <br><br>
@@ -8,6 +11,8 @@ package com.example.chaotopia.Model;
  * {@link #exercise}, {@link #pet} (receive a pet), and {@link #bonk}
  * (be bonked).
  *
+ * There is also a method {@link #applyNaturalDecay(Chao)} to naturally decrease the
+ * stats which the ChaoStatusController will use.
  * @version 1.0.0
  * @author Justin Rowbotham
  */
@@ -57,8 +62,8 @@ public final class Commands {
      * @param chao the Chao being commanded
      */
     public static void sleep(Chao chao) {
-        if (isConscious(chao) != 0) return; // If Chao is not conscious...
-        if (isNotAngry(chao) != 0) return; // If Chao is angry...
+        if (isConscious(chao) != null) return; // If Chao is not conscious...
+        if (isNotAngry(chao) != null) return; // If Chao is angry...
         if (chao.getStatus().getSleep() >= 100) return;
         chao.setState(State.SLEEPING);
     }
@@ -70,8 +75,8 @@ public final class Commands {
      * @param food the food item being consumed
      */
     public static void feed(Chao chao, Item food) {
-        if (isConscious(chao) != 0) return; // If Chao is not conscious...
-        if (isNotAngry(chao) != 0) return; // If Chao is angry...
+        if (isConscious(chao) != null) return; // If Chao is not conscious...
+        if (isNotAngry(chao) != null) return; // If Chao is angry...
         chao.getStatus().adjustFullness(food.getEffectValue());
     }
 
@@ -82,8 +87,8 @@ public final class Commands {
      * @param specialFruit the special fruit item being consumed
      */
     public static void feedSpecialFruit(Chao chao, Item specialFruit) {
-        if (isConscious(chao) != 0) return; // If Chao is not conscious...
-        if (isNotAngry(chao) != 0) return; // If Chao is angry...
+        if (isConscious(chao) != null) return; // If Chao is not conscious...
+        if (isNotAngry(chao) != null) return; // If Chao is angry...
         chao.getStatus().adjustFullness(specialFruit.getEffectValue());
         chao.adjustAlignment(specialFruit.getAlignmentChange());
     }
@@ -95,7 +100,7 @@ public final class Commands {
      * @param gift the gift item being consumed
      */
     public static void give(Chao chao, Item gift) {
-        if (isConscious(chao) != 0) return; // If Chao is not conscious...
+        if (isConscious(chao) != null) return; // If Chao is not conscious...
         chao.getStatus().adjustHappiness(gift.getEffectValue());
     }
 
@@ -103,21 +108,34 @@ public final class Commands {
      * Vet command that heals the Chao at the vet.
      * @param chao the Chao being commanded
      */
-    public static void vet(Chao chao) {
-        if (isConscious(chao) != 0) return; // If Chao is not conscious...
-        if (isNotAngry(chao) != 0) return; // If Chao is angry...
-        if (cooldownActive(vetCooldown, CooldownType.VET) != 0) return;
+    public static String vet(Chao chao) {
+        if (isConscious(chao) != null) return chao.getName() + " is unresponsive!";
+        if (isNotAngry(chao) != null) return chao.getName() + " is being uncooperative!";
+        if (cooldownActive(vetCooldown, CooldownType.VET) != null) return "Too soon!";
         chao.getStatus().adjustHealth(VET_HEALTH);
+        return null; // Indicate success with no message needed, or return a success string
     }
 
     /**
      * Play command that makes the Chao happier through play.
+     * Checks consciousness and cooldown.
      * @param chao the Chao being commanded
+     * @return null if the command succeeded, or a String message indicating the reason for failure (e.g., "Too soon!").
      */
-    public static void play(Chao chao) {
-        if (isConscious(chao) != 0) return; // If Chao is not conscious...
-        if (cooldownActive(playCooldown, CooldownType.PLAY) != 0) return;
+    public static String play(Chao chao) {
+        String consciousCheck = isConscious(chao);
+        if (consciousCheck != null) {
+            System.out.println("Commands.play: Conscious check failed: " + consciousCheck); // DEBUG LOG
+            return consciousCheck;
+        }
+        String cooldownCheck = cooldownActive(playCooldown, CooldownType.PLAY);
+        if (cooldownCheck != null) {
+            System.out.println("Commands.play: Cooldown check failed: " + cooldownCheck); // DEBUG LOG
+            return cooldownCheck;
+        }
+        System.out.println("Commands.play: SUCCESS - Applying happiness."); // DEBUG LOG
         chao.getStatus().adjustHappiness(PLAY_HAPPINESS);
+        return null;
     }
 
     /**
@@ -126,8 +144,8 @@ public final class Commands {
      * @param chao the Chao being commanded
      */
     public static void exercise(Chao chao) {
-        if (isConscious(chao) != 0) return; // If Chao is not conscious...
-        if (isNotAngry(chao) != 0) return; // If Chao is angry...
+        if (isConscious(chao) != null) return; // If Chao is not conscious...
+        if (isNotAngry(chao) != null) return; // If Chao is angry...
         chao.getStatus().updateStats(0,EXER_HEALTH,EXER_FULLNESS,
                 EXER_SLEEPINESS);
     }
@@ -137,10 +155,11 @@ public final class Commands {
      * @param chao the Chao being commanded
      */
     public static void pet(Chao chao) {
-        if (isConscious(chao) != 0) return; // If Chao is not conscious...
-        if (isNotAngry(chao) != 0) return; // If Chao is angry...
-        if (cooldownActive(petCooldown, CooldownType.PET) != 0) return;
+        if (isConscious(chao) != null) return; // If Chao is not conscious...
+        if (isNotAngry(chao) != null) return; // If Chao is angry...
+        //if (cooldownActive(petCooldown, CooldownType.PET) != 0) return;
         chao.adjustAlignment(PET_VAL);
+        chao.getStatus().adjustHappiness(3);
     }
 
     /**
@@ -148,9 +167,50 @@ public final class Commands {
      * @param chao the Chao being commanded
      */
     public static void bonk(Chao chao) {
-        if (isConscious(chao) != 0) return; // If Chao is not conscious...
-        if (cooldownActive(bonkCooldown, CooldownType.BONK) != 0) return;
+        if (isConscious(chao) != null) return; // If Chao is not conscious...
+        //if (cooldownActive(bonkCooldown, CooldownType.BONK) != 0) return;
         chao.adjustAlignment(BONK_VAL);
+        chao.getStatus().adjustHappiness(-3);
+    }
+
+    /**
+     * Applies natural stat decay over time to simulate hunger, tiredness, etc.
+     * @param chao the Chao to apply decay to
+     */
+    public static void applyNaturalDecay(Chao chao) {
+        if (chao.getStatus().isDead()) return;
+        if (chao.getState() == State.SLEEPING) {
+            chao.getStatus().adjustSleep(10);
+        }
+
+        Status status = chao.getStatus();
+        int happinessDecrease = 2;
+        int fullnessDecrease = 2;
+        int sleepDecrease = 2;
+        int healthDecrease = 0;
+
+        // Apply type-specific modifications
+        ChaoType type = chao.getType();
+        if (type == ChaoType.DARK) {
+            happinessDecrease = (int)(happinessDecrease * 1.5);
+        } else if (type == ChaoType.BLUE) {
+            sleepDecrease = (int)(sleepDecrease * 1.5);
+        } else if (type == ChaoType.RED) {
+            fullnessDecrease = (int)(fullnessDecrease * 1.5);
+        } else if (type == ChaoType.GREEN) {
+            healthDecrease = 1;
+        } else if (type == ChaoType.HERO){
+            happinessDecrease = (int)(happinessDecrease * 0.5);
+        }
+
+        // Handle hunger effects
+        if (status.getFullness() == 0) {
+            happinessDecrease *= 2;
+            healthDecrease += 5;
+        }
+
+        // Update the stats
+        status.updateStats(-happinessDecrease, -healthDecrease, -fullnessDecrease, -sleepDecrease);
     }
 
     /**
@@ -158,12 +218,10 @@ public final class Commands {
      * @param chao The Chao to be assessed
      * @return 0 if the Chao is conscious, or 1 if they are not
      */
-    private static int isConscious(Chao chao) {
-        if (chao.getState() == State.SLEEPING
-                || chao.getStatus().isDead()) {
-            System.out.println(chao.getName() + " is unresponsive!");
-            return 1;
-        } else return 0;
+    private static String isConscious(Chao chao) {
+        if (chao.getState() == State.SLEEPING || chao.getStatus().isDead()) {
+            return chao.getName() + " is unresponsive!"; // Return message
+        } else return null; // Indicate success (conscious)
     }
 
     /**
@@ -171,11 +229,10 @@ public final class Commands {
      * @param chao The Chao to be assessed
      * @return 0 if the Chao is not angry, or 1 if they are
      */
-    private static int isNotAngry(Chao chao) {
+    private static String isNotAngry(Chao chao) {
         if (chao.getState() == State.ANGRY) {
-            System.out.println(chao.getName() + " is being uncooperative!");
-            return 1;
-        } else return 0;
+            return chao.getName() + " is being uncooperative!";
+        } else return null; //success
     }
 
     /**
@@ -184,7 +241,7 @@ public final class Commands {
      * @param type The type of cooldown
      * @return 0 if the cooldown is over, 1 if not
      */
-    private static int cooldownActive(long cooldown, CooldownType type) {
+    private static String cooldownActive(long cooldown, CooldownType type) {
         /* Check the cooldown. */
         long currentTime = System.nanoTime();
         if (currentTime - cooldown >= MINUTE) {
@@ -192,10 +249,10 @@ public final class Commands {
             else if (type == CooldownType.PLAY) playCooldown = currentTime;
             else if (type == CooldownType.PET) petCooldown = currentTime;
             else if (type == CooldownType.BONK) bonkCooldown = currentTime;
-            return 0;
+            return null;
         } else {
-            System.out.println("Too soon!");
-            return 1;
+            return "Too soon!";
         }
     }
+
 }
