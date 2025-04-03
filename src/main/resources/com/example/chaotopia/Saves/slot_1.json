@@ -1,29 +1,29 @@
 {
     "ActiveSlot": true,
     "SlotId": 1,
-    "numSessions": 0,
-    "score": 0,
-    "playtime": 0,
+    "numSessions": 1,
+    "score": 57,
+    "playtime": 16,
     "inventory": {
-        "Dark Fruit": 3,
+        "Dark Fruit": 5,
         "Hero Fruit": 3,
         "T.V.": 1,
-        "Green Fruit": 3,
-        "Red Fruit": 3,
+        "Green Fruit": 4,
+        "Red Fruit": 2,
         "Blue Fruit": 3,
         "Duck": 1,
         "Trumpet": 1
     },
     "averagePlaytime": 0,
     "chao": {
-        "name": "sick",
+        "name": "Sonic",
         "state": "NORMAL",
-        "type": "GREEN",
-        "alignment": 0,
+        "type": "DARK",
+        "alignment": -7,
         "status": {
-            "sleep": 100,
-            "happiness": 100,
-            "fullness": 100,
+            "sleep": 98,
+            "happiness": 97,
+            "fullness": 94,
             "health": 100
         }
     }

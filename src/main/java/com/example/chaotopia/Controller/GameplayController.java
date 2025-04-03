@@ -1657,7 +1657,9 @@ public class GameplayController extends BaseController implements Initializable 
      */
     public void shutdown() {
         System.out.println("Gameplay Controller Shutting Down...");
+        game.setNumSessions(game.getNumSessions() + 1);
         saveGame();
+        Commands.resetCooldowns();
         stopTimelines();
         stopAllSounds();
         if (chaoAnimation != null) chaoAnimation.stopAnimation();

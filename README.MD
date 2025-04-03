@@ -46,7 +46,7 @@ This project also uses additional packages:
 
 3. Go to File > Project Structure > Libraries and ensure the JavaFX SDK is added.
 
-**To Run using Maven (Configured for JavaFX Dependencies via IntelliJ):**
+**To Run Using Maven (Configured for JavaFX Dependencies via IntelliJ):**
 1. Ensure you have Maven 3.9.9 installed.
 2. After downloading JavaFX 21.0.6 and extract it to a local folder (`/Library/Java/JavaVirtualMachines/javafx-sdk-21.0.6/lib`). This path will be used when configuring JavaFX in IntelliJ.
 3. Open terminal and run
@@ -65,6 +65,22 @@ NOTE: You may need to update `pom.xml` based on the path of your JavaFX `.lib` f
 --module-path "C:\Path\To\javafx-sdk-21.0.6\lib" --add-modules javafx.controls,javafx.fxml,javafx.media
 ```
 where your `Path\To` is the path to your JavaFX.
+
+**To Run Using Executable JAR File**
+1. Ensure you have JavaFX 21.0.6 downloaded and you know the file path.
+2. Open a command line terminal (e.g. Powershell for Windows).
+3. Navigate to the directory containing the ChaoTopia.jar file.
+4. Run the executable JAR by entering the following command:
+```
+java --module-path "C:\Path\To\javafx-sdk-21.0.6\lib" --add-modules javafx.controls,javafx.fxml,javafx.media -jar ChaoTopia.jar
+```
+where your `Path\To` is the path to your JavaFX.
+
+To make the executable JAR, you can run the following command in the root of the project repository:
+```
+mvn clean build
+```
+It can then be found in the _target_ directory as _Chaotopia-1.0-SNAPSHOT-shaded.jar_
 
 ## User Guide
 
@@ -90,7 +106,17 @@ These are your Chao's statistics. If ignored, your pet’s stats may drop over t
 - **Sleep**: Chaos get sleepy. Use the **Sleep** button to recharge your Chao.
 - **Happiness**: Your Chao's happiness will be displayed. It changes based on how well you care for it.
 
-You are able to perform various some actions to take care of your Chao.
+You are able to perform various actions to take care of your Chao. There are buttons on the screen as well as keyboard buttons for the following commands:
+
+- **Play**: p
+- **Exercise**: e
+- **Sleep**: z
+- **Vet**: v
+- **Pet**: q
+- **Bonk**: b
+- **Inventory**: Numbers 1-8 (uses items from top to bottom of inventory)
+- **Save Game**: s
+- 
 #### Bonus
 If you feed your Chao Hero Fruit (white fruit) or Dark Fruit (black fruit), your Chao might transform!
 

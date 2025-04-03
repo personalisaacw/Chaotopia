@@ -39,10 +39,6 @@ public final class Commands {
     private static long vetCooldown = System.nanoTime() - MINUTE;
     /** The start of the cooldown for the play command. */
     private static long playCooldown = System.nanoTime() - MINUTE;
-    /** The start of the cooldown for the pet command. */
-    private static long petCooldown = System.nanoTime() - MINUTE;
-    /** The start of the cooldown for the bonk command. */
-    private static long bonkCooldown = System.nanoTime() - MINUTE;
 
     /** Enumerator identifying the cooldown type. */
     private enum CooldownType {
@@ -206,12 +202,20 @@ public final class Commands {
             happinessDecrease *= 2;
             healthDecrease += 5;
             if (chao.getType() == ChaoType.GREEN) {
-                healthDecrease +=2;
+                healthDecrease += 2;
             }
         }
 
         // Update the stats
         status.updateStats(-happinessDecrease, -healthDecrease, -fullnessDecrease, -sleepDecrease);
+    }
+
+    /**
+     * Method that resets the cooldowns on stats.
+     */
+    public static void resetCooldowns() {
+        vetCooldown = System.nanoTime() - MINUTE;
+        playCooldown = System.nanoTime() - MINUTE;
     }
 
     /**
@@ -248,12 +252,9 @@ public final class Commands {
         if (currentTime - cooldown >= MINUTE) {
             if (type == CooldownType.VET) vetCooldown = currentTime;
             else if (type == CooldownType.PLAY) playCooldown = currentTime;
-            else if (type == CooldownType.PET) petCooldown = currentTime;
-            else if (type == CooldownType.BONK) bonkCooldown = currentTime;
             return null;
         } else {
             return "Too soon!";
         }
     }
-
 }

@@ -98,6 +98,6 @@ public class Time {
      */
     public void storeTime(GameFile gameFile) {
         gameFile.setPlaytime(gameFile.getPlaytime() + sessionPlaytime);
-        gameFile.setNumSessions(gameFile.getNumSessions() + 1);
+        sessionPlaytime = 0;
     }
 }
