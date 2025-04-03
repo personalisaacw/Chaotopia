@@ -11,6 +11,11 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.10.2</junit.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <javafx.version>21.0.6</javafx.version>
+        <javafx.sdk>C:/Program Files/Java/javafx-sdk-${javafx.version}</javafx.sdk>
+        <main.class>com.example.chaotopia.Application.MainMenu</main.class>
     </properties>
 
     <dependencies>
@@ -51,6 +56,24 @@
             <version>RELEASE</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>11</version>
+            <classifier>win</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>11</version>
+            <classifier>linux</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>11</version>
+            <classifier>mac</classifier>
+        </dependency>
     </dependencies>
 
     <build>
@@ -72,7 +95,7 @@
                     <execution>
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.example.chaotopia.Application.MainMenu</mainClass>
+                            <mainClass>${main.class}</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
@@ -81,14 +104,43 @@
                             <noHeaderFiles>true</noHeaderFiles>
                             <options>
                                 <option>--module-path</option>
-                                <option>/Library/Java/JavaVirtualMachines/javafx-sdk-21.0.6/lib</option>
+                                <option>${javafx.sdk}/lib</option>
                                 <option>--add-modules</option>
-                                <option>javafx.controls,javafx.fxml</option>
+                                <option>javafx.controls,javafx.fxml,javafx.media</option>
                                 <option>-Dprism.order=sw</option>
                             </options>
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.1</version> <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>shade</goal>
+                    </goals>
+                    <configuration>
+                        <shadedArtifactAttached>true</shadedArtifactAttached> <transformers>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <mainClass>${main.class}</mainClass>
+                        </transformer>
+                    </transformers>
+                        <filters>
+                            <filter>
+                                <artifact>*:*</artifact>
+                                <excludes>
+                                    <exclude>META-INF/*.SF</exclude>
+                                    <exclude>META-INF/*.DSA</exclude>
+                                    <exclude>META-INF/*.RSA</exclude>
+                                </excludes>
+                            </filter>
+                        </filters>
+                    </configuration>
+                </execution>
+            </executions>
             </plugin>
         </plugins>
     </build>

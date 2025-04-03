@@ -1,0 +1,30 @@
+{
+    "ActiveSlot": true,
+    "SlotId": 2,
+    "numSessions": 7,
+    "score": 89,
+    "playtime": 53,
+    "inventory": {
+        "Dark Fruit": 6,
+        "Hero Fruit": 7,
+        "T.V.": 2,
+        "Green Fruit": 3,
+        "Blue Fruit": 3,
+        "Duck": 1,
+        "Red Fruit": 1,
+        "Trumpet": 1
+    },
+    "averagePlaytime": 0,
+    "chao": {
+        "name": "Mario",
+        "state": "NORMAL",
+        "type": "RED",
+        "alignment": 0,
+        "status": {
+            "sleep": 90,
+            "happiness": 84,
+            "fullness": 88,
+            "health": 100
+        }
+    }
+}

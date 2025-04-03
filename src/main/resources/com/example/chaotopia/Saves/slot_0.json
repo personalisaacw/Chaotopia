@@ -1,9 +1,9 @@
 {
     "ActiveSlot": true,
     "SlotId": 0,
-    "numSessions": 4,
+    "numSessions": 5,
     "score": 176,
-    "playtime": 55,
+    "playtime": 58,
     "inventory": {
         "Dark Fruit": 14,
         "Hero Fruit": 10,
@@ -21,9 +21,9 @@
         "type": "DARK",
         "alignment": -6,
         "status": {
-            "sleep": 24,
-            "happiness": 40,
-            "fullness": 22,
+            "sleep": 22,
+            "happiness": 37,
+            "fullness": 20,
             "health": 61
         }
     }
