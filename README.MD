@@ -1,16 +1,14 @@
-Java Version: 23  
-JavaFX version: 21.0.6  
-Get JavaFX from this site: https://gluonhq.com/products/javafx/
-Check the pom.xml file. You may need to update the path to where you stored JavaFX. Look for my comment.  
-
-Run this command: mvn clean javafx:run  
-
-You may need to download maven first for Mac.
-If you have homebrew, put this command in terminal:  
-brew install maven  
-If you don't have homebrew, get it LOL.
-
 # README
+
+**Table of Contents**
+- [README](#readme)
+    * [Description](#description)
+    * [Build Requirements](#build-requirements)
+    * [To Run](#to-run)
+    * [User Guide](#user-guide)
+    * [Parental Control Password](#parental-control-password)
+    * [Access Parental Controls](#access-parental-controls)
+
 
 ## Description
 Welcome to ChaoTopia! A game designed for children ages 5 and up, 
@@ -23,7 +21,7 @@ This project is built by:
 - Isaac Wang
 - Derek Xue
 
-# Build Requirements
+## Build Requirements
 To run this project, you will need to have installed and configure:
 - Intellij IDEA version 2024.3.4 or higher (https://www.jetbrains.com/idea/download/?section=mac)
 - Java JDK 23 (https://www.oracle.com/ca-en/java/technologies/downloads/#jdk23-windows)
@@ -34,7 +32,7 @@ This project also uses additional packages:
 - Maven 3.9.9 (https://maven.apache.org/download.cgi)
 - JUnit (Configured in Intellij IDEA)
 
-# To Run
+## To Run
 1. Ensure you have Java JDK 23 installed and configured to your path variables. Ensure the other build requirements are installed (as described in [# build-requirements](#build-requirements))
    Ensure the correct JDK (Java 23) and JavaFX SDK paths are configured:
 
@@ -62,7 +60,7 @@ NOTE: You may need to update `pom.xml` based on the path of your JavaFX `.lib` f
 ```
 where your `Path\To` is the path to your JavaFX.
 
-# User Guide
+## User Guide
 [in-progress]
 
 ## Parental Control Password
