@@ -1,15 +1,20 @@
 # README
 ![img.png](ReadME_Image.png)
 
-**Table of Contents**
 - [README](#readme)
-    * [Description](#description)
-    * [Build Requirements](#build-requirements)
-    * [To Run](#to-run)
-    * [User Guide](#user-guide)
-    * [Parental Control Password](#parental-control-password)
-    * [Access Parental Controls](#access-parental-controls)
-
+  * [Description](#description)
+  * [Build Requirements](#build-requirements)
+  * [To Run](#to-run)
+  * [User Guide](#user-guide)
+    + [Getting Started](#getting-started)
+    + [Gameplay Features](#gameplay-features)
+      - [Bonus](#bonus)
+    + [Saving and Loading](#saving-and-loading)
+    + [Parental Controls](#parental-controls)
+  * [Parental Control Password](#parental-control-password)
+  * [Access Parental Controls](#access-parental-controls)
+  
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
 ## Description
 Welcome to ChaoTopia! A game designed for children ages 5 and up, 
@@ -62,7 +67,47 @@ NOTE: You may need to update `pom.xml` based on the path of your JavaFX `.lib` f
 where your `Path\To` is the path to your JavaFX.
 
 ## User Guide
-[in-progress]
+
+### Getting Started
+
+1. **Launch the Game**
+  - Run the program using the provided instructions (see "To Run" section).
+  - The main menu will appear with options to start a new game or load an existing one.
+
+2. **Play Game**
+  - To play the game, click on the "Play" button at the main menu. This will take you to a screen with all of your saved files.
+  - As a new user, click on an empty slot to start a new game
+  - You can choose your Chao, in which each Chao has different personalities and characteristics. 
+  - You will also be able to name your Chao (NOTE: The name cannot be changed later on).
+  - A new game file will be created and saved
+
+### Gameplay Features
+
+These are your Chao's statistics. If ignored, your pet’s stats may drop over time. Try to maintain a balance!
+
+- **Hunger**: Your Chao gets hungry over time. Click the food items in the inventory to keep it full and happy!
+- **Health**: Taking good care of your Chao will ensure good health! If your Chao's health drops to 0, your Chao will die.
+- **Sleep**: Chaos get sleepy. Use the **Sleep** button to recharge your Chao.
+- **Happiness**: Your Chao's happiness will be displayed. It changes based on how well you care for it.
+
+You are able to perform various some actions to take care of your Chao.
+#### Bonus
+If you feed your Chao Hero Fruit (white fruit) or Dark Fruit (black fruit), your Chao might transform!
+
+### Saving and Loading
+
+- Use the **"Save"** button to save your game. A note will be displayed when you save your file.
+- To load your saved game, go to the Main Menu, which you will see your game saved in a specific slot.
+
+### Parental Controls
+
+To access the parental controls, you will need the password (see [Parental Control Password](#parental-control-password)). The parental controls allows you to:
+  - Adjust the start and end allowable play time to limit access (in hh:mm:ss format)
+  - Enable or disable your set play time.
+  - Displays your total playtime and average playtime from all game files.
+  - Allows you to reset the total playtime and average playtime.
+  - Ability to revive a dead Chao
+
 
 ## Parental Control Password
 The password to the parental control access is:
