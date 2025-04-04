@@ -91,8 +91,8 @@ public class Time {
     /**
      * "Deconstructor" method for the current time entity.
      * <p>
-     * Stores the new playtime in the game file. Then changes the
-     * average playtime and total number of sessions.
+     * Stores the new playtime in the game file. Then reset the
+     * current game playtime.
      *
      * @param gameFile the file to store the time to
      */
